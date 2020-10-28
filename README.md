@@ -133,5 +133,5 @@ function App() {
 
 MIT
 
-[npm-image]: https://badge.fury.io/js/react-viewer.svg
+[npm-image]: https://badge.fury.io/js/react-viewers.svg
 [npm-url]: https://npmjs.org/package/react-viewers
