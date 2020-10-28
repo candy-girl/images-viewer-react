@@ -1,4 +1,4 @@
-# react-viewer
+# react-viewers
 
 [![NPM version][npm-image]][npm-url]
 
