@@ -54,9 +54,9 @@ export default function ViewerNav(props: ViewerNavProps) {
   return (
     <div className={`${props.prefixCls}-navbar divContainer`}>
       {
-        marginValue ? <a className="preButton" onClick={() => goPre()}>上一张</a> : ''
+        marginValue ? <a className="preButton" onClick={() => goPre()}>上一张</a> : <span className="preButton"></span>
       }
-      <div className="ulContainer" id="ulContainer" ref={ulRef}>
+      <div className="ulContainer" ref={ulRef} style={{margin: 'auto', width: (navImgWidth+10)*props.images.length}}>
       <ul className={`${props.prefixCls}-list ${props.prefixCls}-list-transition`} style={listStyle}>
           {props.images.map((item, index) =>
             <li
@@ -72,7 +72,7 @@ export default function ViewerNav(props: ViewerNavProps) {
         </ul>
       </div>
       {
-        showNext ? <a className="nextButton" onClick={() => goNext()}>下一张</a> : ''
+        showNext ? <a className="nextButton" onClick={() => goNext()}>下一张</a> : <span className="nextButton"></span>
       }
     </div>
   );

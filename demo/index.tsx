@@ -191,7 +191,7 @@ class App extends React.Component<any, Partial<State>> {
             <div className="github">
               <a className="bagde" href="https://github.com/candy-girl/react-viewers">
                 <img
-                src="https://img.shields.io/github/stars/candy-girl/react-viewer?style=social"
+                src="https://img.shields.io/github/stars/candy-girl/react-viewers?style=social"
                 />
               </a>
             </div>
