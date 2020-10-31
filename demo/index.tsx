@@ -182,16 +182,16 @@ class App extends React.Component<any, Partial<State>> {
         <nav className="navbar">
           <div className="container-fluid">
             <div className="navbar-brand">
-              react-viewers
+              react-images-viewer
             </div>
-            <a className="bagde" href="https://npmjs.org/package/react-viewers">
+            <a className="bagde" href="https://npmjs.org/package/react-images-viewer">
               <img src="https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=3.0.0&x2=0" />
             </a>
 
             <div className="github">
-              <a className="bagde" href="https://github.com/candy-girl/react-viewers">
+              <a className="bagde" href="https://github.com/candy-girl/react-images-viewer">
                 <img
-                src="https://img.shields.io/github/stars/candy-girl/react-viewers?style=social"
+                src="https://img.shields.io/github/stars/candy-girl/react-images-viewer?style=social"
                 />
               </a>
             </div>
@@ -265,23 +265,24 @@ class App extends React.Component<any, Partial<State>> {
           </div>
           <Viewer
           visible={this.state.visible}
-          onClose={() => {
-            this.setState({ visible: false });
-          }}
-          images={images}
-          activeIndex={this.state.activeIndex}
-          container={inline ? this.container : null}
-          downloadable
-          customToolbar={(toolbars) => {
-            return toolbars.concat([{
-              key: 'test',
-              render: <div>C</div>,
-              onClick: (activeImage) => {
-                console.log(activeImage);
-              },
-            }]);
-          }}
-          {...options}
+            onClose={() => {
+              this.setState({ visible: false });
+            }}
+            images={images}
+            navImgWidth={100}
+            activeIndex={this.state.activeIndex}
+            container={inline ? this.container : null}
+            downloadable
+            customToolbar={(toolbars) => {
+              return toolbars.concat([{
+                key: 'test',
+                render: <div>C</div>,
+                onClick: (activeImage) => {
+                  console.log(activeImage);
+                },
+              }]);
+            }}
+            {...options}
           />
         </div>
         <div className="footer">

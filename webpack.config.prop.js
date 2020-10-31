@@ -9,7 +9,7 @@ if (fs.existsSync(distPath)) {
 }
 
 config.output.merge({
-  library: 'react-viewer',
+  library: 'react-images-viewer',
   libraryTarget: 'umd',
   globalObject: 'this'
 });

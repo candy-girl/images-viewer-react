@@ -50,6 +50,7 @@ export default (props: ViewerProps) => {
     visible = false,
     onClose = noop,
     images = [],
+    navImgWidth = 100,
     activeIndex = 0,
     zIndex = 1000,
     drag = true,
@@ -619,7 +620,7 @@ export default (props: ViewerProps) => {
     }));
   }
 
-  const prefixCls = 'react-viewers';
+  const prefixCls = 'react-images-viewer';
 
   const className = classnames(`${prefixCls}`, `${prefixCls}-transition`, {
     [`${prefixCls}-inline`]: props.container,
@@ -712,6 +713,7 @@ export default (props: ViewerProps) => {
               images={props.images}
               activeIndex={state.activeIndex}
               onChangeImg={handleChangeImg}
+              navImgWidth={navImgWidth}
             />
           )}
         </div>

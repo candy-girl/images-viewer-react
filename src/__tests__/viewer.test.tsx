@@ -136,6 +136,7 @@ declare const global: any;
 
 global.Image = MockImage;
 
+/** 触发鼠标拖动事件 */
 function triggerMouseEvent(node, eventType, x = 0, y = 0) {
   const clickEvent = new MouseEvent(eventType, {
     clientX: x,
@@ -147,6 +148,7 @@ function triggerMouseEvent(node, eventType, x = 0, y = 0) {
   node.dispatchEvent(clickEvent);
 }
 
+/** 触发鼠标滚动 */
 function triggerWheel(node, eventType, deltaY) {
   const wheelEvent = new WheelEvent(eventType, {
     view: window,
@@ -157,6 +159,7 @@ function triggerWheel(node, eventType, deltaY) {
   node.dispatchEvent(wheelEvent);
 }
 
+/** 触发键盘操作事件 */
 function triggerKeyboard(node, eventType, keyCode, ctrlKey = false) {
   const wheelEvent = new KeyboardEvent(eventType, {
     view: window,
@@ -168,6 +171,7 @@ function triggerKeyboard(node, eventType, keyCode, ctrlKey = false) {
   node.dispatchEvent(wheelEvent);
 }
 
+/** 得到变换值 */
 function getTransformValue(transform) {
   const translateXReg = /translateX\((.+)px\)(?= translateY)/;
   const translateYReg = /translateY\((.+)px\)/;
@@ -202,6 +206,9 @@ class ViewerHelper {
     wrapper = mount(<ViewerTester {...props} />);
   }
 
+  /**
+   * 模拟点击打开事件
+   */
   open() {
     wrapper.find('#viewer-tester-open-btn').simulate('click');
     this.skipAnimation();
@@ -219,50 +226,50 @@ describe('Viewer', () => {
     viewerHelper.new();
     viewerHelper.open();
 
-    expect($$('img.react-viewers-image')).toHaveLength(1);
+    expect($$('img.react-images-viewer-image')).toHaveLength(1);
 
-    $$('.react-viewers-close')[0].click();
+    $$('.react-images-viewer-close')[0].click();
 
     viewerHelper.skipAnimation();
 
-    wrapper.find('.react-viewers').simulate('transitionend');
+    wrapper.find('.react-images-viewer').simulate('transitionend');
 
-    expect($$('.react-viewers')[0].style.display).toBe('none');
+    expect($$('.react-images-viewer')[0].style.display).toBe('none');
   });
 
   it('render with no footer', () => {
     viewerHelper.new({ noFooter: true });
     viewerHelper.open();
 
-    expect($$('.react-viewers-footer')).toHaveLength(0);
+    expect($$('.react-images-viewer-footer')).toHaveLength(0);
   });
 
   it('render with no navbar', () => {
     viewerHelper.new({ noNavbar: true });
     viewerHelper.open();
 
-    expect($$('.react-viewers-navbar')).toHaveLength(0);
+    expect($$('.react-images-viewer-navbar')).toHaveLength(0);
   });
 
   it('render with no toolbar', () => {
     viewerHelper.new({ noToolbar: true });
     viewerHelper.open();
 
-    expect($$('.react-viewers-toolbar')).toHaveLength(0);
+    expect($$('.react-images-viewer-toolbar')).toHaveLength(0);
   });
 
   it('render with no attribute', () => {
     viewerHelper.new({ attribute: false });
     viewerHelper.open();
 
-    expect($$('.react-viewers-attribute')).toHaveLength(0);
+    expect($$('.react-images-viewer-attribute')).toHaveLength(0);
   });
 
   it('render with no img details', () => {
     viewerHelper.new({ noImgDetails: true });
     viewerHelper.open();
 
-    expect($$('.react-viewers-img-details')).toHaveLength(0);
+    expect($$('.react-images-viewer-img-details')).toHaveLength(0);
   });
 
   it('render with no zoom rotate scale change toolbar button', () => {
@@ -274,14 +281,14 @@ describe('Viewer', () => {
     });
     viewerHelper.open();
 
-    expect($$('.react-viewers-icon-zoomIn')).toHaveLength(0);
-    expect($$('.react-viewers-icon-zoomOut')).toHaveLength(0);
-    expect($$('.react-viewers-icon-rotateLeft')).toHaveLength(0);
-    expect($$('.react-viewers-icon-rotateRight')).toHaveLength(0);
-    expect($$('.react-viewers-icon-scaleX')).toHaveLength(0);
-    expect($$('.react-viewers-icon-scaleY')).toHaveLength(0);
-    expect($$('.react-viewers-icon-prev')).toHaveLength(0);
-    expect($$('.react-viewers-icon-next')).toHaveLength(0);
+    expect($$('.react-images-viewer-icon-zoomIn')).toHaveLength(0);
+    expect($$('.react-images-viewer-icon-zoomOut')).toHaveLength(0);
+    expect($$('.react-images-viewer-icon-rotateLeft')).toHaveLength(0);
+    expect($$('.react-images-viewer-icon-rotateRight')).toHaveLength(0);
+    expect($$('.react-images-viewer-icon-scaleX')).toHaveLength(0);
+    expect($$('.react-images-viewer-icon-scaleY')).toHaveLength(0);
+    expect($$('.react-images-viewer-icon-prev')).toHaveLength(0);
+    expect($$('.react-images-viewer-icon-next')).toHaveLength(0);
   });
 
   it('change active index success', () => {
@@ -291,7 +298,7 @@ describe('Viewer', () => {
     wrapper.find('#viewer-tester-change-btn').simulate('click');
     viewerHelper.skipAnimation();
 
-    expect($$('.react-viewers-attribute')[0].innerHTML).toContain('mountain');
+    expect($$('.react-images-viewer-attribute')[0].innerHTML).toContain('mountain');
   });
 
   it('custom toolbar', () => {
@@ -327,7 +334,7 @@ describe('Viewer', () => {
     });
     viewerHelper.open();
 
-    const canvas = $$('.react-viewers-canvas')[0];
+    const canvas = $$('.react-images-viewer-canvas')[0];
     triggerMouseEvent(canvas, 'mousedown');
 
     expect(handleMaskClick).toBeCalledWith(expect.anything());
@@ -337,11 +344,11 @@ describe('Viewer', () => {
     viewerHelper.new();
     viewerHelper.open();
 
-    let imgNode = $$('img.react-viewers-image')[0];
+    let imgNode = $$('img.react-images-viewer-image')[0];
 
     const oldTransform = imgNode.style.transform;
 
-    const canvas = $$('.react-viewers-canvas')[0];
+    const canvas = $$('.react-images-viewer-canvas')[0];
     triggerMouseEvent(canvas, 'mousedown');
 
     triggerMouseEvent(document, 'mousemove', 50, 50);
@@ -364,18 +371,18 @@ describe('Viewer', () => {
     $$('li[data-key=next]')[0].click();
     $$('li[data-key=next]')[0].click();
     viewerHelper.skipAnimation();
-    expect($$('.react-viewers-attribute')[0].innerHTML).toContain('lake');
+    expect($$('.react-images-viewer-attribute')[0].innerHTML).toContain('lake');
 
     $$('li[data-key=prev]')[0].click();
     viewerHelper.skipAnimation();
-    expect($$('.react-viewers-attribute')[0].innerHTML).toContain('mountain');
+    expect($$('.react-images-viewer-attribute')[0].innerHTML).toContain('mountain');
   });
 
   it('rotate image', () => {
     viewerHelper.new();
     viewerHelper.open();
 
-    let imgNode = $$('img.react-viewers-image')[0];
+    let imgNode = $$('img.react-images-viewer-image')[0];
 
     $$('li[data-key=rotateRight]')[0].click();
 
@@ -390,7 +397,7 @@ describe('Viewer', () => {
     viewerHelper.new();
     viewerHelper.open();
 
-    let imgNode = $$('img.react-viewers-image')[0];
+    let imgNode = $$('img.react-images-viewer-image')[0];
 
     $$('li[data-key=scaleX]')[0].click();
 
@@ -405,7 +412,7 @@ describe('Viewer', () => {
     viewerHelper.new();
     viewerHelper.open();
 
-    let imgNode = $$('img.react-viewers-image')[0];
+    let imgNode = $$('img.react-images-viewer-image')[0];
 
     $$('li[data-key=zoomIn]')[0].click();
 
@@ -420,9 +427,9 @@ describe('Viewer', () => {
     viewerHelper.new();
     viewerHelper.open();
 
-    let imgNode = $$('img.react-viewers-image')[0];
+    let imgNode = $$('img.react-images-viewer-image')[0];
 
-    const viewer = $$('.react-viewers')[0];
+    const viewer = $$('.react-images-viewer')[0];
 
     triggerWheel(viewer, 'wheel', -1);
 
@@ -443,9 +450,9 @@ describe('Viewer', () => {
     });
     viewerHelper.open();
 
-    let imgNode = $$('img.react-viewers-image')[0];
+    let imgNode = $$('img.react-images-viewer-image')[0];
 
-    const viewer = $$('.react-viewers')[0];
+    const viewer = $$('.react-images-viewer')[0];
 
     triggerWheel(viewer, 'wheel', -1);
 
@@ -458,11 +465,11 @@ describe('Viewer', () => {
     });
     viewerHelper.open();
 
-    let imgNode = $$('img.react-viewers-image')[0];
+    let imgNode = $$('img.react-images-viewer-image')[0];
 
     const oldTransform = imgNode.style.transform;
 
-    const canvas = $$('.react-viewers-canvas')[0];
+    const canvas = $$('.react-images-viewer-canvas')[0];
     triggerMouseEvent(canvas, 'mousedown');
 
     triggerMouseEvent(canvas, 'mousemove', 50, 50);
@@ -480,13 +487,13 @@ describe('Viewer', () => {
     viewerHelper.new({});
     viewerHelper.open();
 
-    const navList = $$('.react-viewers-list')[0];
+    const navList = $$('.react-images-viewer-list')[0];
 
     navList.children[1].click();
 
     viewerHelper.skipAnimation();
 
-    expect($$('.react-viewers-attribute')[0].innerHTML).toContain('mountain');
+    expect($$('.react-images-viewer-attribute')[0].innerHTML).toContain('mountain');
   });
 
   it('render witch container', () => {
@@ -498,21 +505,21 @@ describe('Viewer', () => {
 
     viewerHelper.skipAnimation();
 
-    expect(wrapper.find('.react-viewers-inline')).toHaveLength(1);
+    expect(wrapper.find('.react-images-viewer-inline')).toHaveLength(1);
   });
 
   it('reset image', () => {
     viewerHelper.new();
     viewerHelper.open();
 
-    let imgNode = $$('img.react-viewers-image')[0];
+    let imgNode = $$('img.react-images-viewer-image')[0];
 
     const oldTransformValue = getTransformValue(imgNode.style.transform);
 
     $$('li[data-key=zoomIn]')[0].click();
     $$('li[data-key=reset]')[0].click();
 
-    imgNode = $$('img.react-viewers-image')[0];
+    imgNode = $$('img.react-images-viewer-image')[0];
     const newTransformValue = getTransformValue(imgNode.style.transform);
 
     expect(oldTransformValue.scaleX - newTransformValue.scaleX).toBe(0);
@@ -534,21 +541,21 @@ describe('Viewer', () => {
     // close
     triggerKeyboard(document, 'keydown', 27);
     viewerHelper.skipAnimation();
-    wrapper.find('.react-viewers').simulate('transitionend');
-    expect($$('.react-viewers')[0].style.display).toBe('none');
+    wrapper.find('.react-images-viewer').simulate('transitionend');
+    expect($$('.react-images-viewer')[0].style.display).toBe('none');
     viewerHelper.open();
 
     // prev
     triggerKeyboard(document, 'keydown', 37);
     viewerHelper.skipAnimation();
-    expect($$('.react-viewers-attribute')[0].innerHTML).toContain('mountain');
+    expect($$('.react-images-viewer-attribute')[0].innerHTML).toContain('mountain');
 
     // next
     triggerKeyboard(document, 'keydown', 39);
     viewerHelper.skipAnimation();
-    expect($$('.react-viewers-attribute')[0].innerHTML).toContain('lake');
+    expect($$('.react-images-viewer-attribute')[0].innerHTML).toContain('lake');
 
-    let imgNode = $$('img.react-viewers-image')[0];
+    let imgNode = $$('img.react-images-viewer-image')[0];
 
     // zoomIn
     triggerKeyboard(document, 'keydown', 38);
@@ -574,7 +581,7 @@ describe('Viewer', () => {
     triggerKeyboard(document, 'keydown', 39, true);
     triggerKeyboard(document, 'keydown', 49, true);
     viewerHelper.skipAnimation();
-    imgNode = $$('img.react-viewers-image')[0];
+    imgNode = $$('img.react-images-viewer-image')[0];
     expect(getTransformValue(imgNode.style.transform).rotate).toBe('0');
   });
 
@@ -601,13 +608,13 @@ describe('Viewer', () => {
     });
     viewerHelper.open();
 
-    let imgNode = $$('img.react-viewers-image')[0];
+    let imgNode = $$('img.react-images-viewer-image')[0];
     expect(imgNode.style.width).toBe('100px');
     expect(imgNode.style.width).toBe('100px');
 
     $$('li[data-key=next]')[0].click();
     viewerHelper.skipAnimation();
-    imgNode = $$('img.react-viewers-image')[0];
+    imgNode = $$('img.react-images-viewer-image')[0];
     expect(imgNode.style.width).toBe('200px');
     expect(imgNode.style.width).toBe('200px');
   });
@@ -632,7 +639,7 @@ describe('Viewer', () => {
 
     viewerHelper.open();
 
-    const imgNode = $$('img.react-viewers-image')[0];
+    const imgNode = $$('img.react-images-viewer-image')[0];
     expect(imgNode.src).toBe(`http://localhost/${defaultImg}`);
     expect(imgNode.style.width).toBe('100px');
     expect(imgNode.style.width).toBe('100px');
@@ -656,7 +663,7 @@ describe('Viewer', () => {
 
     viewerHelper.open();
 
-    const imgNode = $$('img.react-viewers-image')[0];
+    const imgNode = $$('img.react-images-viewer-image')[0];
     expect(imgNode.style.width).toBe('100px');
     expect(getTransformValue(imgNode.style.transform).scaleX).toBe('0.5');
   });
@@ -680,7 +687,7 @@ describe('Viewer', () => {
     });
     viewerHelper.open();
 
-    let imgNode = $$('img.react-viewers-image')[0];
+    let imgNode = $$('img.react-images-viewer-image')[0];
     expect(imgNode.style.width).toBe('2000px');
     expect(imgNode.style.width).toBe('2000px');
   });
@@ -691,7 +698,7 @@ describe('Viewer', () => {
     });
     viewerHelper.open();
 
-    let imgNode = $$('img.react-viewers-image')[0];
+    let imgNode = $$('img.react-images-viewer-image')[0];
 
     $$('li[data-key=zoomIn]')[0].click();
     viewerHelper.skipAnimation();
@@ -699,7 +706,7 @@ describe('Viewer', () => {
 
     $$('li[data-key=next]')[0].click();
     viewerHelper.skipAnimation();
-    imgNode = $$('img.react-viewers-image')[0];
+    imgNode = $$('img.react-images-viewer-image')[0];
     expect(getTransformValue(imgNode.style.transform).scaleX).toBe('1.05');
   });
 
@@ -728,55 +735,55 @@ describe('Viewer', () => {
     $$('li[data-key=next]')[0].click();
     $$('li[data-key=next]')[0].click();
     viewerHelper.skipAnimation();
-    expect($$('.react-viewers-attribute')[0].innerHTML).toContain('mountain');
+    expect($$('.react-images-viewer-attribute')[0].innerHTML).toContain('mountain');
 
     $$('li[data-key=prev]')[0].click();
     $$('li[data-key=prev]')[0].click();
     viewerHelper.skipAnimation();
-    expect($$('.react-viewers-attribute')[0].innerHTML).toContain('lake');
+    expect($$('.react-images-viewer-attribute')[0].innerHTML).toContain('lake');
 
     // next
     triggerKeyboard(document, 'keydown', 39);
     triggerKeyboard(document, 'keydown', 39);
     viewerHelper.skipAnimation();
-    expect($$('.react-viewers-attribute')[0].innerHTML).toContain('mountain');
+    expect($$('.react-images-viewer-attribute')[0].innerHTML).toContain('mountain');
 
     // prev
     triggerKeyboard(document, 'keydown', 37);
     triggerKeyboard(document, 'keydown', 37);
     viewerHelper.skipAnimation();
-    expect($$('.react-viewers-attribute')[0].innerHTML).toContain('lake');
+    expect($$('.react-images-viewer-attribute')[0].innerHTML).toContain('lake');
   });
 
   it('customized CSS class', () => {
     viewerHelper.new({
-      className: 'my-react-viewers',
+      className: 'my-react-images-viewer',
     });
     viewerHelper.open();
 
-    expect($$('.my-react-viewers')).toHaveLength(1);
+    expect($$('.my-react-images-viewer')).toHaveLength(1);
   });
 
   it('showTotal', () => {
     viewerHelper.new({
-      className: 'my-react-viewers',
+      className: 'my-react-images-viewer',
     });
     viewerHelper.open();
 
-    expect($$('.react-viewers-showTotal')[0].innerHTML).toBe('1 of 2');
+    expect($$('.react-images-viewer-showTotal')[0].innerHTML).toBe('1 of 2');
     triggerKeyboard(document, 'keydown', 39);
-    expect($$('.react-viewers-showTotal')[0].innerHTML).toBe('2 of 2');
+    expect($$('.react-images-viewer-showTotal')[0].innerHTML).toBe('2 of 2');
   });
 
   it('max scale and min scale', () => {
     viewerHelper.new({
-      className: 'my-react-viewers',
+      className: 'my-react-images-viewer',
       maxScale: 1.06,
       minScale: 0.88,
     });
     viewerHelper.open();
 
-    let imgNode = $$('img.react-viewers-image')[0];
+    let imgNode = $$('img.react-images-viewer-image')[0];
 
     $$('li[data-key=zoomIn]')[0].click();
     $$('li[data-key=zoomIn]')[0].click();
@@ -803,9 +810,9 @@ describe('Viewer', () => {
     });
 
     viewerHelper.open();
-    expect($$('.react-viewers-img-details')[0].innerHTML).toBe('(100 x 100)');
+    expect($$('.react-images-viewer-img-details')[0].innerHTML).toBe('(100 x 100)');
     setGetImageSize(() => 200);
     wrapper.find('#viewer-tester-change-images-btn').simulate('click');
-    expect($$('.react-viewers-img-details')[0].innerHTML).toBe('(200 x 200)');
+    expect($$('.react-images-viewer-img-details')[0].innerHTML).toBe('(200 x 200)');
   });
 });
