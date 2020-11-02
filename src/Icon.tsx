@@ -19,7 +19,7 @@ export interface IconProps {
 }
 
 export default function Icon(props: IconProps) {
-  let prefixCls = 'react-images-viewer-icon';
+  let prefixCls = 'images-viewer-react-icon';
 
   return (
     <i className={`${prefixCls} ${prefixCls}-${ActionType[props.type]}`}></i>

@@ -7,11 +7,11 @@ function App () {
   const images = [
     {
       src:
-        "https://infeng.github.io/react-images-viewer/59111ff2c38954887bc313887fe76e27.jpg"
+        "https://infeng.github.io/images-viewer-react/59111ff2c38954887bc313887fe76e27.jpg"
     },
     {
       src:
-        "https://infeng.github.io/react-images-viewer/bbbc41dac417d9fb4b275223a6a6d3e8.jpg"
+        "https://infeng.github.io/images-viewer-react/bbbc41dac417d9fb4b275223a6a6d3e8.jpg"
     }
   ];
 

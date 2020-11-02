@@ -620,7 +620,7 @@ export default (props: ViewerProps) => {
     }));
   }
 
-  const prefixCls = 'react-images-viewer';
+  const prefixCls = 'images-viewer-react';
 
   const className = classnames(`${prefixCls}`, `${prefixCls}-transition`, {
     [`${prefixCls}-inline`]: props.container,

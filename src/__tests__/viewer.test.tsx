@@ -226,50 +226,50 @@ describe('Viewer', () => {
     viewerHelper.new();
     viewerHelper.open();
 
-    expect($$('img.react-images-viewer-image')).toHaveLength(1);
+    expect($$('img.images-viewer-react-image')).toHaveLength(1);
 
-    $$('.react-images-viewer-close')[0].click();
+    $$('.images-viewer-react-close')[0].click();
 
     viewerHelper.skipAnimation();
 
-    wrapper.find('.react-images-viewer').simulate('transitionend');
+    wrapper.find('.images-viewer-react').simulate('transitionend');
 
-    expect($$('.react-images-viewer')[0].style.display).toBe('none');
+    expect($$('.images-viewer-react')[0].style.display).toBe('none');
   });
 
   it('render with no footer', () => {
     viewerHelper.new({ noFooter: true });
     viewerHelper.open();
 
-    expect($$('.react-images-viewer-footer')).toHaveLength(0);
+    expect($$('.images-viewer-react-footer')).toHaveLength(0);
   });
 
   it('render with no navbar', () => {
     viewerHelper.new({ noNavbar: true });
     viewerHelper.open();
 
-    expect($$('.react-images-viewer-navbar')).toHaveLength(0);
+    expect($$('.images-viewer-react-navbar')).toHaveLength(0);
   });
 
   it('render with no toolbar', () => {
     viewerHelper.new({ noToolbar: true });
     viewerHelper.open();
 
-    expect($$('.react-images-viewer-toolbar')).toHaveLength(0);
+    expect($$('.images-viewer-react-toolbar')).toHaveLength(0);
   });
 
   it('render with no attribute', () => {
     viewerHelper.new({ attribute: false });
     viewerHelper.open();
 
-    expect($$('.react-images-viewer-attribute')).toHaveLength(0);
+    expect($$('.images-viewer-react-attribute')).toHaveLength(0);
   });
 
   it('render with no img details', () => {
     viewerHelper.new({ noImgDetails: true });
     viewerHelper.open();
 
-    expect($$('.react-images-viewer-img-details')).toHaveLength(0);
+    expect($$('.images-viewer-react-img-details')).toHaveLength(0);
   });
 
   it('render with no zoom rotate scale change toolbar button', () => {
@@ -281,14 +281,14 @@ describe('Viewer', () => {
     });
     viewerHelper.open();
 
-    expect($$('.react-images-viewer-icon-zoomIn')).toHaveLength(0);
-    expect($$('.react-images-viewer-icon-zoomOut')).toHaveLength(0);
-    expect($$('.react-images-viewer-icon-rotateLeft')).toHaveLength(0);
-    expect($$('.react-images-viewer-icon-rotateRight')).toHaveLength(0);
-    expect($$('.react-images-viewer-icon-scaleX')).toHaveLength(0);
-    expect($$('.react-images-viewer-icon-scaleY')).toHaveLength(0);
-    expect($$('.react-images-viewer-icon-prev')).toHaveLength(0);
-    expect($$('.react-images-viewer-icon-next')).toHaveLength(0);
+    expect($$('.images-viewer-react-icon-zoomIn')).toHaveLength(0);
+    expect($$('.images-viewer-react-icon-zoomOut')).toHaveLength(0);
+    expect($$('.images-viewer-react-icon-rotateLeft')).toHaveLength(0);
+    expect($$('.images-viewer-react-icon-rotateRight')).toHaveLength(0);
+    expect($$('.images-viewer-react-icon-scaleX')).toHaveLength(0);
+    expect($$('.images-viewer-react-icon-scaleY')).toHaveLength(0);
+    expect($$('.images-viewer-react-icon-prev')).toHaveLength(0);
+    expect($$('.images-viewer-react-icon-next')).toHaveLength(0);
   });
 
   it('change active index success', () => {
@@ -298,7 +298,7 @@ describe('Viewer', () => {
     wrapper.find('#viewer-tester-change-btn').simulate('click');
     viewerHelper.skipAnimation();
 
-    expect($$('.react-images-viewer-attribute')[0].innerHTML).toContain('mountain');
+    expect($$('.images-viewer-react-attribute')[0].innerHTML).toContain('mountain');
   });
 
   it('custom toolbar', () => {
@@ -334,7 +334,7 @@ describe('Viewer', () => {
     });
     viewerHelper.open();
 
-    const canvas = $$('.react-images-viewer-canvas')[0];
+    const canvas = $$('.images-viewer-react-canvas')[0];
     triggerMouseEvent(canvas, 'mousedown');
 
     expect(handleMaskClick).toBeCalledWith(expect.anything());
@@ -344,11 +344,11 @@ describe('Viewer', () => {
     viewerHelper.new();
     viewerHelper.open();
 
-    let imgNode = $$('img.react-images-viewer-image')[0];
+    let imgNode = $$('img.images-viewer-react-image')[0];
 
     const oldTransform = imgNode.style.transform;
 
-    const canvas = $$('.react-images-viewer-canvas')[0];
+    const canvas = $$('.images-viewer-react-canvas')[0];
     triggerMouseEvent(canvas, 'mousedown');
 
     triggerMouseEvent(document, 'mousemove', 50, 50);
@@ -371,18 +371,18 @@ describe('Viewer', () => {
     $$('li[data-key=next]')[0].click();
     $$('li[data-key=next]')[0].click();
     viewerHelper.skipAnimation();
-    expect($$('.react-images-viewer-attribute')[0].innerHTML).toContain('lake');
+    expect($$('.images-viewer-react-attribute')[0].innerHTML).toContain('lake');
 
     $$('li[data-key=prev]')[0].click();
     viewerHelper.skipAnimation();
-    expect($$('.react-images-viewer-attribute')[0].innerHTML).toContain('mountain');
+    expect($$('.images-viewer-react-attribute')[0].innerHTML).toContain('mountain');
   });
 
   it('rotate image', () => {
     viewerHelper.new();
     viewerHelper.open();
 
-    let imgNode = $$('img.react-images-viewer-image')[0];
+    let imgNode = $$('img.images-viewer-react-image')[0];
 
     $$('li[data-key=rotateRight]')[0].click();
 
@@ -397,7 +397,7 @@ describe('Viewer', () => {
     viewerHelper.new();
     viewerHelper.open();
 
-    let imgNode = $$('img.react-images-viewer-image')[0];
+    let imgNode = $$('img.images-viewer-react-image')[0];
 
     $$('li[data-key=scaleX]')[0].click();
 
@@ -412,7 +412,7 @@ describe('Viewer', () => {
     viewerHelper.new();
     viewerHelper.open();
 
-    let imgNode = $$('img.react-images-viewer-image')[0];
+    let imgNode = $$('img.images-viewer-react-image')[0];
 
     $$('li[data-key=zoomIn]')[0].click();
 
@@ -427,9 +427,9 @@ describe('Viewer', () => {
     viewerHelper.new();
     viewerHelper.open();
 
-    let imgNode = $$('img.react-images-viewer-image')[0];
+    let imgNode = $$('img.images-viewer-react-image')[0];
 
-    const viewer = $$('.react-images-viewer')[0];
+    const viewer = $$('.images-viewer-react')[0];
 
     triggerWheel(viewer, 'wheel', -1);
 
@@ -450,9 +450,9 @@ describe('Viewer', () => {
     });
     viewerHelper.open();
 
-    let imgNode = $$('img.react-images-viewer-image')[0];
+    let imgNode = $$('img.images-viewer-react-image')[0];
 
-    const viewer = $$('.react-images-viewer')[0];
+    const viewer = $$('.images-viewer-react')[0];
 
     triggerWheel(viewer, 'wheel', -1);
 
@@ -465,11 +465,11 @@ describe('Viewer', () => {
     });
     viewerHelper.open();
 
-    let imgNode = $$('img.react-images-viewer-image')[0];
+    let imgNode = $$('img.images-viewer-react-image')[0];
 
     const oldTransform = imgNode.style.transform;
 
-    const canvas = $$('.react-images-viewer-canvas')[0];
+    const canvas = $$('.images-viewer-react-canvas')[0];
     triggerMouseEvent(canvas, 'mousedown');
 
     triggerMouseEvent(canvas, 'mousemove', 50, 50);
@@ -487,13 +487,13 @@ describe('Viewer', () => {
     viewerHelper.new({});
     viewerHelper.open();
 
-    const navList = $$('.react-images-viewer-list')[0];
+    const navList = $$('.images-viewer-react-list')[0];
 
     navList.children[1].click();
 
     viewerHelper.skipAnimation();
 
-    expect($$('.react-images-viewer-attribute')[0].innerHTML).toContain('mountain');
+    expect($$('.images-viewer-react-attribute')[0].innerHTML).toContain('mountain');
   });
 
   it('render witch container', () => {
@@ -505,21 +505,21 @@ describe('Viewer', () => {
 
     viewerHelper.skipAnimation();
 
-    expect(wrapper.find('.react-images-viewer-inline')).toHaveLength(1);
+    expect(wrapper.find('.images-viewer-react-inline')).toHaveLength(1);
   });
 
   it('reset image', () => {
     viewerHelper.new();
     viewerHelper.open();
 
-    let imgNode = $$('img.react-images-viewer-image')[0];
+    let imgNode = $$('img.images-viewer-react-image')[0];
 
     const oldTransformValue = getTransformValue(imgNode.style.transform);
 
     $$('li[data-key=zoomIn]')[0].click();
     $$('li[data-key=reset]')[0].click();
 
-    imgNode = $$('img.react-images-viewer-image')[0];
+    imgNode = $$('img.images-viewer-react-image')[0];
     const newTransformValue = getTransformValue(imgNode.style.transform);
 
     expect(oldTransformValue.scaleX - newTransformValue.scaleX).toBe(0);
@@ -541,21 +541,21 @@ describe('Viewer', () => {
     // close
     triggerKeyboard(document, 'keydown', 27);
     viewerHelper.skipAnimation();
-    wrapper.find('.react-images-viewer').simulate('transitionend');
-    expect($$('.react-images-viewer')[0].style.display).toBe('none');
+    wrapper.find('.images-viewer-react').simulate('transitionend');
+    expect($$('.images-viewer-react')[0].style.display).toBe('none');
     viewerHelper.open();
 
     // prev
     triggerKeyboard(document, 'keydown', 37);
     viewerHelper.skipAnimation();
-    expect($$('.react-images-viewer-attribute')[0].innerHTML).toContain('mountain');
+    expect($$('.images-viewer-react-attribute')[0].innerHTML).toContain('mountain');
 
     // next
     triggerKeyboard(document, 'keydown', 39);
     viewerHelper.skipAnimation();
-    expect($$('.react-images-viewer-attribute')[0].innerHTML).toContain('lake');
+    expect($$('.images-viewer-react-attribute')[0].innerHTML).toContain('lake');
 
-    let imgNode = $$('img.react-images-viewer-image')[0];
+    let imgNode = $$('img.images-viewer-react-image')[0];
 
     // zoomIn
     triggerKeyboard(document, 'keydown', 38);
@@ -581,7 +581,7 @@ describe('Viewer', () => {
     triggerKeyboard(document, 'keydown', 39, true);
     triggerKeyboard(document, 'keydown', 49, true);
     viewerHelper.skipAnimation();
-    imgNode = $$('img.react-images-viewer-image')[0];
+    imgNode = $$('img.images-viewer-react-image')[0];
     expect(getTransformValue(imgNode.style.transform).rotate).toBe('0');
   });
 
@@ -608,13 +608,13 @@ describe('Viewer', () => {
     });
     viewerHelper.open();
 
-    let imgNode = $$('img.react-images-viewer-image')[0];
+    let imgNode = $$('img.images-viewer-react-image')[0];
     expect(imgNode.style.width).toBe('100px');
     expect(imgNode.style.width).toBe('100px');
 
     $$('li[data-key=next]')[0].click();
     viewerHelper.skipAnimation();
-    imgNode = $$('img.react-images-viewer-image')[0];
+    imgNode = $$('img.images-viewer-react-image')[0];
     expect(imgNode.style.width).toBe('200px');
     expect(imgNode.style.width).toBe('200px');
   });
@@ -639,7 +639,7 @@ describe('Viewer', () => {
 
     viewerHelper.open();
 
-    const imgNode = $$('img.react-images-viewer-image')[0];
+    const imgNode = $$('img.images-viewer-react-image')[0];
     expect(imgNode.src).toBe(`http://localhost/${defaultImg}`);
     expect(imgNode.style.width).toBe('100px');
     expect(imgNode.style.width).toBe('100px');
@@ -663,7 +663,7 @@ describe('Viewer', () => {
 
     viewerHelper.open();
 
-    const imgNode = $$('img.react-images-viewer-image')[0];
+    const imgNode = $$('img.images-viewer-react-image')[0];
     expect(imgNode.style.width).toBe('100px');
     expect(getTransformValue(imgNode.style.transform).scaleX).toBe('0.5');
   });
@@ -687,7 +687,7 @@ describe('Viewer', () => {
     });
     viewerHelper.open();
 
-    let imgNode = $$('img.react-images-viewer-image')[0];
+    let imgNode = $$('img.images-viewer-react-image')[0];
     expect(imgNode.style.width).toBe('2000px');
     expect(imgNode.style.width).toBe('2000px');
   });
@@ -698,7 +698,7 @@ describe('Viewer', () => {
     });
     viewerHelper.open();
 
-    let imgNode = $$('img.react-images-viewer-image')[0];
+    let imgNode = $$('img.images-viewer-react-image')[0];
 
     $$('li[data-key=zoomIn]')[0].click();
     viewerHelper.skipAnimation();
@@ -706,7 +706,7 @@ describe('Viewer', () => {
 
     $$('li[data-key=next]')[0].click();
     viewerHelper.skipAnimation();
-    imgNode = $$('img.react-images-viewer-image')[0];
+    imgNode = $$('img.images-viewer-react-image')[0];
     expect(getTransformValue(imgNode.style.transform).scaleX).toBe('1.05');
   });
 
@@ -735,55 +735,55 @@ describe('Viewer', () => {
     $$('li[data-key=next]')[0].click();
     $$('li[data-key=next]')[0].click();
     viewerHelper.skipAnimation();
-    expect($$('.react-images-viewer-attribute')[0].innerHTML).toContain('mountain');
+    expect($$('.images-viewer-react-attribute')[0].innerHTML).toContain('mountain');
 
     $$('li[data-key=prev]')[0].click();
     $$('li[data-key=prev]')[0].click();
     viewerHelper.skipAnimation();
-    expect($$('.react-images-viewer-attribute')[0].innerHTML).toContain('lake');
+    expect($$('.images-viewer-react-attribute')[0].innerHTML).toContain('lake');
 
     // next
     triggerKeyboard(document, 'keydown', 39);
     triggerKeyboard(document, 'keydown', 39);
     viewerHelper.skipAnimation();
-    expect($$('.react-images-viewer-attribute')[0].innerHTML).toContain('mountain');
+    expect($$('.images-viewer-react-attribute')[0].innerHTML).toContain('mountain');
 
     // prev
     triggerKeyboard(document, 'keydown', 37);
     triggerKeyboard(document, 'keydown', 37);
     viewerHelper.skipAnimation();
-    expect($$('.react-images-viewer-attribute')[0].innerHTML).toContain('lake');
+    expect($$('.images-viewer-react-attribute')[0].innerHTML).toContain('lake');
   });
 
   it('customized CSS class', () => {
     viewerHelper.new({
-      className: 'my-react-images-viewer',
+      className: 'my-images-viewer-react',
     });
     viewerHelper.open();
 
-    expect($$('.my-react-images-viewer')).toHaveLength(1);
+    expect($$('.my-images-viewer-react')).toHaveLength(1);
   });
 
   it('showTotal', () => {
     viewerHelper.new({
-      className: 'my-react-images-viewer',
+      className: 'my-images-viewer-react',
     });
     viewerHelper.open();
 
-    expect($$('.react-images-viewer-showTotal')[0].innerHTML).toBe('1 of 2');
+    expect($$('.images-viewer-react-showTotal')[0].innerHTML).toBe('1 of 2');
     triggerKeyboard(document, 'keydown', 39);
-    expect($$('.react-images-viewer-showTotal')[0].innerHTML).toBe('2 of 2');
+    expect($$('.images-viewer-react-showTotal')[0].innerHTML).toBe('2 of 2');
   });
 
   it('max scale and min scale', () => {
     viewerHelper.new({
-      className: 'my-react-images-viewer',
+      className: 'my-images-viewer-react',
       maxScale: 1.06,
       minScale: 0.88,
     });
     viewerHelper.open();
 
-    let imgNode = $$('img.react-images-viewer-image')[0];
+    let imgNode = $$('img.images-viewer-react-image')[0];
 
     $$('li[data-key=zoomIn]')[0].click();
     $$('li[data-key=zoomIn]')[0].click();
@@ -810,9 +810,9 @@ describe('Viewer', () => {
     });
 
     viewerHelper.open();
-    expect($$('.react-images-viewer-img-details')[0].innerHTML).toBe('(100 x 100)');
+    expect($$('.images-viewer-react-img-details')[0].innerHTML).toBe('(100 x 100)');
     setGetImageSize(() => 200);
     wrapper.find('#viewer-tester-change-images-btn').simulate('click');
-    expect($$('.react-images-viewer-img-details')[0].innerHTML).toBe('(200 x 200)');
+    expect($$('.images-viewer-react-img-details')[0].innerHTML).toBe('(200 x 200)');
   });
 });

@@ -8,7 +8,7 @@ const img2 = require('../../demo/images/image2.jpg');
 configure({ adapter: new Adapter() });
 
 it('renders <ViewerNav /> components', () => {
-  const prefixCls = 'react-images-viewer';
+  const prefixCls = 'images-viewer-react';
   const  images = [{
       src: img1,
       alt: 'lake',

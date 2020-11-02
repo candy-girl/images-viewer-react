@@ -1,4 +1,4 @@
-# react-images-viewer
+# images-viewer-react
 
 [![NPM version][npm-image]][npm-url]
 
@@ -6,21 +6,21 @@
 
 ## Introduction
 
-Because I can`t be comfortable using [viewerjs](https://github.com/fengyuanchen/viewerjs) in react, so I created react-images-viewer to replace it.
+Because I can`t be comfortable using [viewerjs](https://github.com/fengyuanchen/viewerjs) in react, so I created images-viewer-react to replace it.
 
 ## Installation
 
 > react >= 16.8.0 | react-dom >= 16.8.0
 
 ```bash
-npm install react-images-viewer --save
+npm install images-viewer-react --save
 ```
 
 ## Usage
 
 ```javascript
 import * as React from "react";
-import Viewer from "react-images-viewer";
+import Viewer from "images-viewer-react";
 
 function App() {
   const [visible, setVisible] = React.useState(false);
@@ -133,5 +133,5 @@ function App() {
 
 MIT
 
-[npm-image]: https://badge.fury.io/js/react-images-viewer.svg
-[npm-url]: https://npmjs.org/package/react-images-viewer
+[npm-image]: https://badge.fury.io/js/images-viewer-react.svg
+[npm-url]: https://npmjs.org/package/images-viewer-react
