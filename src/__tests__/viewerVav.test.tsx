@@ -7,7 +7,7 @@ const img2 = require('../../demo/images/image2.jpg');
 
 configure({ adapter: new Adapter() });
 
-it('renders <ViewerNav /> components less than 3 image', () => {
+it('renders <ViewerNav /> components', () => {
   const prefixCls = 'react-images-viewer';
   const  images = [{
       src: img1,
