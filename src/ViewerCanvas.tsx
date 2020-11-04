@@ -1,6 +1,8 @@
 import * as React from 'react';
 import Loading from './Loading';
 import classnames from 'classnames';
+import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
+import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 
 export interface ViewerCanvasProps {
   prefixCls: string;
@@ -173,12 +175,34 @@ translateX(${props.left !== null ? props.left + 'px' : 'aoto'}) translateY(${pro
     );
   }
 
+  const [numPages, setNumPages] = React.useState(0);
+
+  const onDocumentLoadSuccess = ({ numPages }) => {
+    setNumPages(numPages);
+  };
+
   return (
     <div
     className={`${props.prefixCls}-canvas`}
     onMouseDown={handleCanvasMouseDown}
     style={style}
     >
+      <Document
+        file="../demo/images/test.pdf"
+        onLoadSuccess={onDocumentLoadSuccess}
+      >
+        {
+          Array.from(
+            new Array(numPages),
+            (el, index) => (
+              <Page
+                key={`page_${index + 1}`}
+                pageNumber={index + 1}
+              />
+            ),
+          )
+        }
+      </Document>
       {imgNode}
     </div>
   );
