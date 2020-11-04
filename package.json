@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/candy-girl/react-images-viewer.git"
+    "url": "git+https://github.com/candy-girl/images-viewer-react.git"
   },
   "keywords": [
     "react",
@@ -27,14 +27,14 @@
   "author": "candy-girl",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/candy-girl/react-images-viewer/issues"
+    "url": "https://github.com/candy-girl/images-viewer-react/issues"
   },
   "files": [
     "dist",
     "lib"
   ],
   "typings": "lib/index.d.ts",
-  "homepage": "https://github.com/candy-girl/react-images-viewer#readme",
+  "homepage": "https://github.com/candy-girl/images-viewer-react/#readme",
   "devDependencies": {
     "@babel/core": "^7.6.4",
     "@babel/plugin-proposal-object-rest-spread": "^7.6.2",

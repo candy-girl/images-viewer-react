@@ -182,16 +182,16 @@ class App extends React.Component<any, Partial<State>> {
         <nav className="navbar">
           <div className="container-fluid">
             <div className="navbar-brand">
-              react-images-viewer
+              images-viewer-react
             </div>
-            <a className="bagde" href="https://npmjs.org/package/react-images-viewer">
+            <a className="bagde" href="https://npmjs.org/package/images-viewer-react">
               <img src="https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=3.0.0&x2=0" />
             </a>
 
             <div className="github">
-              <a className="bagde" href="https://github.com/candy-girl/react-images-viewer">
+              <a className="bagde" href="https://github.com/candy-girl/images-viewer-react">
                 <img
-                src="https://img.shields.io/github/stars/candy-girl/react-images-viewer?style=social"
+                src="https://img.shields.io/github/stars/candy-girl/images-viewer-react?style=social"
                 />
               </a>
             </div>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1604286722591" clover="3.2.0">
-  <project timestamp="1604286722591" name="All files">
+<coverage generated="1604312088517" clover="3.2.0">
+  <project timestamp="1604312088517" name="All files">
     <metrics statements="469" coveredstatements="437" conditionals="310" coveredconditionals="259" methods="77" coveredmethods="75" elements="856" coveredelements="771" complexity="0" loc="469" ncloc="469" packages="1" files="9" classes="9"/>
-    <file name="Icon.tsx" path="/Users/zengxiaobai/projects/nuonuo/react-images-viewer/src/Icon.tsx">
+    <file name="Icon.tsx" path="/Users/zengxiaobai/projects/nuonuo/react-images-preview/src/Icon.tsx">
       <metrics statements="16" coveredstatements="16" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
       <line num="1" count="1" type="stmt"/>
       <line num="3" count="1" type="cond" truecount="2" falsecount="0"/>
@@ -21,14 +21,14 @@
       <line num="22" count="1610" type="stmt"/>
       <line num="24" count="1610" type="stmt"/>
     </file>
-    <file name="Loading.tsx" path="/Users/zengxiaobai/projects/nuonuo/react-images-viewer/src/Loading.tsx">
+    <file name="Loading.tsx" path="/Users/zengxiaobai/projects/nuonuo/react-images-preview/src/Loading.tsx">
       <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
       <line num="1" count="1" type="stmt"/>
       <line num="7" count="1" type="stmt"/>
       <line num="8" count="1" type="stmt"/>
       <line num="9" count="1" type="stmt"/>
     </file>
-    <file name="Viewer.tsx" path="/Users/zengxiaobai/projects/nuonuo/react-images-viewer/src/Viewer.tsx">
+    <file name="Viewer.tsx" path="/Users/zengxiaobai/projects/nuonuo/react-images-preview/src/Viewer.tsx">
       <metrics statements="19" coveredstatements="19" conditionals="10" coveredconditionals="9" methods="4" coveredmethods="4"/>
       <line num="1" count="1" type="stmt"/>
       <line num="2" count="1" type="stmt"/>
@@ -50,7 +50,7 @@
       <line num="30" count="102" type="stmt"/>
       <line num="32" count="39" type="stmt"/>
     </file>
-    <file name="ViewerCanvas.tsx" path="/Users/zengxiaobai/projects/nuonuo/react-images-viewer/src/ViewerCanvas.tsx">
+    <file name="ViewerCanvas.tsx" path="/Users/zengxiaobai/projects/nuonuo/react-images-preview/src/ViewerCanvas.tsx">
       <metrics statements="60" coveredstatements="58" conditionals="26" coveredconditionals="24" methods="15" coveredmethods="14"/>
       <line num="1" count="1" type="stmt"/>
       <line num="2" count="1" type="stmt"/>
@@ -113,7 +113,7 @@
       <line num="162" count="1" type="stmt"/>
       <line num="176" count="169" type="stmt"/>
     </file>
-    <file name="ViewerCore.tsx" path="/Users/zengxiaobai/projects/nuonuo/react-images-viewer/src/ViewerCore.tsx">
+    <file name="ViewerCore.tsx" path="/Users/zengxiaobai/projects/nuonuo/react-images-preview/src/ViewerCore.tsx">
       <metrics statements="311" coveredstatements="281" conditionals="234" coveredconditionals="189" methods="39" coveredmethods="38"/>
       <line num="1" count="1" type="stmt"/>
       <line num="2" count="1" type="stmt"/>
@@ -427,7 +427,7 @@
       <line num="650" count="2" type="stmt"/>
       <line num="662" count="1" type="stmt"/>
     </file>
-    <file name="ViewerNav.tsx" path="/Users/zengxiaobai/projects/nuonuo/react-images-viewer/src/ViewerNav.tsx">
+    <file name="ViewerNav.tsx" path="/Users/zengxiaobai/projects/nuonuo/react-images-preview/src/ViewerNav.tsx">
       <metrics statements="27" coveredstatements="27" conditionals="16" coveredconditionals="13" methods="9" coveredmethods="9"/>
       <line num="1" count="2" type="stmt"/>
       <line num="12" count="2" type="stmt"/>
@@ -457,7 +457,7 @@
       <line num="66" count="2" type="stmt"/>
       <line num="75" count="2" type="cond" truecount="2" falsecount="0"/>
     </file>
-    <file name="ViewerToolbar.tsx" path="/Users/zengxiaobai/projects/nuonuo/react-images-viewer/src/ViewerToolbar.tsx">
+    <file name="ViewerToolbar.tsx" path="/Users/zengxiaobai/projects/nuonuo/react-images-preview/src/ViewerToolbar.tsx">
       <metrics statements="28" coveredstatements="28" conditionals="22" coveredconditionals="22" methods="7" coveredmethods="7"/>
       <line num="1" count="1" type="stmt"/>
       <line num="2" count="1" type="stmt"/>
@@ -488,12 +488,12 @@
       <line num="125" count="162" type="stmt"/>
       <line num="130" count="1445" type="stmt"/>
     </file>
-    <file name="constants.ts" path="/Users/zengxiaobai/projects/nuonuo/react-images-viewer/src/constants.ts">
+    <file name="constants.ts" path="/Users/zengxiaobai/projects/nuonuo/react-images-preview/src/constants.ts">
       <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <line num="1" count="1" type="stmt"/>
       <line num="4" count="1" type="stmt"/>
     </file>
-    <file name="index.tsx" path="/Users/zengxiaobai/projects/nuonuo/react-images-viewer/src/index.tsx">
+    <file name="index.tsx" path="/Users/zengxiaobai/projects/nuonuo/react-images-preview/src/index.tsx">
       <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <line num="1" count="1" type="stmt"/>
       <line num="3" count="1" type="stmt"/>
