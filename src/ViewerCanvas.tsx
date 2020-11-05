@@ -152,10 +152,10 @@ translateX(${props.left !== null ? props.left + 'px' : 'aoto'}) translateY(${pro
   };
 
   let imgNode = null;
-  const [numPages, setNumPages] = React.useState(1);
+  const [totalPages, settotalPages] = React.useState(1);
 
-  const onDocumentLoadSuccess = ({ totalPages }) => {
-    setNumPages(totalPages);
+  const onDocumentLoadSuccess = ({ numPages }) => {
+    settotalPages(numPages);
   };
   if (props.imgSrc !== '') {
     props.imgSrc.endsWith('.pdf') ? imgNode = <Document
@@ -165,7 +165,7 @@ translateX(${props.left !== null ? props.left + 'px' : 'aoto'}) translateY(${pro
       onLoadSuccess={onDocumentLoadSuccess}
     >
     {
-      new Array(numPages).fill('').map((item, index) => {
+      new Array(totalPages).fill('').map((item, index) => {
         return <Page key={index} pageNumber={index + 1} style={{display: 'none'}} />;
       })
     }
