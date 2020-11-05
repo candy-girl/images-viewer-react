@@ -464,17 +464,20 @@ export default (props: ViewerProps) => {
   function bindEvent(remove: boolean = false) {
     let funcName = 'addEventListener';
     if (remove) {
-      funcName = 'removeEventListener';
+      console.log(6666)
+      // funcName = 'removeEventListener';
     }
     if (!disableKeyboardSupport) {
-      document[funcName]('keydown', handleKeydown, true);
+      console.log(5555)
+      // document[funcName]('keydown', handleKeydown, true);
     }
     if (viewerCore.current) {
-      viewerCore.current[funcName](
-        'wheel',
-        handleMouseScroll,
-        false,
-      );
+      console.log(4444)
+      // viewerCore.current[funcName](
+      //   'wheel',
+      //   handleMouseScroll,
+      //   false,
+      // );
     }
   }
 

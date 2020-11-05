@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import Viewer from '../src/Viewer';
+const img = require('./images/test.pdf')
 const img1 = require('./images/image1.jpg');
 const img2 = require('./images/image2.jpg');
 const img3 = require('./images/image3.jpg');
@@ -137,6 +138,10 @@ class App extends React.Component<any, Partial<State>> {
 
   render() {
     let images = [{
+      src: img,
+      alt: 'pdf',
+      downloadUrl: '',
+    }, {
       src: img1,
       alt: 'lake',
       downloadUrl: '',

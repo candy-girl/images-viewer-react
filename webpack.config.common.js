@@ -84,6 +84,28 @@ config.module
         sourceMap: false,
         javascriptEnabled: true,
       });
+config.module
+  .rule('css')
+  .test(/\.css$/)
+  .use('style-loader')
+    .loader('style-loader')
+    .end()
+  .use('css-loader')
+    .loader('css-loader')
+    .options({
+      sourceMap: false,
+    })
+    .end()
+  .use('postcss-loader')
+    .loader('postcss-loader')
+    .options({
+      plugins: () => [
+        autoprefixer({
+          overrideBrowserslist: DEFAULT_BROWSERS,
+          flexbox: 'no-2009',
+        }),
+      ],
+    });
 
 config.module
   .rule('eot')
@@ -127,7 +149,7 @@ config.module
 
 config.module
   .rule('image')
-    .test(/\.(jpg|png)$/)
+    .test(/\.(jpg|png|pdf)$/)
     .use('file-loader')
       .loader('file-loader');
 
