@@ -6,7 +6,7 @@
 
 ## Introduction
 
-Because I can`t be comfortable using [viewerjs](https://github.com/fengyuanchen/viewerjs) in react, so I created images-viewer-react to replace it.
+Because I can`t be comfortable using [viewerjs](https://github.com/fengyuanchen/viewerjs) in react, so I created images-viewer-react to replace it. it supports images and PDF
 
 ## Installation
 

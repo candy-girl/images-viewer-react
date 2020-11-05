@@ -67,7 +67,7 @@ export default (props: ViewerProps) => {
     noLimitInitializationSize = false,
     defaultScale = 1,
     loop = true,
-    disableMouseZoom = false,
+    // disableMouseZoom = false,
     downloadable = false,
     noImgDetails = false,
     noToolbar = false,
@@ -462,7 +462,7 @@ export default (props: ViewerProps) => {
   }
 
   function bindEvent(remove: boolean = false) {
-    let funcName = 'addEventListener';
+    // let funcName = 'addEventListener';
     if (remove) {
       // console.log(6666)
       // funcName = 'removeEventListener';
@@ -481,85 +481,85 @@ export default (props: ViewerProps) => {
     }
   }
 
-  function handleKeydown(e) {
-    let keyCode = e.keyCode || e.which || e.charCode;
-    let isFeatrue = false;
-    switch (keyCode) {
-      // key: esc
-      case 27:
-        onClose();
-        isFeatrue = true;
-        break;
-      // key: ←
-      case 37:
-        if (e.ctrlKey) {
-          handleDefaultAction(ActionType.rotateLeft);
-        } else {
-          handleDefaultAction(ActionType.prev);
-        }
-        isFeatrue = true;
-        break;
-      // key: →
-      case 39:
-        if (e.ctrlKey) {
-          handleDefaultAction(ActionType.rotateRight);
-        } else {
-          handleDefaultAction(ActionType.next);
-        }
-        isFeatrue = true;
-        break;
-      // key: ↑
-      case 38:
-        handleDefaultAction(ActionType.zoomIn);
-        isFeatrue = true;
-        break;
-      // key: ↓
-      case 40:
-        handleDefaultAction(ActionType.zoomOut);
-        isFeatrue = true;
-        break;
-      // key: Ctrl + 1
-      case 49:
-        if (e.ctrlKey) {
-          loadImg(state.activeIndex);
-          isFeatrue = true;
-        }
-        break;
-      default:
-        break;
-    }
-    if (isFeatrue) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-  }
+  // function handleKeydown(e) {
+  //   let keyCode = e.keyCode || e.which || e.charCode;
+  //   let isFeatrue = false;
+  //   switch (keyCode) {
+  //     // key: esc
+  //     case 27:
+  //       onClose();
+  //       isFeatrue = true;
+  //       break;
+  //     // key: ←
+  //     case 37:
+  //       if (e.ctrlKey) {
+  //         handleDefaultAction(ActionType.rotateLeft);
+  //       } else {
+  //         handleDefaultAction(ActionType.prev);
+  //       }
+  //       isFeatrue = true;
+  //       break;
+  //     // key: →
+  //     case 39:
+  //       if (e.ctrlKey) {
+  //         handleDefaultAction(ActionType.rotateRight);
+  //       } else {
+  //         handleDefaultAction(ActionType.next);
+  //       }
+  //       isFeatrue = true;
+  //       break;
+  //     // key: ↑
+  //     case 38:
+  //       handleDefaultAction(ActionType.zoomIn);
+  //       isFeatrue = true;
+  //       break;
+  //     // key: ↓
+  //     case 40:
+  //       handleDefaultAction(ActionType.zoomOut);
+  //       isFeatrue = true;
+  //       break;
+  //     // key: Ctrl + 1
+  //     case 49:
+  //       if (e.ctrlKey) {
+  //         loadImg(state.activeIndex);
+  //         isFeatrue = true;
+  //       }
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  //   if (isFeatrue) {
+  //     e.preventDefault();
+  //     e.stopPropagation();
+  //   }
+  // }
 
-  function handleMouseScroll(e) {
-    if (disableMouseZoom) {
-      return;
-    }
-    if (state.loading) {
-      return;
-    }
-    e.preventDefault();
-    let direct: 0 | 1 | -1 = 0;
-    const value = e.deltaY;
-    if (value === 0) {
-      direct = 0;
-    } else {
-      direct = value > 0 ? -1 : 1;
-    }
-    if (direct !== 0) {
-      let x = e.clientX;
-      let y = e.clientY;
-      if (props.container) {
-        const containerRect = props.container.getBoundingClientRect();
-        x -= containerRect.left;
-        y -= containerRect.top;
-      }
-      handleZoom(x, y, direct, zoomSpeed);
-    }
-  }
+  // function handleMouseScroll(e) {
+  //   if (disableMouseZoom) {
+  //     return;
+  //   }
+  //   if (state.loading) {
+  //     return;
+  //   }
+  //   e.preventDefault();
+  //   let direct: 0 | 1 | -1 = 0;
+  //   const value = e.deltaY;
+  //   if (value === 0) {
+  //     direct = 0;
+  //   } else {
+  //     direct = value > 0 ? -1 : 1;
+  //   }
+  //   if (direct !== 0) {
+  //     let x = e.clientX;
+  //     let y = e.clientY;
+  //     if (props.container) {
+  //       const containerRect = props.container.getBoundingClientRect();
+  //       x -= containerRect.left;
+  //       y -= containerRect.top;
+  //     }
+  //     handleZoom(x, y, direct, zoomSpeed);
+  //   }
+  // }
 
   function getImageCenterXY() {
     return {
