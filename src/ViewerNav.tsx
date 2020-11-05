@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { ImageDecorator } from './ViewerProps';
+const PDF = require('./pdf.png');
 
 export interface ViewerNavProps {
   prefixCls: string;
@@ -65,7 +66,7 @@ export default function ViewerNav(props: ViewerNavProps) {
           style={liStyle}
           onClick={() => { handleChangeImg(index); }}
           >
-            <img src={item.src} alt={item.alt} style={{width: navImgWidth}}/>
+            <img src={item.src.endsWith('.pdf') ? PDF : item.src} alt={item.alt} style={{width: navImgWidth}}/>
           </li>,
           )
         }

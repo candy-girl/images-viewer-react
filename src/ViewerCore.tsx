@@ -464,15 +464,15 @@ export default (props: ViewerProps) => {
   function bindEvent(remove: boolean = false) {
     let funcName = 'addEventListener';
     if (remove) {
-      console.log(6666)
+      // console.log(6666)
       // funcName = 'removeEventListener';
     }
     if (!disableKeyboardSupport) {
-      console.log(5555)
+      // console.log(5555)
       // document[funcName]('keydown', handleKeydown, true);
     }
     if (viewerCore.current) {
-      console.log(4444)
+      // console.log(4444)
       // viewerCore.current[funcName](
       //   'wheel',
       //   handleMouseScroll,

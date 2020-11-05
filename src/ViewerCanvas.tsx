@@ -83,9 +83,8 @@ export default function ViewerCanvas(props: ViewerCanvasProps) {
   }
 
   function handleCanvasMouseDown(e) {
-    console.log(333,e)
-    // props.onCanvasMouseDown(e);
-    // handleMouseDown(e);
+    props.onCanvasMouseDown(e);
+    handleMouseDown(e);
   }
 
   function handleMouseDown(e) {
@@ -155,30 +154,27 @@ translateX(${props.left !== null ? props.left + 'px' : 'aoto'}) translateY(${pro
   let imgNode = null;
   const [numPages, setNumPages] = React.useState(1);
 
-  const onDocumentLoadSuccess = ({ numPages }) => {
-    setNumPages(numPages);
+  const onDocumentLoadSuccess = ({ totalPages }) => {
+    setNumPages(totalPages);
   };
-  
   if (props.imgSrc !== '') {
-    console.log(111, props.imgSrc)
-    props.imgSrc.endsWith('.pdf') ? 
-    imgNode = <Document
+    props.imgSrc.endsWith('.pdf') ? imgNode = <Document
       className={imgClass}
       file={props.imgSrc}
+      style={imgStyle}
       onLoadSuccess={onDocumentLoadSuccess}
     >
     {
       new Array(numPages).fill('').map((item, index) => {
-        return <Page key={index} pageNumber={index+1} />
+        return <Page key={index} pageNumber={index + 1} style={{display: 'none'}} />;
       })
     }
-    </Document> : 
-    imgNode = <img
-    className={imgClass}
-    src={props.imgSrc}
-    style={imgStyle}
-    onMouseDown={handleMouseDown}
-    />
+    </Document> : imgNode = <img
+      className={imgClass}
+      src={props.imgSrc}
+      style={imgStyle}
+      onMouseDown={handleMouseDown}
+    />;
   }
   if (props.loading) {
     imgNode = (

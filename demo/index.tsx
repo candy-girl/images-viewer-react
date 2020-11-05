@@ -1,7 +1,8 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import Viewer from '../src/Viewer';
-const img = require('./images/test.pdf')
+const PDF = require('./images/pdf.png')
+const img = require('./images/image.pdf')
 const img1 = require('./images/image1.jpg');
 const img2 = require('./images/image2.jpg');
 const img3 = require('./images/image3.jpg');
@@ -255,7 +256,7 @@ class App extends React.Component<any, Partial<State>> {
                 {images.map((item, index) => {
                   return (
                     <div key={index.toString()} className="img-item">
-                      <img src={item.src} onClick={() => {
+                      <img src={item.src?.endsWith('.pdf') ? PDF : item.src} onClick={() => {
                         this.setState({
                           visible: true,
                           activeIndex: index,
@@ -269,7 +270,7 @@ class App extends React.Component<any, Partial<State>> {
             </div>
           </div>
           <Viewer
-          visible={this.state.visible}
+            visible={this.state.visible}
             onClose={() => {
               this.setState({ visible: false });
             }}

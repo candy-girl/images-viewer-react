@@ -177,6 +177,7 @@
     cursor: pointer;
     overflow: hidden;
     margin: 0 5px;
+    border: 1px solid #f1f1f1;
   }
 
   &-list > li > img {
@@ -184,6 +185,7 @@
     height: @viewer-list-item-height;
     margin-left: @viewer-list-item-img-marginLeft;
     opacity: 0.5;
+    background-color: #fff;
   }
 
   &-list > li.active > img {
@@ -324,4 +326,22 @@
       margin: 0 auto;
     }
   }
+}
+.images-viewer-react-canvas {
+  // height: 200px;
+  overflow: auto !important;
+  background: #ccc;
+}
+.images-viewer-react-attribute {
+  display: none;
+}
+.react-pdf__Document {
+  width: calc(100% - 10px);
+  height: calc(100% - 100px);
+  overflow: auto;
+  border: 1px solid #f1f1f1;
+  margin: 5px auto;
+}
+.react-pdf__Page__canvas {
+  margin: 0 auto;
 }
