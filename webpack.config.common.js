@@ -150,8 +150,11 @@ config.module
 config.module
   .rule('image')
     .test(/\.(jpg|png|pdf)$/)
-    .use('file-loader')
-      .loader('file-loader');
+    .use('url-loader')
+      .loader('url-loader')
+      .options({
+        limit: 10000,
+      });
 
 config.resolve
   .extensions.merge([ '.tsx', '.ts', '.js' ])

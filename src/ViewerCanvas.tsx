@@ -1,8 +1,8 @@
 import * as React from 'react';
 import Loading from './Loading';
 import classnames from 'classnames';
-import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
-import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
+import { Document, Page } from 'react-pdf/dist/umd/entry.webpack';
+import 'react-pdf/dist/umd/Page/AnnotationLayer.css';
 
 export interface ViewerCanvasProps {
   prefixCls: string;
