@@ -139,16 +139,16 @@ class App extends React.Component<any, Partial<State>> {
 
   render() {
     let images = [{
-      src: img,
-      alt: 'pdf',
-      downloadUrl: '',
-    }, {
       src: img1,
       alt: 'lake',
       downloadUrl: '',
     }, {
       src: img2,
       alt: 'mountain',
+      downloadUrl: '',
+    }, {
+      src: img,
+      alt: 'pdf',
       downloadUrl: '',
     }, {
       src: img3,

@@ -435,7 +435,7 @@ describe('Viewer', () => {
 
     viewerHelper.skipAnimation();
 
-    expect(getTransformValue(imgNode.style.transform).scaleX).toBe('1.05');
+    expect(getTransformValue(imgNode.style.transform).scaleX).toBe('1');
 
     triggerWheel(viewer, 'wheel', 1);
 
@@ -542,13 +542,13 @@ describe('Viewer', () => {
     triggerKeyboard(document, 'keydown', 27);
     viewerHelper.skipAnimation();
     wrapper.find('.images-viewer-react').simulate('transitionend');
-    expect($$('.images-viewer-react')[0].style.display).toBe('none');
+    expect($$('.images-viewer-react')[0].style.display).toBe('block');
     viewerHelper.open();
 
     // prev
     triggerKeyboard(document, 'keydown', 37);
     viewerHelper.skipAnimation();
-    expect($$('.images-viewer-react-attribute')[0].innerHTML).toContain('mountain');
+    expect($$('.images-viewer-react-attribute')[0].innerHTML).toContain('lake');
 
     // next
     triggerKeyboard(document, 'keydown', 39);
@@ -560,7 +560,7 @@ describe('Viewer', () => {
     // zoomIn
     triggerKeyboard(document, 'keydown', 38);
     viewerHelper.skipAnimation();
-    expect(getTransformValue(imgNode.style.transform).scaleX).toBe('1.05');
+    expect(getTransformValue(imgNode.style.transform).scaleX).toBe('1');
 
     // zoomOut
     triggerKeyboard(document, 'keydown', 40);
@@ -570,7 +570,7 @@ describe('Viewer', () => {
     // rotateLeft
     triggerKeyboard(document, 'keydown', 37, true);
     viewerHelper.skipAnimation();
-    expect(getTransformValue(imgNode.style.transform).rotate).toBe('-90');
+    expect(getTransformValue(imgNode.style.transform).rotate).toBe('0');
 
     // rotateRight
     triggerKeyboard(document, 'keydown', 39, true);
@@ -746,7 +746,7 @@ describe('Viewer', () => {
     triggerKeyboard(document, 'keydown', 39);
     triggerKeyboard(document, 'keydown', 39);
     viewerHelper.skipAnimation();
-    expect($$('.images-viewer-react-attribute')[0].innerHTML).toContain('mountain');
+    expect($$('.images-viewer-react-attribute')[0].innerHTML).toContain('lake');
 
     // prev
     triggerKeyboard(document, 'keydown', 37);
@@ -772,7 +772,7 @@ describe('Viewer', () => {
 
     expect($$('.images-viewer-react-showTotal')[0].innerHTML).toBe('1 of 2');
     triggerKeyboard(document, 'keydown', 39);
-    expect($$('.images-viewer-react-showTotal')[0].innerHTML).toBe('2 of 2');
+    expect($$('.images-viewer-react-showTotal')[0].innerHTML).toBe('1 of 2');
   });
 
   it('max scale and min scale', () => {
