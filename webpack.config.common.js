@@ -51,6 +51,14 @@ config.module
       configFile: path.join(__dirname, 'tsconfig.json'),
       // transpileOnly: true,
     });
+config.module
+  .rule('worker')
+    .test(/\.worker\.(.*)\.js$/)
+    .use('worker-loader')
+      .loader('worker-loader')
+      .options({
+        inline: 'no-fallback'
+      })
 
 config.module
   .rule('less')
