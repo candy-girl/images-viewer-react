@@ -1,8 +1,11 @@
 import * as React from 'react';
 import Loading from './Loading';
 import classnames from 'classnames';
-import { Document, Page } from 'react-pdf';
+import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/umd/Page/AnnotationLayer.css';
+import PdfjsWorker from './pdf.worker.entry';
+
+pdfjs.GlobalWorkerOptions.workerPort = new PdfjsWorker();
 
 export interface ViewerCanvasProps {
   prefixCls: string;
