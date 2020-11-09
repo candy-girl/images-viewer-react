@@ -141,7 +141,7 @@ class App extends React.Component<any, Partial<State>> {
     let images = [{
       src: img1,
       alt: 'lake',
-      downloadUrl: '',
+      downloadUrl: 'https://infeng.github.io/react-viewer/59111ff2c38954887bc313887fe76e27.jpg',
     }, {
       src: img2,
       alt: 'mountain',
@@ -274,11 +274,13 @@ class App extends React.Component<any, Partial<State>> {
             onClose={() => {
               this.setState({ visible: false });
             }}
+            downloadInNewWindow={true}
             images={images}
             navImgWidth={100}
             activeIndex={this.state.activeIndex}
             container={inline ? this.container : null}
-            downloadable
+            downloadable={true}
+            onChange={(activeImage, index) => console.log(111,activeImage, index)}
             customToolbar={(toolbars) => {
               return toolbars.concat([{
                 key: 'test',
