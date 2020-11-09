@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Loading from './Loading';
 import classnames from 'classnames';
-import { Document, Page } from 'react-pdf/dist/umd/entry.webpack';
+import { Document, Page } from 'react-pdf';
 import 'react-pdf/dist/umd/Page/AnnotationLayer.css';
 
 export interface ViewerCanvasProps {
