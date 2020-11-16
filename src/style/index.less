@@ -158,7 +158,7 @@
   }
 
   @viewer-list-item-width: 100px;
-  @viewer-list-item-height: 50px;
+  @viewer-list-item-height: 80px;
   @viewer-list-item-img-width: @viewer-list-item-width;
   @viewer-list-item-img-marginLeft: -(
       @viewer-list-item-img-width - @viewer-list-item-width
@@ -291,32 +291,27 @@
 }
 .divContainer {
   position: relative;
-  height: 50px;
+  // height: 50px;
+  height: 140px;
+  padding: 25px 0;
   align-items: center;
   display: flex;
-  a {
-    width: 80px;
-    z-index: 1200;
-    cursor: pointer;
-    color: #1890ff;
-    font-size: 12px;
-  }
   .preButton {
-    width: 80px;
+    display: block;
+    width: 40px;
     float: left;
-    // position: absolute;
-    // left: 0;
+    cursor: pointer;
   }
   .nextButton {
-    width: 80px;
+    display: block;
+    width: 40px;
     float: right;
-    // position: absolute;
-    // right: 0;
+    cursor: pointer;
   }
   .ulContainer {
     position: relative;
     width: calc(100% - 160px);
-    height: 50px;
+    height: 80px;
     overflow: hidden;
     margin-left: 80px;
     ul {

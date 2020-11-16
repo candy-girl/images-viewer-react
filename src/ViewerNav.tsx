@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { ImageDecorator } from './ViewerProps';
 const PDF = require('./pdf.png');
+const ArrowLeft = require('./arrow-left.png');
+const ArrowRight = require('./arrow-right.png');
 
 export interface ViewerNavProps {
   prefixCls: string;
@@ -55,7 +57,7 @@ export default function ViewerNav(props: ViewerNavProps) {
   return (
     <div className={`${props.prefixCls}-navbar divContainer`}>
       {
-        marginValue ? <a className="preButton" onClick={() => goPre()}>上一张</a> : <span className="preButton"></span>
+        marginValue ? <img src={ArrowLeft} alt="" className="preButton" onClick={() => goPre()}/> : <span className="preButton"></span>
       }
       <div className="ulContainer" ref={ulRef} style={{margin: 'auto', width: (navImgWidth + 10) * props.images.length}}>
       <ul className={`${props.prefixCls}-list ${props.prefixCls}-list-transition`} style={listStyle}>
@@ -73,7 +75,7 @@ export default function ViewerNav(props: ViewerNavProps) {
         </ul>
       </div>
       {
-        showNext ? <a className="nextButton" onClick={() => goNext()}>下一张</a> : <span className="nextButton"></span>
+        showNext ? <img src={ArrowRight} alt="" className="nextButton" onClick={() => goNext()}/> : <span className="nextButton"></span>
       }
     </div>
   );
