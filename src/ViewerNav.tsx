@@ -57,7 +57,7 @@ export default function ViewerNav(props: ViewerNavProps) {
   return (
     <div className={`${props.prefixCls}-navbar divContainer`}>
       {
-        marginValue ? <img src={ArrowLeft} alt="" className="preButton" onClick={() => goPre()}/> : <span className="preButton"></span>
+        marginValue ? <img src={ArrowLeft} alt="" className="preButton" onClick={() => goPre()}/> : <span className="preSpan"></span>
       }
       <div className="ulContainer" ref={ulRef} style={{margin: 'auto', width: (navImgWidth + 10) * props.images.length}}>
       <ul className={`${props.prefixCls}-list ${props.prefixCls}-list-transition`} style={listStyle}>
@@ -75,7 +75,7 @@ export default function ViewerNav(props: ViewerNavProps) {
         </ul>
       </div>
       {
-        showNext ? <img src={ArrowRight} alt="" className="nextButton" onClick={() => goNext()}/> : <span className="nextButton"></span>
+        showNext ? <img src={ArrowRight} alt="" className="nextButton" onClick={() => goNext()}/> : <span className="nextSpan"></span>
       }
     </div>
   );
