@@ -14,7 +14,7 @@ export interface ViewerNavProps {
 
 export default function ViewerNav(props: ViewerNavProps) {
   const { activeIndex = 0, navImgWidth = 100 } = props;
-  const initMarginValue = activeIndex > 5 ? - ( activeIndex - 2 ) * navImgWidth : 0;
+  const initMarginValue = activeIndex > 5 ? - ( activeIndex - 2 ) * ( navImgWidth + 10 ) : 0;
   const [marginValue, setMarginValue] = React.useState(initMarginValue);
   const ulRef = React.useRef();
   const [showNext, setShowNext] = React.useState(false);

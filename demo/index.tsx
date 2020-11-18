@@ -106,7 +106,7 @@ class App extends React.Component<any, Partial<State>> {
 
     this.state = {
       visible: false,
-      activeIndex: 0,
+      activeIndex: 6,
       mode: 'modal',
     };
     optionData.forEach(item => {
