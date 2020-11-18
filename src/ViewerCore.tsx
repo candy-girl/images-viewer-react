@@ -82,7 +82,7 @@ export default (props: ViewerProps) => {
     activeIndex: props.activeIndex,
     width: 0,
     height: 0,
-    top: 15,
+    top: 10,
     left: null,
     rotate: 0,
     imageWidth: 0,
@@ -268,7 +268,7 @@ export default (props: ViewerProps) => {
       }
       let [width, height] = getImgWidthHeight(realImgWidth, realImgHeight);
       let left = (containerSize.current.width - width) / 2;
-      let top = (containerSize.current.height - height - footerHeight) / 2;
+      let top = (containerSize.current.height - height - footerHeight - 60) / 2;
       let scaleX = defaultScale;
       let scaleY = defaultScale;
       if (noResetZoomAfterChange && !isReset) {
