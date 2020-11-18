@@ -166,6 +166,34 @@ class App extends React.Component<any, Partial<State>> {
       src: img6,
       alt: '',
       downloadUrl: '',
+    }, {
+      src: img1,
+      alt: 'lake',
+      downloadUrl: 'https://infeng.github.io/react-viewer/59111ff2c38954887bc313887fe76e27.jpg',
+    }, {
+      src: img2,
+      alt: 'mountain',
+      downloadUrl: '',
+    }, {
+      src: img,
+      alt: 'pdf',
+      downloadUrl: '',
+    }, {
+      src: img3,
+      alt: '',
+      downloadUrl: '',
+    }, {
+      src: img4,
+      alt: '',
+      downloadUrl: '',
+    }, {
+      src: img5,
+      alt: '',
+      downloadUrl: '',
+    }, {
+      src: img6,
+      alt: '',
+      downloadUrl: '',
     }];
 
     let inline = this.state.mode === 'inline';
