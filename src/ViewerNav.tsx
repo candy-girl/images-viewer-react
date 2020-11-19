@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { ImageDecorator } from './ViewerProps';
 const PDF = require('./pdf.png');
+const FAILED = require('./failed.png');
 const ArrowLeft = require('./arrow-left.png');
 const ArrowRight = require('./arrow-right.png');
 
@@ -69,7 +70,7 @@ export default function ViewerNav(props: ViewerNavProps) {
           style={liStyle}
           onClick={() => { handleChangeImg(index); }}
           >
-            <img src={item.navSrc.endsWith('.pdf') ? PDF : item.navSrc} alt={item.alt} style={{width: navImgWidth}}/>
+            <img src={item.navSrc.endsWith('.pdf') ? PDF : item.navSrc || FAILED} alt={item.alt} style={{width: navImgWidth}}/>
           </li>,
           )
         }
