@@ -341,6 +341,7 @@ export default (props: ViewerProps) => {
 
   function getActiveImage(activeIndex2 = undefined) {
     let activeImg2: ImageDecorator = {
+      navSrc: '',
       src: '',
       alt: '',
       downloadUrl: '',
@@ -636,6 +637,7 @@ export default (props: ViewerProps) => {
   };
 
   let activeImg: ImageDecorator = {
+    navSrc: '',
     src: '',
     alt: '',
   };
@@ -671,7 +673,7 @@ export default (props: ViewerProps) => {
       )}
       <ViewerCanvas
         prefixCls={prefixCls}
-        imgSrc={state.loadFailed ? (props.defaultImg.src || activeImg.src) : activeImg.src}
+        imgSrc={state.loadFailed && !activeImg.src.endsWith('.pdf') ? (props.defaultImg.src || activeImg.src) : activeImg.src}
         visible={visible}
         width={state.width}
         height={state.height}

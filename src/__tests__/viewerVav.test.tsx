@@ -10,10 +10,12 @@ configure({ adapter: new Adapter() });
 it('renders <ViewerNav /> components', () => {
   const prefixCls = 'images-viewer-react';
   const  images = [{
+      navSrc: img1,
       src: img1,
       alt: 'lake',
       downloadUrl: '',
     }, {
+      navSrc: img2,
       src: img2,
       alt: 'mountain',
       downloadUrl: '',

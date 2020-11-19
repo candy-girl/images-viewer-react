@@ -1,9 +1,10 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import Viewer from '../src/Viewer';
+const Failed  = require('./images/failed.png');
 const PDF = require('./images/pdf.png')
 const img = require('./images/image.pdf')
-const img1 = require('./images/image1.jpg');
+// const img1 = require('./images/image1.jpg');
 const img2 = require('./images/image2.jpg');
 const img3 = require('./images/image3.jpg');
 const img4 = require('./images/image4.jpg');
@@ -106,7 +107,7 @@ class App extends React.Component<any, Partial<State>> {
 
     this.state = {
       visible: false,
-      activeIndex: 6,
+      activeIndex: 0,
       mode: 'modal',
     };
     optionData.forEach(item => {
@@ -138,59 +139,42 @@ class App extends React.Component<any, Partial<State>> {
   }
 
   render() {
+    let defaultImg = {
+      src: Failed,
+      navSrc: Failed,
+    }
     let images = [{
-      src: img1,
+      navSrc: Failed,
+      src: '',
       alt: 'lake',
       downloadUrl: 'https://infeng.github.io/react-viewer/59111ff2c38954887bc313887fe76e27.jpg',
     }, {
+      navSrc: img2,
       src: img2,
       alt: 'mountain',
       downloadUrl: '',
     }, {
+      navSrc: img,
       src: img,
       alt: 'pdf',
       downloadUrl: '',
     }, {
+      navSrc: img3,
       src: img3,
       alt: '',
       downloadUrl: '',
     }, {
+      navSrc: img4,
       src: img4,
       alt: '',
       downloadUrl: '',
     }, {
+      navSrc: img5,
       src: img5,
       alt: '',
       downloadUrl: '',
     }, {
-      src: img6,
-      alt: '',
-      downloadUrl: '',
-    }, {
-      src: img1,
-      alt: 'lake',
-      downloadUrl: 'https://infeng.github.io/react-viewer/59111ff2c38954887bc313887fe76e27.jpg',
-    }, {
-      src: img2,
-      alt: 'mountain',
-      downloadUrl: '',
-    }, {
-      src: img,
-      alt: 'pdf',
-      downloadUrl: '',
-    }, {
-      src: img3,
-      alt: '',
-      downloadUrl: '',
-    }, {
-      src: img4,
-      alt: '',
-      downloadUrl: '',
-    }, {
-      src: img5,
-      alt: '',
-      downloadUrl: '',
-    }, {
+      navSrc: img6,
       src: img6,
       alt: '',
       downloadUrl: '',
@@ -284,7 +268,7 @@ class App extends React.Component<any, Partial<State>> {
                 {images.map((item, index) => {
                   return (
                     <div key={index.toString()} className="img-item">
-                      <img src={item.src?.endsWith('.pdf') ? PDF : item.src} onClick={() => {
+                      <img src={item.src?.endsWith('.pdf') ? PDF : item.src||Failed} onClick={() => {
                         this.setState({
                           visible: true,
                           activeIndex: index,
@@ -309,6 +293,7 @@ class App extends React.Component<any, Partial<State>> {
             container={inline ? this.container : null}
             downloadable={true}
             onChange={(activeImage, index) => console.log(111,activeImage, index)}
+            defaultImg={defaultImg}
             customToolbar={(toolbars) => {
               return toolbars.concat([{
                 key: 'test',

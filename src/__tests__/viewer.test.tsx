@@ -31,10 +31,12 @@ class ViewerTester extends React.Component<ViewerTesterProps & ViewerProps, any>
       visible: false,
       activeIndex: 0,
       images: props.images || [{
+        navSrc: img,
         src: img,
         alt: 'lake',
         downloadUrl: '',
       }, {
+        navSrc: img2,
         src: img2,
         alt: 'mountain',
         downloadUrl: '',
@@ -593,10 +595,12 @@ describe('Viewer', () => {
         height: 100,
       },
       images: [{
+        navSrc: img,
         src: img,
         alt: 'lake',
         downloadUrl: '',
       }, {
+        navSrc: img2,
         src: img2,
         alt: 'mountain',
         downloadUrl: '',
@@ -624,13 +628,16 @@ describe('Viewer', () => {
 
     viewerHelper.new({
       images: [{
+        navSrc: FAILED_IMG,
         src: FAILED_IMG,
         alt: 'lake',
       }, {
+        navSrc: img2,
         src: img2,
         alt: 'mountain',
       }],
       defaultImg: {
+        navSrc: defaultImg,
         src: defaultImg,
         width: 100,
         height: 100,
@@ -648,6 +655,7 @@ describe('Viewer', () => {
   it('set defaultScale', () => {
     viewerHelper.new({
       images: [{
+        navSrc: img,
         src: img,
         alt: 'lake',
         defaultSize: {
@@ -655,6 +663,7 @@ describe('Viewer', () => {
           height: 100,
         },
       }, {
+        navSrc: img2,
         src: img2,
         alt: 'mountain',
       }],
@@ -675,10 +684,12 @@ describe('Viewer', () => {
         height: 2000,
       },
       images: [{
+        navSrc: img,
         src: img,
         alt: 'lake',
         downloadUrl: '',
       }, {
+        navSrc: img2,
         src: img2,
         alt: 'mountain',
         downloadUrl: '',
@@ -798,11 +809,13 @@ describe('Viewer', () => {
   it('reset img when change images', () => {
     viewerHelper.new({
       images: [{
+        navSrc: img,
         src: img,
         alt: 'lake',
       }],
       onChangeImages: () => {
         return [{
+          navSrc: img2,
           src: img2,
           alt: 'mountain',
         }];

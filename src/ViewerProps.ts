@@ -4,6 +4,7 @@ export interface ViewerImageSize {
 }
 
 export interface ImageDecorator {
+  navSrc: string;
   src: string;
   alt?: string;
   downloadUrl?: string;
@@ -18,6 +19,7 @@ export interface ToolbarConfig {
 }
 
 export interface ViewerDefaultImg {
+  navSrc: string;
   src: string;
   width?: number;
   height?: number;
@@ -26,95 +28,109 @@ export interface ViewerDefaultImg {
 interface ViewerProps {
   /** viewer是否可见 */
   visible?: boolean;
+
   /** 点击关闭按钮的回调 */
   onClose?: () => void;
+
   /** 需要进行浏览的图片地址集合 */
   images?: ImageDecorator[];
+
   /** 缩略图的宽度 */
   navImgWidth?: number;
+
   /** 当前图像index */
   activeIndex?: number;
+
   /** 自定义viewer组件的z-index */
   zIndex?: number;
+
   /** viewer渲染的父节点，设置后开启inline mode */
   container?: HTMLElement;
+
   /** 图片是否可拖动 */
   drag?: boolean;
+
   /** 是否显示图片属性 */
   attribute?: boolean;
+
   /** 是否显示缩放按钮 */
   zoomable?: boolean;
+
   /** 是否显示旋转按钮 */
   rotatable?: boolean;
+
   /** 是否显示变换按钮 */
   scalable?: boolean;
-  /** callback function when mask is clicked */
+
+  /** 当蒙版被点击时的回调函数 */
   onMaskClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
+
   /** 是否显示下载按钮 */
   downloadable?: boolean;
   /** 图片是否可循环 */
   loop?: boolean;
 
-  // no render close button
+  // 不显示管理按钮
   noClose?: boolean;
 
-  // no render image details
+  // 不显示图片详情
   noImgDetails?: boolean;
 
-  // no render navbar
+  // 不显示导航条
   noNavbar?: boolean;
 
-  // no render toolbar
+  // 不显示工具栏
   noToolbar?: boolean;
 
-  // no render footer
+  // 不呈现页脚
   noFooter?: boolean;
 
-  // wheather to show change button
+  // 是否显示更改按钮
   changeable?: boolean;
 
-  // custom toolbar
+  // 自定义工具栏
   customToolbar?: (toolbars: ToolbarConfig[]) => ToolbarConfig[];
 
-  // zoom speed
+  // 变焦速度
   zoomSpeed?: number;
 
-  // default image size
+  // 默认图片大小
   defaultSize?: ViewerImageSize;
 
-  // if load img failed, show default img
+  // 图片加载失败显示默认图片
   defaultImg?: ViewerDefaultImg;
 
-  // disable keyboard support
+  // 禁用键盘支持
   disableKeyboardSupport?: boolean;
 
-  // no reset zoom after image change
+  // 没有复位变焦后的图像变化
   noResetZoomAfterChange?: boolean;
 
-  // no limit image initialization size
+  // 没有限制图像初始化大小
   noLimitInitializationSize?: boolean;
 
-  // default scale
+  // 默认的放大缩小倍数
   defaultScale?: number;
 
-  // callback when iamge change
+  // 当图片改变时回调
   onChange?: (activeImage: ImageDecorator, index: number) => void;
 
-  // disable mouse zoom
+  // 禁用鼠标缩放
   disableMouseZoom?: boolean;
 
-  // whether to download in a new window
+  // 是否在新窗口中下载
   downloadInNewWindow?: boolean;
 
+  // 自定义样式名
   className?: string;
 
-  // whether to display the total number and range
+  // 是否显示总数和范围
   showTotal?: boolean;
 
-  // max scale
+  // 最大缩放
   maxScale?: number;
 
-  // min scale
+  // 最小缩放
   minScale?: number;
 }
 
