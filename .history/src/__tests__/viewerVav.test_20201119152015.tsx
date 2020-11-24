@@ -29,8 +29,6 @@ it('renders <ViewerNav /> components', () => {
       images={images}
       activeIndex={activeIndex}
       onChangeImg={fn}
-      onPreButton={fn}
-      onNextButton={fn}
       navImgWidth={navImgWidth}
     />);
   /** 点击下一张 */

@@ -35,13 +35,16 @@ export default function ViewerNav(props: ViewerNavProps) {
   });
 
   React.useEffect(() => {
-    if (marginValue <= 5 * (navImgWidth + 10)) {
+    if(marginValue<=5 * (navImgWidth + 10)){
+      console.log(1)
       props.onPreButton();
     }
-    if ((props.images.length - 6) * (navImgWidth + 10) <= 5 * (navImgWidth + 10)) {
+    if((props.images.length - 6) * (navImgWidth + 10) <= 5 * (navImgWidth + 10)){
+      console.log(2)
       props.onNextButton();
     }
-  }, [marginValue, activeIndex]);
+    console.log(123, activeIndex, initMarginValue)
+  },[marginValue]);
 
   function handleChangeImg(newIndex) {
     if (activeIndex === newIndex) {

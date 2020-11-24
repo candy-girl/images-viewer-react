@@ -107,7 +107,7 @@ class App extends React.Component<any, Partial<State>> {
 
     this.state = {
       visible: false,
-      activeIndex: 6,
+      activeIndex: 0,
       mode: 'modal',
     };
     optionData.forEach(item => {
@@ -196,11 +196,11 @@ class App extends React.Component<any, Partial<State>> {
     });
 
     const getPreData = () => {
-      console.log(111777)
+      console.log(111)
     }
 
     const getNextData = () => {
-      console.log(222888)
+      console.log(222)
     }
 
     return (

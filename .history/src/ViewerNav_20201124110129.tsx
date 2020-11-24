@@ -1,4 +1,4 @@
-// import { SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS } from 'constants';
+import { SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS } from 'constants';
 import * as React from 'react';
 import { ImageDecorator } from './ViewerProps';
 const PDF = require('./pdf.png');
@@ -35,13 +35,14 @@ export default function ViewerNav(props: ViewerNavProps) {
   });
 
   React.useEffect(() => {
-    if (marginValue <= 5 * (navImgWidth + 10)) {
+    if(marginValue<=5 * (navImgWidth + 10)){
       props.onPreButton();
     }
-    if ((props.images.length - 6) * (navImgWidth + 10) <= 5 * (navImgWidth + 10)) {
+    if((props.images.length - 6) * (navImgWidth + 10) <= 5 * (navImgWidth + 10)){
       props.onNextButton();
     }
-  }, [marginValue, activeIndex]);
+    console.log(123, activeIndex, initMarginValue)
+  },[marginValue]);
 
   function handleChangeImg(newIndex) {
     if (activeIndex === newIndex) {

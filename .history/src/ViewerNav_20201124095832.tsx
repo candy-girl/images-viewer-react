@@ -1,4 +1,3 @@
-// import { SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS } from 'constants';
 import * as React from 'react';
 import { ImageDecorator } from './ViewerProps';
 const PDF = require('./pdf.png');
@@ -18,7 +17,7 @@ export interface ViewerNavProps {
 
 export default function ViewerNav(props: ViewerNavProps) {
   const { activeIndex = 0, navImgWidth = 100 } = props;
-  const initMarginValue = activeIndex > 5 ? - ( activeIndex - 5 ) * ( navImgWidth + 10 ) : 0;
+  const initMarginValue = activeIndex > 5 ? - ( activeIndex - 2 ) * ( navImgWidth + 10 ) : 0;
   const [marginValue, setMarginValue] = React.useState(initMarginValue);
   const ulRef = React.useRef();
   const [showNext, setShowNext] = React.useState(false);
@@ -26,22 +25,13 @@ export default function ViewerNav(props: ViewerNavProps) {
   React.useEffect(() => {
     let ulContainer = ulRef.current || undefined;
     let ulWidth = ulContainer.clientWidth;
-    const showNextButton = (navImgWidth + 10) * props.images.length + marginValue - 5 > ulWidth;
+    const showNextButton = (navImgWidth + 10) * props.images.length + marginValue > ulWidth;
     if (showNextButton) {
       setShowNext(true);
     } else {
       setShowNext(false);
     }
   });
-
-  React.useEffect(() => {
-    if (marginValue <= 5 * (navImgWidth + 10)) {
-      props.onPreButton();
-    }
-    if ((props.images.length - 6) * (navImgWidth + 10) <= 5 * (navImgWidth + 10)) {
-      props.onNextButton();
-    }
-  }, [marginValue, activeIndex]);
 
   function handleChangeImg(newIndex) {
     if (activeIndex === newIndex) {
@@ -51,6 +41,8 @@ export default function ViewerNav(props: ViewerNavProps) {
   }
 
   function goNext() {
+    console.log(111999, props)
+    props.onNextButton()
     let currentValue = marginValue - navImgWidth - 10;
     setMarginValue(currentValue);
   }

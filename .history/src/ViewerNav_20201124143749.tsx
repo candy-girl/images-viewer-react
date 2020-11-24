@@ -41,7 +41,7 @@ export default function ViewerNav(props: ViewerNavProps) {
     if ((props.images.length - 6) * (navImgWidth + 10) <= 5 * (navImgWidth + 10)) {
       props.onNextButton();
     }
-  }, [marginValue, activeIndex]);
+  },[marginValue, activeIndex]);
 
   function handleChangeImg(newIndex) {
     if (activeIndex === newIndex) {

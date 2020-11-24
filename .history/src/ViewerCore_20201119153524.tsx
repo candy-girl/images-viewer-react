@@ -718,8 +718,6 @@ export default (props: ViewerProps) => {
               images={props.images}
               activeIndex={state.activeIndex}
               onChangeImg={handleChangeImg}
-              onPreButton={props.onPreButton}
-              onNextButton={props.onNextButton}
               navImgWidth={navImgWidth}
             />
           )}

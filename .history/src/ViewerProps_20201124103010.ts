@@ -121,6 +121,12 @@ interface ViewerProps {
   // 点击下一张
   onNextButton?: () =>  void;
 
+  // 显示上一张按钮
+  showPreButton?: boolean;
+
+  // 显示下一张按钮
+  showNextButton?: boolean;
+
   // 禁用鼠标缩放
   disableMouseZoom?: boolean;
 

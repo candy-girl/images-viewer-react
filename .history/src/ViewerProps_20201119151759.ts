@@ -115,12 +115,6 @@ interface ViewerProps {
   // 当图片改变时回调
   onChange?: (activeImage: ImageDecorator, index: number) => void;
 
-  // 点击上一张
-  onPreButton?: () =>  void;
-
-  // 点击下一张
-  onNextButton?: () =>  void;
-
   // 禁用鼠标缩放
   disableMouseZoom?: boolean;
 
