@@ -36,11 +36,13 @@ export default function ViewerNav(props: ViewerNavProps) {
 
   React.useEffect(() => {
     // 当前选中第6张，加载前20张
-    if (activeIndex <= 5) {
+    if (activeIndex <= 2) {
+      console.log(1)
       props.onPreButton();
     }
-    // 当前显示第15张,加载下一页20张
-    if (activeIndex >= props.images.length - 6) {
+    // 当前显示第15张
+    if (activeIndex >= props.images.length - 3) {
+      console.log(2)
       props.onNextButton();
     }
   }, [marginValue, activeIndex]);
