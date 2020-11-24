@@ -13,6 +13,7 @@ const img6 = require('./images/image6.jpg');
 import './index.less';
 import classNames from 'classnames';
 import { Button, List, Checkbox } from 'antd';
+import { ImageDecorator } from '../lib/ViewerProps';
 const ButtonGroup = Button.Group;
 
 interface State {
@@ -22,6 +23,9 @@ interface State {
   drawerVisible: boolean;
   drag: boolean;
   attribute: boolean;
+  prePageNo: number;
+  nextPageNo: number;
+  images: ImageDecorator[];
 }
 
 interface OptionData {
@@ -109,6 +113,44 @@ class App extends React.Component<any, Partial<State>> {
       visible: false,
       activeIndex: 6,
       mode: 'modal',
+      prePageNo: 1,
+      nextPageNo: 5,
+      images: [{
+          navSrc: Failed,
+          src: '',
+          alt: 'lake',
+          downloadUrl: 'https://infeng.github.io/react-viewer/59111ff2c38954887bc313887fe76e27.jpg',
+        }, {
+          navSrc: img2,
+          src: img2,
+          alt: 'mountain',
+          downloadUrl: '',
+        }, {
+          navSrc: img,
+          src: img,
+          alt: 'pdf',
+          downloadUrl: '',
+        }, {
+          navSrc: img3,
+          src: img3,
+          alt: '',
+          downloadUrl: '',
+        }, {
+          navSrc: img4,
+          src: img4,
+          alt: '',
+          downloadUrl: '',
+        }, {
+          navSrc: img5,
+          src: img5,
+          alt: '',
+          downloadUrl: '',
+        }, {
+          navSrc: img6,
+          src: img6,
+          alt: '',
+          downloadUrl: '',
+      }]
     };
     optionData.forEach(item => {
       if (item.value === undefined) {
@@ -143,42 +185,6 @@ class App extends React.Component<any, Partial<State>> {
       src: Failed,
       navSrc: Failed,
     }
-    let images = [{
-      navSrc: Failed,
-      src: '',
-      alt: 'lake',
-      downloadUrl: 'https://infeng.github.io/react-viewer/59111ff2c38954887bc313887fe76e27.jpg',
-    }, {
-      navSrc: img2,
-      src: img2,
-      alt: 'mountain',
-      downloadUrl: '',
-    }, {
-      navSrc: img,
-      src: img,
-      alt: 'pdf',
-      downloadUrl: '',
-    }, {
-      navSrc: img3,
-      src: img3,
-      alt: '',
-      downloadUrl: '',
-    }, {
-      navSrc: img4,
-      src: img4,
-      alt: '',
-      downloadUrl: '',
-    }, {
-      navSrc: img5,
-      src: img5,
-      alt: '',
-      downloadUrl: '',
-    }, {
-      navSrc: img6,
-      src: img6,
-      alt: '',
-      downloadUrl: '',
-    }];
 
     let inline = this.state.mode === 'inline';
 
@@ -195,12 +201,61 @@ class App extends React.Component<any, Partial<State>> {
       options[item.key] = this.state[item.key];
     });
 
-    const getPreData = () => {
-      console.log(111777)
+    const getPreData = (activeIndex: number) => {
+      console.log(111777);
+      const offset = 8;
+      let { prePageNo } = this.state;
+      if (prePageNo >= 3) {
+        return Promise.reject();
+      }
+      return fetch(`http://118.190.158.81:3000/comment/new?type=0&id=27511488&sortType=2&pageSize=${offset}&pageNo=${prePageNo}`).then(res => res.json()).then(res => {
+        const images = this.state.images.slice();
+        res.data.comments.forEach(comment => {
+          images.unshift({
+            navSrc: comment.user.avatarUrl,
+            src: comment.user.avatarUrl,
+            alt: '',
+            downloadUrl: '',
+          });
+        });
+        prePageNo++;
+        activeIndex += offset
+        this.setState({
+          ...this.state,
+          images,
+          prePageNo,
+          activeIndex
+        });
+        return images.length;
+      });
     }
 
-    const getNextData = () => {
-      console.log(222888)
+    const getNextData = (activeIndex: number) => {
+      console.log(222888);
+      const offset = 8;
+      let { nextPageNo } = this.state;
+      if (nextPageNo >= 8) {
+        return Promise.reject();
+      }
+      return fetch(`http://118.190.158.81:3000/comment/new?type=0&id=27511488&sortType=2&pageSize=${offset}&pageNo=${nextPageNo}`).then(res => res.json()).then(res => {
+        const images = this.state.images.slice();
+        res.data.comments.forEach(comment => {
+          images.push({
+            navSrc: comment.user.avatarUrl,
+            src: comment.user.avatarUrl,
+            alt: '',
+            downloadUrl: '',
+          });
+        });
+        nextPageNo++;
+        this.setState({
+          ...this.state,
+          images,
+          nextPageNo,
+          activeIndex
+        });
+        return images.length;
+      });
     }
 
     return (
@@ -273,7 +328,7 @@ class App extends React.Component<any, Partial<State>> {
             </div>
             <div className="img-list-wrap">
               <div className={imgListClass}>
-                {images.map((item, index) => {
+                {this.state.images.map((item, index) => {
                   return (
                     <div key={index.toString()} className="img-item">
                       <img src={item.src?.endsWith('.pdf') ? PDF : item.src||Failed} onClick={() => {
@@ -295,7 +350,7 @@ class App extends React.Component<any, Partial<State>> {
               this.setState({ visible: false });
             }}
             downloadInNewWindow={true}
-            images={images}
+            images={this.state.images}
             navImgWidth={100}
             activeIndex={this.state.activeIndex}
             container={inline ? this.container : null}

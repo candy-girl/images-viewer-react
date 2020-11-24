@@ -11,13 +11,14 @@ export interface ViewerNavProps {
   images: ImageDecorator[];
   activeIndex: number;
   navImgWidth?: number;
-  onPreButton: () => void;
-  onNextButton: () => void;
+  onPreButton: (activeIndex: number) => Promise<number>;
+  onNextButton: (activeIndex: number) => Promise<number>;
   onChangeImg: (index: number) => void;
 }
 
 export default function ViewerNav(props: ViewerNavProps) {
-  const { activeIndex = 0, navImgWidth = 100 } = props;
+  let { activeIndex = 0 } = props;
+  const { navImgWidth = 100 } = props;
   const initMarginValue = activeIndex > 5 ? - ( activeIndex - 5 ) * ( navImgWidth + 10 ) : 0;
   const [marginValue, setMarginValue] = React.useState(initMarginValue);
   const ulRef = React.useRef();
@@ -34,32 +35,118 @@ export default function ViewerNav(props: ViewerNavProps) {
     }
   });
 
+  // React.useEffect(() => {
+  //   // 当前选中第6张，加载前20张
+  //   if (activeIndex <= 5 && props.onPreButton) {
+  //     props.onPreButton(activeIndex).then(length => {
+  //       const pageOffset = length - props.images.length
+  //       move(length, activeIndex + pageOffset)
+  //     }).catch(() => {
+  //       console.log('没有更多了')
+  //     })
+  //   }
+  //   // 当前显示第15张,加载下一页20张
+  //   if (activeIndex >= props.images.length - 6 && props.onNextButton) {
+  //     props.onNextButton(activeIndex).then(length => {
+  //       move(length)
+  //     }).catch(() => {
+  //       console.log('没有更多了')
+  //     })
+  //   }
+  // }, [activeIndex]);
+  // React.useEffect(() => {
+  //   console.log('move')
+  //   move()
+  // }, [activeIndex])
+
   React.useEffect(() => {
-    // 当前选中第6张，加载前20张
-    if (activeIndex <= 5 && props.onPreButton) {
-      props.onPreButton();
+    fetchData(activeIndex);
+  }, []);
+
+  function move(currentLength: number, activeIndey: number = activeIndex) {
+    const itemOffset = navImgWidth + 10;
+    let size = activeIndey - 2;
+    const minSize = 0;
+    const maxSize = currentLength - 6;
+    if (size < minSize) {
+      size = minSize;
+    } else if (size > maxSize) {
+      size = maxSize;
     }
-    // 当前显示第15张,加载下一页20张
-    if (activeIndex >= props.images.length - 6 && props.onNextButton) {
-      props.onNextButton();
+    const currentValue = -size * itemOffset;
+    if (currentValue !== marginValue) {
+      setMarginValue(currentValue);
+      props.onChangeImg(activeIndey);
     }
-  }, [activeIndex]);
+  }
+
+  function fetchData(targetIndex: number) {
+        // 当前选中第6张，加载前20张
+    let currentLength = props.images.length;
+    if (targetIndex <= 5 && props.onPreButton) {
+      props.onPreButton(targetIndex).then(length => {
+        currentLength = length;
+        targetIndex = length - props.images.length + targetIndex;
+      }).catch(() => {
+        console.log('没有更多了');
+      }).finally(() => {
+        move(currentLength, targetIndex);
+      });
+    } else if (targetIndex >= props.images.length - 6 && props.onNextButton) {
+      // 当前显示第15张,加载下一页20张
+      props.onNextButton(targetIndex).then(length => {
+        currentLength = length;
+      }).catch(() => {
+        console.log('没有更多了');
+      }).finally(() => {
+        move(currentLength, targetIndex);
+      });
+    } else {
+      // 不需要加载数据的时候
+      move(props.images.length, targetIndex);
+    }
+  }
+
+  // React.useEffect(() => {
+  //   const itemOffset = navImgWidth + 10
+  //   let size = activeIndex - 2
+  //   const minSize = 0
+  //   const maxSize = props.images.length - 6
+  //   if (size < minSize) {
+  //     size = minSize
+  //   } else if (size > maxSize) {
+  //     size = maxSize
+  //   }
+  //   const currentValue = -size * itemOffset
+  //   if (currentValue !== marginValue) {
+  //     setMarginValue(currentValue)
+  //   }
+  // }, [activeIndex])
 
   function handleChangeImg(newIndex) {
     if (activeIndex === newIndex) {
       return;
     }
-    props.onChangeImg(newIndex);
+    // props.onChangeImg(newIndex);
+    move(props.images.length, newIndex);
   }
 
   function goNext() {
-    let currentValue = marginValue - navImgWidth - 10;
-    setMarginValue(currentValue);
+    // let currentValue = marginValue - navImgWidth - 10;
+    // setMarginValue(currentValue);
+    if (activeIndex + 1 <= props.images.length) {
+      fetchData(activeIndex + 1);
+      // props.onChangeImg(activeIndex + 1);
+    }
   }
 
   function goPre() {
-    let currentValue = marginValue + navImgWidth + 10;
-    setMarginValue(currentValue);
+    // let currentValue = marginValue + navImgWidth + 10;
+    // setMarginValue(currentValue);
+    if (activeIndex >= 1) {
+      fetchData(activeIndex - 1);
+      // props.onChangeImg(activeIndex - 1);
+    }
   }
 
   let listStyle = {
