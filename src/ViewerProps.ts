@@ -116,10 +116,10 @@ interface ViewerProps {
   onChange?: (activeImage: ImageDecorator, index: number) => void;
 
   // 点击上一张
-  onPreButton?: () =>  void;
+  onPreButton?: (activeIndex: number) =>  Promise<number>;
 
   // 点击下一张
-  onNextButton?: () =>  void;
+  onNextButton?: (activeIndex: number) =>  Promise<number>;
 
   // 禁用鼠标缩放
   disableMouseZoom?: boolean;
