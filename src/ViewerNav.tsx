@@ -76,6 +76,8 @@ export default function ViewerNav(props: ViewerNavProps) {
     const currentValue = -size * itemOffset;
     if (currentValue !== marginValue) {
       setMarginValue(currentValue);
+    }
+    if (activeIndex !== activeIndey) {
       props.onChangeImg(activeIndey);
     }
   }
@@ -124,9 +126,9 @@ export default function ViewerNav(props: ViewerNavProps) {
   // }, [activeIndex])
 
   function handleChangeImg(newIndex) {
-    if (activeIndex === newIndex) {
-      return;
-    }
+    // if (activeIndex === newIndex) {
+    //   return;
+    // }
     // props.onChangeImg(newIndex);
     move(props.images.length, newIndex);
   }
