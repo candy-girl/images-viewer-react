@@ -202,7 +202,7 @@ class App extends React.Component<any, Partial<State>> {
     });
 
     const getPreData = (activeIndex: number) => {
-      console.log(111777, activeIndex);
+      console.log(111777);
       const offset = 8;
       let { prePageNo } = this.state;
       if (prePageNo >= 3) {
