@@ -17,12 +17,12 @@ export interface ViewerNavProps {
 }
 
 export default function ViewerNav(props: ViewerNavProps) {
-  let { activeIndex = 0 } = props;
-  const { navImgWidth = 100 } = props;
+  const { navImgWidth = 100, activeIndex = 0 } = props;
   const initMarginValue = activeIndex > 5 ? - ( activeIndex - 5 ) * ( navImgWidth + 10 ) : 0;
   const [marginValue, setMarginValue] = React.useState(initMarginValue);
   const ulRef = React.useRef();
   const [showNext, setShowNext] = React.useState(false);
+  const preActiveIndex = React.useRef(activeIndex);
 
   React.useEffect(() => {
     let ulContainer = ulRef.current || undefined;
@@ -64,7 +64,10 @@ export default function ViewerNav(props: ViewerNavProps) {
   // }, []);
 
   React.useEffect(() => {
+    console.log(preActiveIndex);
     fetchData(activeIndex);
+    move();
+    preActiveIndex.current = activeIndex;
   }, [activeIndex]);
 
   // function move(currentLength: number, activeIndey: number = activeIndex) {
@@ -86,51 +89,93 @@ export default function ViewerNav(props: ViewerNavProps) {
   //   }
   // }
 
-  function moveOne(activeIndey: number, offsetSize: number = 1) {
-    const itemOffset = navImgWidth + 10;
-    let currentValue = marginValue;
-    if (activeIndey > activeIndex) {
-      // 左移
-      currentValue = marginValue - itemOffset * offsetSize;
-    } else if (activeIndey < activeIndex) {
-      // 右移
-      currentValue = marginValue + itemOffset;
-    }
+  function move() {
     // 移动缩略图
+    const itemOffset = navImgWidth + 10;
+    const leftIndex = -marginValue / itemOffset;
+    const rightIndex = leftIndex + 5;
+    let currentValue = marginValue;
+    if (activeIndex < preActiveIndex.current) {
+      // 左移
+      if (activeIndex === 0 && preActiveIndex.current === props.images.length - 1) {
+        // 从最后一张跳到第一张
+        currentValue = 0;
+      } else if (activeIndex === leftIndex - 1) {
+        // 在边界左移1
+        currentValue += itemOffset;
+      } else if (activeIndex < leftIndex - 1) {
+        currentValue = marginValue - (activeIndex - preActiveIndex.current) * itemOffset;
+      }
+    } else if (activeIndex > preActiveIndex.current) {
+      // 右移
+      if (activeIndex === props.images.length - 1 && preActiveIndex.current === 0) {
+        // 从第一张跳到最后一张
+        currentValue = - (props.images.length - 5) * itemOffset;
+      } else if (activeIndex === rightIndex + 1) {
+        // 边界右移1
+        currentValue -= itemOffset;
+      } else if (activeIndex > rightIndex + 1) {
+        currentValue = marginValue - (activeIndex - preActiveIndex.current) * itemOffset;
+      }
+    }
+    // if (activeIndex <= leftIndex - 1) {
+    //   // 左移
+    //   currentValue += itemOffset;
+    // } else if (activeIndex >= rightIndex + 1) {
+    //   // 右移
+    //   currentValue -= itemOffset;
+    // }
     if (currentValue !== marginValue) {
       setMarginValue(currentValue);
     }
-    // 移动activeIndex
-    const leftIndex = -marginValue / itemOffset;
-    const rightIndex = leftIndex + 5;
-    // todo: 判断activeIndex
-    if (leftIndex - 1 === activeIndey) {
-      props.onChangeImg(activeIndey);
-    } else if (leftIndex + 1 === activeIndey) {
-      props.onChangeImg(activeIndey);
-    } else if (rightIndex + 1 === activeIndey) {
-      props.onChangeImg(activeIndey);
-    } else if (rightIndex - 1 === activeIndey) {
-      props.onChangeImg(activeIndey);
-    }
   }
+
+  // function moveOne(activeIndey: number, offsetSize: number = 1) {
+  //   const itemOffset = navImgWidth + 10;
+  //   let currentValue = marginValue;
+  //   if (activeIndey > activeIndex) {
+  //     // 左移
+  //     currentValue = marginValue - itemOffset * offsetSize;
+  //   } else if (activeIndey < activeIndex) {
+  //     // 右移
+  //     currentValue = marginValue + itemOffset;
+  //   }
+  //   // 移动缩略图
+  //   if (currentValue !== marginValue) {
+  //     setMarginValue(currentValue);
+  //   }
+  //   // 移动activeIndex
+  //   const leftIndex = -marginValue / itemOffset;
+  //   const rightIndex = leftIndex + 5;
+  //   // todo: 判断activeIndex
+  //   if (leftIndex - 1 === activeIndey) {
+  //     props.onChangeImg(activeIndey);
+  //   } else if (leftIndex + 1 === activeIndey) {
+  //     props.onChangeImg(activeIndey);
+  //   } else if (rightIndex + 1 === activeIndey) {
+  //     props.onChangeImg(activeIndey);
+  //   } else if (rightIndex - 1 === activeIndey) {
+  //     props.onChangeImg(activeIndey);
+  //   }
+  // }
 
   function fetchData(targetIndex: number) {
         // 当前选中第6张，加载前20张
-    let offsetSize = 1;
-    let prevLength = props.images.length;
+    // let offsetSize = 1;
+    // let prevLength = props.images.length;
     if (targetIndex <= 5 && props.onPreButton) {
       props.onPreButton(targetIndex).then(length => {
         // currentLength = length;
-        offsetSize = length - prevLength;
+        // offsetSize = length - prevLength;
         targetIndex = length - props.images.length + targetIndex;
-        console.log(targetIndex, props.images.length, length);
+        // console.log(targetIndex, props.images.length, length);
       }).catch(() => {
         console.log('没有更多了');
-        offsetSize = targetIndex - activeIndex;
+        // offsetSize = targetIndex - activeIndex;
       }).finally(() => {
-        console.log(targetIndex, prevLength, props.images.length);
-        moveOne(targetIndex, offsetSize);
+        // console.log(targetIndex, prevLength, props.images.length);
+        // moveOne(targetIndex, offsetSize);
+        props.onChangeImg(targetIndex);
 
         // moveOne(targetIndex);
       });
@@ -142,12 +187,14 @@ export default function ViewerNav(props: ViewerNavProps) {
         console.log('没有更多了');
       }).finally(() => {
         // move(currentLength, targetIndex);
-        moveOne(targetIndex);
+        // moveOne(targetIndex);
+        props.onChangeImg(targetIndex);
       });
     } else {
       // 不需要加载数据的时候
       // move(props.images.length, targetIndex);
-      moveOne(targetIndex);
+      // moveOne(targetIndex);
+      props.onChangeImg(targetIndex);
     }
   }
 
