@@ -59,53 +59,95 @@ export default function ViewerNav(props: ViewerNavProps) {
   //   move()
   // }, [activeIndex])
 
+  // React.useEffect(() => {
+  //   fetchData(activeIndex);
+  // }, []);
+
   React.useEffect(() => {
     fetchData(activeIndex);
-  }, []);
+  }, [activeIndex]);
 
-  function move(currentLength: number, activeIndey: number = activeIndex) {
+  // function move(currentLength: number, activeIndey: number = activeIndex) {
+  //   const itemOffset = navImgWidth + 10;
+  //   let size = activeIndey - 2;
+  //   const minSize = 0;
+  //   const maxSize = currentLength - 6;
+  //   if (size < minSize) {
+  //     size = minSize;
+  //   } else if (size > maxSize) {
+  //     size = maxSize;
+  //   }
+  //   const currentValue = -size * itemOffset;
+  //   if (currentValue !== marginValue) {
+  //     setMarginValue(currentValue);
+  //   }
+  //   if (activeIndex !== activeIndey) {
+  //     props.onChangeImg(activeIndey);
+  //   }
+  // }
+
+  function moveOne(activeIndey: number, offsetSize: number = 1) {
     const itemOffset = navImgWidth + 10;
-    let size = activeIndey - 2;
-    const minSize = 0;
-    const maxSize = currentLength - 6;
-    if (size < minSize) {
-      size = minSize;
-    } else if (size > maxSize) {
-      size = maxSize;
+    let currentValue = marginValue;
+    if (activeIndey > activeIndex) {
+      // 左移
+      currentValue = marginValue - itemOffset * offsetSize;
+    } else if (activeIndey < activeIndex) {
+      // 右移
+      currentValue = marginValue + itemOffset;
     }
-    const currentValue = -size * itemOffset;
+    // 移动缩略图
     if (currentValue !== marginValue) {
       setMarginValue(currentValue);
     }
-    if (activeIndex !== activeIndey) {
+    // 移动activeIndex
+    const leftIndex = -marginValue / itemOffset;
+    const rightIndex = leftIndex + 5;
+    // todo: 判断activeIndex
+    if (leftIndex - 1 === activeIndey) {
+      props.onChangeImg(activeIndey);
+    } else if (leftIndex + 1 === activeIndey) {
+      props.onChangeImg(activeIndey);
+    } else if (rightIndex + 1 === activeIndey) {
+      props.onChangeImg(activeIndey);
+    } else if (rightIndex - 1 === activeIndey) {
       props.onChangeImg(activeIndey);
     }
   }
 
   function fetchData(targetIndex: number) {
         // 当前选中第6张，加载前20张
-    let currentLength = props.images.length;
+    let offsetSize = 1;
+    let prevLength = props.images.length;
     if (targetIndex <= 5 && props.onPreButton) {
       props.onPreButton(targetIndex).then(length => {
-        currentLength = length;
+        // currentLength = length;
+        offsetSize = length - prevLength;
         targetIndex = length - props.images.length + targetIndex;
+        console.log(targetIndex, props.images.length, length);
       }).catch(() => {
         console.log('没有更多了');
+        offsetSize = targetIndex - activeIndex;
       }).finally(() => {
-        move(currentLength, targetIndex);
+        console.log(targetIndex, prevLength, props.images.length);
+        moveOne(targetIndex, offsetSize);
+
+        // moveOne(targetIndex);
       });
     } else if (targetIndex >= props.images.length - 6 && props.onNextButton) {
       // 当前显示第15张,加载下一页20张
       props.onNextButton(targetIndex).then(length => {
-        currentLength = length;
+        // currentLength = length;
       }).catch(() => {
         console.log('没有更多了');
       }).finally(() => {
-        move(currentLength, targetIndex);
+        // move(currentLength, targetIndex);
+        moveOne(targetIndex);
       });
     } else {
       // 不需要加载数据的时候
-      move(props.images.length, targetIndex);
+      // move(props.images.length, targetIndex);
+      moveOne(targetIndex);
     }
   }
 
@@ -126,11 +168,11 @@ export default function ViewerNav(props: ViewerNavProps) {
   // }, [activeIndex])
 
   function handleChangeImg(newIndex) {
-    // if (activeIndex === newIndex) {
-    //   return;
-    // }
-    // props.onChangeImg(newIndex);
-    move(props.images.length, newIndex);
+    if (activeIndex === newIndex) {
+      return;
+    }
+    props.onChangeImg(newIndex);
+    // move(props.images.length, newIndex);
   }
 
   function goNext() {
