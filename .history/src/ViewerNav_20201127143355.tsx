@@ -1,10 +1,10 @@
 // import { SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS } from 'constants';
 import * as React from 'react';
 import { ImageDecorator } from './ViewerProps';
-const PDF = require('./images/pdf@2x.png');
-const FAILED = require('./images/failed.png');
-const ArrowLeft = require('./images/arrow-left.png');
-const ArrowRight = require('./images/arrow-right.png');
+const PDF = require('./pdf.png');
+const FAILED = require('./failed.png');
+const ArrowLeft = require('./arrow-left.png');
+const ArrowRight = require('./arrow-right.png');
 const EXCEL = require('./images/excel@2x.png');
 const WORD = require('./images/word@2x.png');
 
@@ -144,7 +144,7 @@ export default function ViewerNav(props: ViewerNavProps) {
           onClick={() => { handleChangeImg(index); }}
           >
             <img 
-              src={item.fileType==='pdf' ? PDF : item.fileType==='xls' || item.fileType==='xlsx' ? EXCEL : item.fileType==='doc' || item.fileType==='docx' ? WORD : item.navSrc || FAILED} alt={item.alt} style={{width: navImgWidth}}/>
+              src={item.fileType==='pdf' ? PDF : item.fileType==='xls' || 'xlsx' ? EXCEL : item.fileType==='doc' || 'docx' ? WORD : item.navSrc || FAILED} alt={item.alt} style={{width: navImgWidth}}/>
           </li>,
           )
         }

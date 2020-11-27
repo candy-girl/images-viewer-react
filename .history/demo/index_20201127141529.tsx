@@ -136,25 +136,25 @@ class App extends React.Component<any, Partial<State>> {
         }, {
           navSrc: img3,
           src: img3,
-          fileType: 'xls',
+          fileType: 'excel',
           alt: '',
           downloadUrl: '',
         }, {
           navSrc: img4,
           src: img4,
-          fileType: 'xlsx',
+          fileType: 'word',
           alt: '',
           downloadUrl: '',
         }, {
           navSrc: img5,
           src: img5,
-          fileType: 'doc',
+          fileType: 'jpg',
           alt: '',
           downloadUrl: '',
         }, {
           navSrc: img6,
           src: img6,
-          fileType: 'docx',
+          fileType: 'jpg',
           alt: '',
           downloadUrl: '',
       }]

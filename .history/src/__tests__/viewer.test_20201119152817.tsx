@@ -597,13 +597,11 @@ describe('Viewer', () => {
       images: [{
         navSrc: img,
         src: img,
-        fileType: 'jpg',
         alt: 'lake',
         downloadUrl: '',
       }, {
         navSrc: img2,
         src: img2,
-        fileType: 'jpg',
         alt: 'mountain',
         downloadUrl: '',
         defaultSize: {
@@ -632,12 +630,10 @@ describe('Viewer', () => {
       images: [{
         navSrc: FAILED_IMG,
         src: FAILED_IMG,
-        fileType: 'jpg',
         alt: 'lake',
       }, {
         navSrc: img2,
         src: img2,
-        fileType: 'jpg',
         alt: 'mountain',
       }],
       defaultImg: {
@@ -661,7 +657,6 @@ describe('Viewer', () => {
       images: [{
         navSrc: img,
         src: img,
-        fileType: 'jpg',
         alt: 'lake',
         defaultSize: {
           width: 100,
@@ -670,7 +665,6 @@ describe('Viewer', () => {
       }, {
         navSrc: img2,
         src: img2,
-        fileType: 'jpg',
         alt: 'mountain',
       }],
       defaultScale: .5,
@@ -692,13 +686,11 @@ describe('Viewer', () => {
       images: [{
         navSrc: img,
         src: img,
-        fileType: 'jpg',
         alt: 'lake',
         downloadUrl: '',
       }, {
         navSrc: img2,
         src: img2,
-        fileType: 'jpg',
         alt: 'mountain',
         downloadUrl: '',
       }],
@@ -819,14 +811,12 @@ describe('Viewer', () => {
       images: [{
         navSrc: img,
         src: img,
-        fileType: 'jpg',
         alt: 'lake',
       }],
       onChangeImages: () => {
         return [{
           navSrc: img2,
           src: img2,
-          fileType: 'jpg',
           alt: 'mountain',
         }];
       },

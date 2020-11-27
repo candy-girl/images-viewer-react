@@ -144,7 +144,7 @@ export default function ViewerNav(props: ViewerNavProps) {
           onClick={() => { handleChangeImg(index); }}
           >
             <img 
-              src={item.fileType==='pdf' ? PDF : item.fileType==='xls' || item.fileType==='xlsx' ? EXCEL : item.fileType==='doc' || item.fileType==='docx' ? WORD : item.navSrc || FAILED} alt={item.alt} style={{width: navImgWidth}}/>
+              src={item.fileType==='pdf' ? PDF : item.fileType==='xls' || 'xlsx' ? EXCEL : item.fileType==='doc' || 'docx' ? WORD : item.navSrc || FAILED} alt={item.alt} style={{width: navImgWidth}}/>
           </li>,
           )
         }
