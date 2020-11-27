@@ -13,7 +13,7 @@ const img6 = require('./images/image6.jpg');
 import './index.less';
 import classNames from 'classnames';
 import { Button, List, Checkbox } from 'antd';
-import { ImageDecorator } from '../src/ViewerProps';
+import { ImageDecorator } from '../lib/ViewerProps';
 const ButtonGroup = Button.Group;
 
 interface State {
@@ -118,43 +118,37 @@ class App extends React.Component<any, Partial<State>> {
       images: [{
           navSrc: Failed,
           src: '',
-          fileType: 'jpg',
           alt: 'lake',
-          downloadUrl: 'https://infeng.github.io/react-viewer/59111ff2c38954887bc313887fe76e27.jpg'
+          downloadUrl: 'https://infeng.github.io/react-viewer/59111ff2c38954887bc313887fe76e27.jpg',
+          // fileType: 'jpg',
         }, {
           navSrc: img2,
           src: img2,
-          fileType: 'jpg',
           alt: 'mountain',
           downloadUrl: '',
         }, {
           navSrc: img,
           src: img,
-          fileType: 'pdf',
-          alt: '',
+          alt: 'pdf',
           downloadUrl: '',
         }, {
           navSrc: img3,
           src: img3,
-          fileType: 'excel',
           alt: '',
           downloadUrl: '',
         }, {
           navSrc: img4,
           src: img4,
-          fileType: 'word',
           alt: '',
           downloadUrl: '',
         }, {
           navSrc: img5,
           src: img5,
-          fileType: 'jpg',
           alt: '',
           downloadUrl: '',
         }, {
           navSrc: img6,
           src: img6,
-          fileType: 'jpg',
           alt: '',
           downloadUrl: '',
       }]
@@ -221,7 +215,6 @@ class App extends React.Component<any, Partial<State>> {
           images.unshift({
             navSrc: comment.user.avatarUrl,
             src: comment.user.avatarUrl,
-            fileType: 'jpg',
             alt: '',
             downloadUrl: '',
           });
@@ -251,7 +244,6 @@ class App extends React.Component<any, Partial<State>> {
           images.push({
             navSrc: comment.user.avatarUrl,
             src: comment.user.avatarUrl,
-            fileType: 'jpg',
             alt: '',
             downloadUrl: '',
           });

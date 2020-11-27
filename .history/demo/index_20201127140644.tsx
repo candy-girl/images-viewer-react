@@ -130,19 +130,19 @@ class App extends React.Component<any, Partial<State>> {
         }, {
           navSrc: img,
           src: img,
-          fileType: 'pdf',
-          alt: '',
+          fileType: 'excel',
+          alt: 'pdf',
           downloadUrl: '',
         }, {
           navSrc: img3,
           src: img3,
-          fileType: 'excel',
+          fileType: 'word',
           alt: '',
           downloadUrl: '',
         }, {
           navSrc: img4,
           src: img4,
-          fileType: 'word',
+          fileType: 'jpg',
           alt: '',
           downloadUrl: '',
         }, {

@@ -640,7 +640,6 @@ export default (props: ViewerProps) => {
   let activeImg: ImageDecorator = {
     navSrc: '',
     src: '',
-    fileType: 'jpg',
     alt: '',
   };
 

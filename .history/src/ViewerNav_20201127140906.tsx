@@ -143,8 +143,7 @@ export default function ViewerNav(props: ViewerNavProps) {
           style={liStyle}
           onClick={() => { handleChangeImg(index); }}
           >
-            <img 
-              src={item.fileType==='pdf' ? PDF : item.fileType==='excel' ? EXCEL : item.fileType==='word' ? WORD : item.navSrc || FAILED} alt={item.alt} style={{width: navImgWidth}}/>
+            <img src={item.fileType==='pdf' ? PDF : item.fileType==='excel' ? EXCEL : item.fileType==='word' ? WORD : item.navSrc || FAILED} alt={item.alt} style={{width: navImgWidth}}/>
           </li>,
           )
         }

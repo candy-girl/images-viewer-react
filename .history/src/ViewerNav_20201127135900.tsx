@@ -5,8 +5,8 @@ const PDF = require('./pdf.png');
 const FAILED = require('./failed.png');
 const ArrowLeft = require('./arrow-left.png');
 const ArrowRight = require('./arrow-right.png');
-const EXCEL = require('./images/excel@2x.png');
-const WORD = require('./images/word@2x.png');
+const EXCEL = require('./images/excel@2x.png')
+const WORD = require('./images/word@2x.png')
 
 export interface ViewerNavProps {
   prefixCls: string;
@@ -143,8 +143,7 @@ export default function ViewerNav(props: ViewerNavProps) {
           style={liStyle}
           onClick={() => { handleChangeImg(index); }}
           >
-            <img 
-              src={item.fileType==='pdf' ? PDF : item.fileType==='excel' ? EXCEL : item.fileType==='word' ? WORD : item.navSrc || FAILED} alt={item.alt} style={{width: navImgWidth}}/>
+            <img src={item.navSrc.endsWith('.pdf') ? EXCEL : item.navSrc || FAILED} alt={item.alt} style={{width: navImgWidth}}/>
           </li>,
           )
         }
