@@ -89,7 +89,7 @@
     "wolfy87-eventemitter": "^5.2.5"
   },
   "dependencies": {
-    "classnames": "^2.2.5"
+    "classnames": "^2.2.5",
   },
   "pre-commit": [
     "lint"

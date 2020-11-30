@@ -89,7 +89,8 @@
     "wolfy87-eventemitter": "^5.2.5"
   },
   "dependencies": {
-    "classnames": "^2.2.5"
+    "classnames": "^2.2.5",
+    "react-pdf": "^5.0.0"
   },
   "pre-commit": [
     "lint"
