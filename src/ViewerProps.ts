@@ -68,6 +68,10 @@ interface ViewerProps {
 
   /** 是否显示下载按钮 */
   downloadable?: boolean;
+
+  /** 是否显示打印按钮 */
+  printable?: boolean;
+
   /** 图片是否可循环 */
   loop?: boolean;
 

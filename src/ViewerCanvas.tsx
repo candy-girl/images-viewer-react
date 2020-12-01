@@ -33,13 +33,13 @@ export interface ViewerCanvasState {
   mouseY?: number;
 }
 
-export default function ViewerCanvas(props: ViewerCanvasProps) {
+const ViewerCanvas = (props: ViewerCanvasProps, imageRef: React.MutableRefObject<HTMLImageElement>) => {
   const isMouseDown = React.useRef(false);
   const prePosition = React.useRef({
     x: 0,
     y: 0,
   });
-  const [ position, setPosition ] = React.useState({
+  const [position, setPosition] = React.useState({
     x: 0,
     y: 0,
   });
@@ -163,6 +163,7 @@ translateX(${props.left !== null ? props.left + 'px' : 'aoto'}) translateY(${pro
       style={imgStyle}
       type="application/pdf"
     /> : imgNode = <img
+      ref={imageRef}
       className={imgClass}
       src={props.imgSrc}
       style={imgStyle}
@@ -179,18 +180,20 @@ translateX(${props.left !== null ? props.left + 'px' : 'aoto'}) translateY(${pro
           alignItems: 'center',
         }}
       >
-        <Loading/>
+        <Loading />
       </div>
     );
   }
 
   return (
     <div
-    className={`${props.prefixCls}-canvas`}
-    onMouseDown={handleCanvasMouseDown}
-    style={style}
+      className={`${props.prefixCls}-canvas`}
+      onMouseDown={handleCanvasMouseDown}
+      style={style}
     >
       {imgNode}
     </div>
   );
-}
+};
+
+export default React.forwardRef(ViewerCanvas);
