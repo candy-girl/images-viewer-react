@@ -45,6 +45,9 @@ export default function ViewerNav(props: ViewerNavProps) {
   }, [activeIndex]);
 
   function move() {
+    if (props.images.length <= 6) {
+      return;
+    }
     // 移动缩略图
     const itemOffset = navImgWidth + 10;
     const leftIndex = -marginValue / itemOffset;
@@ -143,8 +146,10 @@ export default function ViewerNav(props: ViewerNavProps) {
           style={liStyle}
           onClick={() => { handleChangeImg(index); }}
           >
-            <img 
-              src={item.fileType==='pdf' ? PDF : item.fileType==='xls' || item.fileType==='xlsx' ? EXCEL : item.fileType==='doc' || item.fileType==='docx' ? WORD : item.navSrc || FAILED} alt={item.alt} style={{width: navImgWidth}}/>
+            <img src={item.fileType === 'pdf' ?
+              PDF : item.fileType === 'xls' || item.fileType === 'xlsx'
+                ? EXCEL : item.fileType === 'doc' || item.fileType === 'docx'
+                  ? WORD : item.navSrc || FAILED} alt={item.alt} style={{ width: navImgWidth }} />
           </li>,
           )
         }
