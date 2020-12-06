@@ -7,7 +7,6 @@ import ViewerProps, { ImageDecorator, ToolbarConfig } from './ViewerProps';
 import Icon, { ActionType } from './Icon';
 import * as constants from './constants';
 import classnames from 'classnames';
-import ReactToPrint from 'react-to-print';
 
 function noop() { }
 
@@ -75,7 +74,7 @@ export default (props: ViewerProps) => {
     noToolbar = false,
     showTotal = true,
     minScale = 0.1,
-   } = props;
+  } = props;
 
   const initialState: ViewerCoreState = {
     visible: false,
@@ -210,22 +209,23 @@ export default (props: ViewerProps) => {
     }
   }, [activeIndex, visible, images]);
 
-  function processPrint(toolbars: ToolbarConfig[]) {
-    return toolbars.map(toolbar => {
-      if (toolbar.actionType === ActionType.print) {
-        toolbar.render = (<ReactToPrint
-          trigger={() => {
-            // NOTE: could just as easily return <SomeComponent />. Do NOT pass an `onClick` prop
-            // to the root node of the returned component as it will be overwritten.
-            // return <Icon type={ActionType.print} />;
-            return <div>P</div>;
-          }}
-          content={() => imageRef.current}
-        />);
-      }
-      return toolbar;
-    });
-  }
+  // function processPrint(toolbars: ToolbarConfig[]) {
+  //   return toolbars.map(toolbar => {
+  //     if (toolbar.actionType === ActionType.print) {
+  //       toolbar.render = (<ReactToPrint
+  //         trigger={() => {
+  //           // NOTE: could just as easily return <SomeComponent />. Do NOT pass an `onClick` prop
+  //           // to the root node of the returned component as it will be overwritten.
+  //           // return <Icon type={ActionType.print} />;
+  //           console.log('print');
+  //           return <div>P</div>;
+  //         }}
+  //         content={() => imageRef.current}
+  //       />);
+  //     }
+  //     return toolbar;
+  //   });
+  // }
 
   function loadImg(currentActiveIndex, isReset = false) {
     dispatch(createAction(ACTION_TYPES.update, {
@@ -382,7 +382,9 @@ export default (props: ViewerProps) => {
   }
 
   function handlePrint() {
-    console.log(imageRef);
+    console.log(imageRef.current);
+    imageRef.current.print();
+    // toPrint();
   }
 
   function handleDownload() {
@@ -737,7 +739,7 @@ export default (props: ViewerProps) => {
               downloadable={downloadable}
               printable={printable}
               noImgDetails={noImgDetails}
-              toolbars={customToolbar(processPrint(defaultToolbars))}
+              toolbars={customToolbar(defaultToolbars)}
               activeIndex={state.activeIndex}
               count={images.length}
               showTotal={showTotal}

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Loading from './Loading';
 import classnames from 'classnames';
+import { useReactToPrint } from 'react-to-print';
 import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/umd/Page/AnnotationLayer.css';
 import PdfjsWorker from './pdf.worker.entry';
@@ -33,7 +34,7 @@ export interface ViewerCanvasState {
   mouseY?: number;
 }
 
-const ViewerCanvas = (props: ViewerCanvasProps, imageRef: React.MutableRefObject<HTMLImageElement>) => {
+const ViewerCanvas = (props: ViewerCanvasProps, imageRef: React.MutableRefObject<HTMLElement>) => {
   const isMouseDown = React.useRef(false);
   const prePosition = React.useRef({
     x: 0,
@@ -158,8 +159,75 @@ translateX(${props.left !== null ? props.left + 'px' : 'aoto'}) translateY(${pro
 
   const [totalPages, settotalPages] = React.useState(1);
 
-  const onDocumentLoadSuccess = ({ numPages: nextNumPages }) => {
-    settotalPages(nextNumPages);
+  const [pageNo, setPageNo] = React.useState(1);
+
+  const [content, setContent] = React.useState([]);
+
+  const loadSizeRef = React.useRef(0);
+  const printRef = React.useRef(null);
+
+  const pageSize = 5;
+
+  const toPrint = useReactToPrint({
+    content: () => printRef.current,
+  });
+
+  const print = () => {
+    console.log(printRef.current);
+    toPrint();
+  };
+
+  React.useImperativeHandle(imageRef, () => ({
+    ...printRef.current,
+    print,
+  }), []);
+
+  const onRenderSuccess = ({ pageNumber }) => {
+    loadSizeRef.current = loadSizeRef.current + 1;
+    console.log(loadSizeRef.current);
+    console.log(`第${pageNumber}页已经加载完成`);
+    if (loadSizeRef.current === pageNo * pageSize || loadSizeRef.current === totalPages) {
+      console.log(`${loadSizeRef.current}全部加载完成`);
+    }
+    if (loadSizeRef.current === totalPages) {
+      toPrint();
+    }
+  };
+
+  const onDocumentLoadSuccess = ({ numPages }) => {
+    setPageNo(1);
+    settotalPages(numPages);
+    loadSizeRef.current = 0;
+    let currentSize = numPages;
+    if (numPages > pageSize) {
+      currentSize = pageSize;
+    }
+    setContent(new Array(currentSize).fill('').map((_, index) => {
+        return <Page onRenderSuccess={onRenderSuccess} renderTextLayer={false} key={index} pageNumber={index + 1} style={{display: 'none'}} />;
+    }));
+  };
+
+  const onScrollHandler = (e) => {
+    const { clientHeight, scrollTop, scrollHeight } = e.target;
+    // console.log(scrollTop);
+    // console.log(clientHeight);
+    // console.log(scrollHeight);
+    // 3 屏加载下一页
+    if (clientHeight * 3 + scrollTop >= scrollHeight) {
+      console.log('触发');
+      const size = pageNo * pageSize;
+      if (totalPages > size) {
+        let currentSize = pageSize;
+        const oldContent = content.slice();
+        if (totalPages <= size + pageSize) {
+          currentSize = totalPages - size;
+        }
+        setContent(oldContent.concat(new Array(currentSize).fill('').map((_, index) => {
+          return <Page onRenderSuccess={onRenderSuccess} renderTextLayer={false} key={(size) + index} pageNumber={(size) + index + 1} style={{ display: 'none' }} />;
+        })));
+        setPageNo(no => no + 1);
+      }
+    }
   };
 
   const options = {
@@ -171,17 +239,23 @@ translateX(${props.left !== null ? props.left + 'px' : 'aoto'}) translateY(${pro
     props.imgSrc.endsWith('.pdf') ? imgNode = <Document
       className={imgClass}
       file={props.imgSrc}
+      key={props.imgSrc}
       options={options}
       style={imgStyle}
       onLoadSuccess={onDocumentLoadSuccess}
     >
-    {
-      new Array(totalPages).fill('').map((_, index) => {
-        return <Page renderTextLayer={false} key={index} pageNumber={index + 1} style={{display: 'none'}} />;
-      })
-    }
+      <div style={{width: '100%', height: '100%', overflowY: 'scroll'}} onScroll={onScrollHandler}>
+        <div ref={printRef}>
+          {
+            // new Array(totalPages).fill('').map((_, index) => {
+            //   return <Page renderTextLayer={false} key={index} pageNumber={index + 1} style={{display: 'none'}} />;
+            // })
+            content
+          }
+        </div>
+      </div>
     </Document> : imgNode = <img
-      ref={imageRef}
+      ref={printRef}
       className={imgClass}
       src={props.imgSrc}
       style={imgStyle}
