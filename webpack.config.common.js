@@ -1,6 +1,7 @@
 const path = require('path');
 const Config = require('webpack-chain');
 const autoprefixer = require('autoprefixer');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const DEFAULT_BROWSERS = [
@@ -18,7 +19,14 @@ config
     .end()
   .output
     .path(path.resolve(__dirname, 'dist'))
-    .filename('index.js');
+  .filename('index.js');
+
+config.plugin('CopyWebpackPlugin').use(CopyWebpackPlugin, [{
+  patterns: [{
+    from: 'node_modules/pdfjs-dist/cmaps/',
+    to: 'cmaps/'
+  }]
+}])
 
 config.module
   .rule('tsx')

@@ -1,11 +1,11 @@
 import * as React from 'react';
 import Loading from './Loading';
 import classnames from 'classnames';
-// import { Document, Page, pdfjs } from 'react-pdf';
-// import 'react-pdf/dist/umd/Page/AnnotationLayer.css';
-// import PdfjsWorker from './pdf.worker.entry';
+import { Document, Page, pdfjs } from 'react-pdf';
+import 'react-pdf/dist/umd/Page/AnnotationLayer.css';
+import PdfjsWorker from './pdf.worker.entry';
 
-// pdfjs.GlobalWorkerOptions.workerPort = new PdfjsWorker();
+pdfjs.GlobalWorkerOptions.workerPort = new PdfjsWorker();
 
 export interface ViewerCanvasProps {
   prefixCls: string;
@@ -156,13 +156,31 @@ translateX(${props.left !== null ? props.left + 'px' : 'aoto'}) translateY(${pro
 
   let imgNode = null;
 
+  const [totalPages, settotalPages] = React.useState(1);
+
+  const onDocumentLoadSuccess = ({ numPages: nextNumPages }) => {
+    settotalPages(nextNumPages);
+  }
+
+  const options = {
+    cMapUrl: 'cmaps/',
+    cMapPacked: true,
+  };
+
   if (props.imgSrc !== '') {
-    props.imgSrc.endsWith('.pdf') ? imgNode = <embed
+    props.imgSrc.endsWith('.pdf') ? imgNode = <Document
       className={imgClass}
-      src={props.imgSrc}
+      file={props.imgSrc}
+      options={options}
       style={imgStyle}
-      type="application/pdf"
-    /> : imgNode = <img
+      onLoadSuccess={onDocumentLoadSuccess}
+    >
+    {
+      new Array(totalPages).fill('').map((_, index) => {
+        return <Page renderTextLayer={false} key={index} pageNumber={index + 1} style={{display: 'none'}} />;
+      })
+    }
+    </Document> : imgNode = <img
       ref={imageRef}
       className={imgClass}
       src={props.imgSrc}

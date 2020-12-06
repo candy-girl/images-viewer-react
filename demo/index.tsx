@@ -2,8 +2,9 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import Viewer from '../src/Viewer';
 const Failed  = require('./images/failed.png');
-const PDF = require('./images/pdf.png')
-const img = require('./images/image.pdf')
+const PDF = require('./images/pdf.png');
+const img = require('./images/image.pdf');
+const img1 = require('./images/100.pdf');
 // const img1 = require('./images/image1.jpg');
 const img2 = require('./images/image2.jpg');
 const img3 = require('./images/image3.jpg');
@@ -130,6 +131,12 @@ class App extends React.Component<any, Partial<State>> {
         }, {
           navSrc: img,
           src: img,
+          fileType: 'pdf',
+          alt: '',
+          downloadUrl: '',
+        }, {
+          navSrc: img1,
+          src: img1,
           fileType: 'pdf',
           alt: '',
           downloadUrl: '',
@@ -364,6 +371,7 @@ class App extends React.Component<any, Partial<State>> {
             activeIndex={this.state.activeIndex}
             container={inline ? this.container : null}
             downloadable={true}
+            printable={true}
             onChange={(activeImage, index) => console.log(111,activeImage, index)}
             defaultImg={defaultImg}
             // onPreButton={getPreData}
