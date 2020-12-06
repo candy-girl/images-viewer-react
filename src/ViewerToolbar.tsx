@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Icon, { ActionType } from './Icon';
 import { ToolbarConfig } from './ViewerProps';
+import ReactToPrint from 'react-to-print';
 
 export interface ViewerToolbarProps {
   prefixCls: string;
@@ -14,6 +15,7 @@ export interface ViewerToolbarProps {
   scalable: boolean;
   changeable: boolean;
   downloadable: boolean;
+  printable: boolean;
   noImgDetails: boolean;
   toolbars: ToolbarConfig[];
   activeIndex: number;
@@ -62,6 +64,18 @@ export const defaultToolbars: ToolbarConfig[] = [
    key: 'download',
    actionType: ActionType.download,
  },
+ {
+   key: 'print',
+   actionType: ActionType.print,
+   render: (ref) => (<ReactToPrint
+      trigger={() => {
+        // NOTE: could just as easily return <SomeComponent />. Do NOT pass an `onClick` prop
+        // to the root node of the returned component as it will be overwritten.
+        return <Icon type={ActionType.print}/>;
+      }}
+      content={() => ref}
+   />),
+ },
 ];
 
 function deleteToolbarFromKey(toolbars: ToolbarConfig[], keys: string[]) {
@@ -92,7 +106,7 @@ export default function ViewerToolbar(props: ViewerToolbarProps) {
         onClick={() => {handleAction(config); }}
         data-key={config.key}
       >
-          {content}
+        {content}
       </li>
     );
   }
@@ -107,6 +121,7 @@ export default function ViewerToolbar(props: ViewerToolbarProps) {
     </p>
   ) : null;
   let toolbars = props.toolbars;
+  console.log(toolbars);
   if (!props.zoomable) {
     toolbars = deleteToolbarFromKey(toolbars, ['zoomIn', 'zoomOut']);
   }
@@ -121,6 +136,9 @@ export default function ViewerToolbar(props: ViewerToolbarProps) {
   }
   if (!props.downloadable) {
     toolbars = deleteToolbarFromKey(toolbars, ['download']);
+  }
+  if (!props.printable) {
+    toolbars = deleteToolbarFromKey(toolbars, ['print']);
   }
   return (
     <div>

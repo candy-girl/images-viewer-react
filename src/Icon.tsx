@@ -12,6 +12,7 @@ export enum ActionType {
   scaleX = 9,
   scaleY = 10,
   download = 11,
+  print = 12,
 }
 
 export interface IconProps {

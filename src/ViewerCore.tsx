@@ -7,6 +7,7 @@ import ViewerProps, { ImageDecorator, ToolbarConfig } from './ViewerProps';
 import Icon, { ActionType } from './Icon';
 import * as constants from './constants';
 import classnames from 'classnames';
+import ReactToPrint from 'react-to-print';
 
 function noop() { }
 
@@ -69,6 +70,7 @@ export default (props: ViewerProps) => {
     loop = true,
     // disableMouseZoom = false,
     downloadable = false,
+    printable = false,
     noImgDetails = false,
     noToolbar = false,
     showTotal = true,
@@ -149,6 +151,7 @@ export default (props: ViewerProps) => {
   const viewerCore = React.useRef<HTMLDivElement>(null);
   const init = React.useRef(false);
   const currentLoadIndex = React.useRef(0);
+  const imageRef = React.useRef(null);
   const [ state, dispatch ] = React.useReducer<(s: any, a: any) => ViewerCoreState>(reducer, initialState);
 
   React.useEffect(() => {
@@ -206,6 +209,23 @@ export default (props: ViewerProps) => {
       }));
     }
   }, [activeIndex, visible, images]);
+
+  function processPrint(toolbars: ToolbarConfig[]) {
+    return toolbars.map(toolbar => {
+      if (toolbar.actionType === ActionType.print) {
+        toolbar.render = (<ReactToPrint
+          trigger={() => {
+            // NOTE: could just as easily return <SomeComponent />. Do NOT pass an `onClick` prop
+            // to the root node of the returned component as it will be overwritten.
+            // return <Icon type={ActionType.print} />;
+            return <div>P</div>;
+          }}
+          content={() => imageRef.current}
+        />);
+      }
+      return toolbar;
+    });
+  }
 
   function loadImg(currentActiveIndex, isReset = false) {
     dispatch(createAction(ACTION_TYPES.update, {
@@ -361,6 +381,10 @@ export default (props: ViewerProps) => {
     return activeImg2;
   }
 
+  function handlePrint() {
+    console.log(imageRef);
+  }
+
   function handleDownload() {
     const activeImage = getActiveImage();
     if (activeImage.downloadUrl) {
@@ -423,6 +447,9 @@ export default (props: ViewerProps) => {
         break;
       case ActionType.download:
         handleDownload();
+        break;
+      case ActionType.print:
+        handlePrint();
         break;
       default:
         break;
@@ -674,6 +701,7 @@ export default (props: ViewerProps) => {
         </div>
       )}
       <ViewerCanvas
+        ref={imageRef}
         prefixCls={prefixCls}
         imgSrc={state.loadFailed && !activeImg.src.endsWith('.pdf') ? (props.defaultImg.src || activeImg.src) : activeImg.src}
         visible={visible}
@@ -707,8 +735,9 @@ export default (props: ViewerProps) => {
               scalable={scalable}
               changeable={changeable}
               downloadable={downloadable}
+              printable={printable}
               noImgDetails={noImgDetails}
-              toolbars={customToolbar(defaultToolbars)}
+              toolbars={customToolbar(processPrint(defaultToolbars))}
               activeIndex={state.activeIndex}
               count={images.length}
               showTotal={showTotal}
