@@ -45,6 +45,9 @@ export default function ViewerNav(props: ViewerNavProps) {
   }, [activeIndex]);
 
   function move() {
+    if (props.images.length <= 6) {
+      return;
+    }
     // 移动缩略图
     const itemOffset = navImgWidth + 10;
     const leftIndex = -marginValue / itemOffset;

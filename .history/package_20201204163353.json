@@ -50,7 +50,6 @@
     "babel-jest": "^23.4.2",
     "babel-loader": "^8.0.6",
     "babel-plugin-import": "^1.2.1",
-    "copy-webpack-plugin": "^6.3.2",
     "css-loader": "^3.2.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
@@ -90,9 +89,7 @@
     "wolfy87-eventemitter": "^5.2.5"
   },
   "dependencies": {
-    "classnames": "^2.2.5",
-    "react-pdf": "^5.0.0",
-    "react-to-print": "^2.12.0"
+    "classnames": "^2.2.5"
   },
   "pre-commit": [
     "lint"

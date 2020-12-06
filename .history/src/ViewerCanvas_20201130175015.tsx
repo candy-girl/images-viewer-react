@@ -1,11 +1,11 @@
 import * as React from 'react';
 import Loading from './Loading';
 import classnames from 'classnames';
-import { Document, Page, pdfjs } from 'react-pdf';
-import 'react-pdf/dist/umd/Page/AnnotationLayer.css';
-import PdfjsWorker from './pdf.worker.entry';
+// import { Document, Page, pdfjs } from 'react-pdf';
+// import 'react-pdf/dist/umd/Page/AnnotationLayer.css';
+// import PdfjsWorker from './pdf.worker.entry';
 
-pdfjs.GlobalWorkerOptions.workerPort = new PdfjsWorker();
+// pdfjs.GlobalWorkerOptions.workerPort = new PdfjsWorker();
 
 export interface ViewerCanvasProps {
   prefixCls: string;
@@ -33,13 +33,13 @@ export interface ViewerCanvasState {
   mouseY?: number;
 }
 
-const ViewerCanvas = (props: ViewerCanvasProps, imageRef: React.MutableRefObject<HTMLImageElement>) => {
+export default function ViewerCanvas(props: ViewerCanvasProps) {
   const isMouseDown = React.useRef(false);
   const prePosition = React.useRef({
     x: 0,
     y: 0,
   });
-  const [position, setPosition] = React.useState({
+  const [ position, setPosition ] = React.useState({
     x: 0,
     y: 0,
   });
@@ -156,32 +156,13 @@ translateX(${props.left !== null ? props.left + 'px' : 'aoto'}) translateY(${pro
 
   let imgNode = null;
 
-  const [totalPages, settotalPages] = React.useState(1);
-
-  const onDocumentLoadSuccess = ({ numPages: nextNumPages }) => {
-    settotalPages(nextNumPages);
-  };
-
-  const options = {
-    cMapUrl: 'cmaps/',
-    cMapPacked: true,
-  };
-
   if (props.imgSrc !== '') {
-    props.imgSrc.endsWith('.pdf') ? imgNode = <Document
+    props.imgSrc.endsWith('.pdf') ? imgNode = <embed
       className={imgClass}
-      file={props.imgSrc}
-      options={options}
+      src={props.imgSrc}
       style={imgStyle}
-      onLoadSuccess={onDocumentLoadSuccess}
-    >
-    {
-      new Array(totalPages).fill('').map((_, index) => {
-        return <Page renderTextLayer={false} key={index} pageNumber={index + 1} style={{display: 'none'}} />;
-      })
-    }
-    </Document> : imgNode = <img
-      ref={imageRef}
+      type="application/pdf"
+    /> : imgNode = <img
       className={imgClass}
       src={props.imgSrc}
       style={imgStyle}
@@ -198,20 +179,18 @@ translateX(${props.left !== null ? props.left + 'px' : 'aoto'}) translateY(${pro
           alignItems: 'center',
         }}
       >
-        <Loading />
+        <Loading/>
       </div>
     );
   }
 
   return (
     <div
-      className={`${props.prefixCls}-canvas`}
-      onMouseDown={handleCanvasMouseDown}
-      style={style}
+    className={`${props.prefixCls}-canvas`}
+    onMouseDown={handleCanvasMouseDown}
+    style={style}
     >
       {imgNode}
     </div>
   );
-};
-
-export default React.forwardRef(ViewerCanvas);
+}
