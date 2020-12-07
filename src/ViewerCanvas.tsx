@@ -33,7 +33,7 @@ export interface ViewerCanvasState {
   mouseY?: number;
 }
 
-const ViewerCanvas = (props: ViewerCanvasProps, imageRef: React.MutableRefObject<HTMLImageElement>) => {
+const ViewerCanvas = (props: ViewerCanvasProps, printRef: React.MutableRefObject<HTMLImageElement>) => {
   const isMouseDown = React.useRef(false);
   const prePosition = React.useRef({
     x: 0,
@@ -158,8 +158,8 @@ translateX(${props.left !== null ? props.left + 'px' : 'aoto'}) translateY(${pro
 
   const [totalPages, settotalPages] = React.useState(1);
 
-  const onDocumentLoadSuccess = ({ numPages: nextNumPages }) => {
-    settotalPages(nextNumPages);
+  const onDocumentLoadSuccess = ({ numPages }) => {
+    settotalPages(numPages);
   };
 
   const options = {
@@ -175,13 +175,15 @@ translateX(${props.left !== null ? props.left + 'px' : 'aoto'}) translateY(${pro
       style={imgStyle}
       onLoadSuccess={onDocumentLoadSuccess}
     >
-    {
-      new Array(totalPages).fill('').map((_, index) => {
-        return <Page renderTextLayer={false} key={index} pageNumber={index + 1} style={{display: 'none'}} />;
-      })
-    }
+      <div ref={printRef}>
+        {
+          new Array(totalPages).fill('').map((_, index) => {
+            return <Page renderTextLayer={false} key={index} pageNumber={index + 1} style={{display: 'none'}} />;
+          })
+        }
+      </div>
     </Document> : imgNode = <img
-      ref={imageRef}
+      ref={printRef}
       className={imgClass}
       src={props.imgSrc}
       style={imgStyle}
