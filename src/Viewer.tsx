@@ -3,7 +3,11 @@ import * as ReactDOM from 'react-dom';
 import ViewerCore from './ViewerCore';
 import ViewerProps from './ViewerProps';
 
-export default (props: ViewerProps) => {
+export interface ViewerRef {
+  toPrint: () => void;
+}
+
+export default React.forwardRef((props: ViewerProps, viewerRef: React.MutableRefObject<ViewerRef>) => {
   const defaultContainer = React.useRef(typeof document !== 'undefined' ? document.createElement('div') : null);
   const [ container, setContainer ] = React.useState(props.container);
   const [ init, setInit ] = React.useState(false);
@@ -31,7 +35,8 @@ export default (props: ViewerProps) => {
   }
   return ReactDOM.createPortal((
     <ViewerCore
+      ref={viewerRef}
       {...props}
     />
   ), container);
-};
+});

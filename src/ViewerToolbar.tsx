@@ -113,7 +113,6 @@ export default function ViewerToolbar(props: ViewerToolbarProps) {
     </p>
   ) : null;
   let toolbars = props.toolbars;
-  console.log(toolbars);
   if (!props.zoomable) {
     toolbars = deleteToolbarFromKey(toolbars, ['zoomIn', 'zoomOut']);
   }
