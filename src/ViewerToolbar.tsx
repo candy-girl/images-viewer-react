@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Icon, { ActionType } from './Icon';
 import { ToolbarConfig } from './ViewerProps';
-import ReactToPrint from 'react-to-print';
 
 export interface ViewerToolbarProps {
   prefixCls: string;
@@ -24,58 +23,51 @@ export interface ViewerToolbarProps {
 }
 
 export const defaultToolbars: ToolbarConfig[] = [
- {
-   key: 'zoomIn',
-   actionType: ActionType.zoomIn,
- },
- {
-   key: 'zoomOut',
-   actionType: ActionType.zoomOut,
- },
- {
-   key: 'prev',
-   actionType: ActionType.prev,
- },
- {
-   key: 'reset',
-   actionType: ActionType.reset,
- },
- {
-   key: 'next',
-   actionType: ActionType.next,
- },
- {
-   key: 'rotateLeft',
-   actionType: ActionType.rotateLeft,
- },
- {
-   key: 'rotateRight',
-   actionType: ActionType.rotateRight,
- },
- {
-   key: 'scaleX',
-   actionType: ActionType.scaleX,
- },
- {
-   key: 'scaleY',
-   actionType: ActionType.scaleY,
- },
- {
-   key: 'download',
-   actionType: ActionType.download,
- },
- {
-   key: 'print',
-   actionType: ActionType.print,
-   render: (ref) => (<ReactToPrint
-      trigger={() => {
-        // NOTE: could just as easily return <SomeComponent />. Do NOT pass an `onClick` prop
-        // to the root node of the returned component as it will be overwritten.
-        return <Icon type={ActionType.print}/>;
-      }}
-      content={() => ref}
-   />),
- },
+  {
+    key: 'zoomIn',
+    actionType: ActionType.zoomIn,
+  },
+  {
+    key: 'zoomOut',
+    actionType: ActionType.zoomOut,
+  },
+  {
+    key: 'prev',
+    actionType: ActionType.prev,
+  },
+  {
+    key: 'reset',
+    actionType: ActionType.reset,
+  },
+  {
+    key: 'next',
+    actionType: ActionType.next,
+  },
+  {
+    key: 'rotateLeft',
+    actionType: ActionType.rotateLeft,
+  },
+  {
+    key: 'rotateRight',
+    actionType: ActionType.rotateRight,
+  },
+  {
+    key: 'scaleX',
+    actionType: ActionType.scaleX,
+  },
+  {
+    key: 'scaleY',
+    actionType: ActionType.scaleY,
+  },
+  {
+    key: 'download',
+    actionType: ActionType.download,
+  },
+  {
+    key: 'print',
+    actionType: ActionType.print,
+    render: <div>P</div>,
+  },
 ];
 
 function deleteToolbarFromKey(toolbars: ToolbarConfig[], keys: string[]) {
