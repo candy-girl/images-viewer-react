@@ -369,6 +369,7 @@ export default (props: ViewerProps) => {
   }
 
   function handlePrint() {
+    console.log(printRef);
     reactToPrint();
   }
 

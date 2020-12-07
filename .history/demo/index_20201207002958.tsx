@@ -11,7 +11,6 @@ const img3 = require('./images/image3.jpg');
 const img4 = require('./images/image4.jpg');
 const img5 = require('./images/image5.jpg');
 const img6 = require('./images/image6.jpg');
-const img7 = require('./images/image7.jpg');
 import './index.less';
 import classNames from 'classnames';
 import { Button, List, Checkbox } from 'antd';
@@ -165,13 +164,7 @@ class App extends React.Component<any, Partial<State>> {
           fileType: 'docx',
           alt: '',
           downloadUrl: '',
-      }, {
-        navSrc: img7,
-        src: img7,
-        fileType: 'jpg',
-        alt: '',
-        downloadUrl: '',
-    }]
+      }]
     };
     optionData.forEach(item => {
       if (item.value === undefined) {
