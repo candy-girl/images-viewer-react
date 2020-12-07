@@ -38,6 +38,7 @@ export default function ViewerNav(props: ViewerNavProps) {
   });
 
   React.useEffect(() => {
+    console.log(preActiveIndex);
     fetchData(activeIndex);
     move();
     preActiveIndex.current = activeIndex;
@@ -149,7 +150,7 @@ export default function ViewerNav(props: ViewerNavProps) {
                 item.fileType === 'pdf'
                   ? PDF : item.fileType === 'xls' || item.fileType === 'xlsx'
                     ? EXCEL : item.fileType === 'doc' || item.fileType === 'docx'
-                    ? WORD : item.navSrc || FAILED} alt={item.alt}
+                    ? WORD : item.navSrc || FAILED} alt={item.alt} style={{ width: navImgWidth }}
             />
           </li>,
           )
