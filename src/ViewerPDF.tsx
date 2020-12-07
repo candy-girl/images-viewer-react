@@ -115,15 +115,6 @@ const ViewerPDF = (props: ViewerPDFProps, printRef: React.MutableRefObject<Print
     // }));
   };
 
-  const hasMore = () => {
-    // 已加载的数据
-    const size = pageNo * pageSize;
-    if (totalPages > size) {
-      return true;
-    }
-    return false;
-  };
-
   const loadNextPage = () => {
     const currentSize = pageNo * pageSize;
     const nextSize = (pageNo + 1) * pageSize;
@@ -164,7 +155,8 @@ const ViewerPDF = (props: ViewerPDFProps, printRef: React.MutableRefObject<Print
     // 3 屏加载下一页
     if (clientHeight * 3 + scrollTop >= scrollHeight) {
       console.log('加载下一页');
-      if (hasMore() && !loading) {
+      const hasMore = totalPages > loadSuccessSize.current;
+      if (hasMore && !loading) {
         setPageNo(pageNo + 1);
         setLoading(true);
       }
