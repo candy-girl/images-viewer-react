@@ -7,7 +7,7 @@ import ViewerProps, { ImageDecorator, ToolbarConfig } from './ViewerProps';
 import Icon, { ActionType } from './Icon';
 import * as constants from './constants';
 import classnames from 'classnames';
-import { useReactToPrint } from 'react-to-print';
+import { ViewerRef } from './Viewer';
 
 function noop() { }
 
@@ -46,7 +46,7 @@ export interface ViewerCoreState {
   startLoading: boolean;
 }
 
-export default (props: ViewerProps) => {
+export default React.forwardRef((props: ViewerProps, viewerRef: React.MutableRefObject<ViewerRef>) => {
   const {
     visible = false,
     onClose = noop,
@@ -75,7 +75,7 @@ export default (props: ViewerProps) => {
     noToolbar = false,
     showTotal = true,
     minScale = 0.1,
-   } = props;
+  } = props;
 
   const initialState: ViewerCoreState = {
     visible: false,
@@ -151,12 +151,9 @@ export default (props: ViewerProps) => {
   const viewerCore = React.useRef<HTMLDivElement>(null);
   const init = React.useRef(false);
   const currentLoadIndex = React.useRef(0);
-  const printRef = React.useRef(null);
   const [ state, dispatch ] = React.useReducer<(s: any, a: any) => ViewerCoreState>(reducer, initialState);
 
-  const reactToPrint = useReactToPrint({
-    content: () => printRef.current,
-  });
+  const printRef = viewerRef ? viewerRef : React.useRef(null);
 
   React.useEffect(() => {
     init.current = true;
@@ -369,7 +366,7 @@ export default (props: ViewerProps) => {
   }
 
   function handlePrint() {
-    reactToPrint();
+    printRef.current?.toPrint();
   }
 
   function handleDownload() {
@@ -745,4 +742,4 @@ export default (props: ViewerProps) => {
       )}
     </div>
   );
-};
+});

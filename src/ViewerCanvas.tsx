@@ -1,11 +1,13 @@
 import * as React from 'react';
 import Loading from './Loading';
-import classnames from 'classnames';
-import { Document, Page, pdfjs } from 'react-pdf';
-import 'react-pdf/dist/umd/Page/AnnotationLayer.css';
-import PdfjsWorker from './pdf.worker.entry';
+// import classnames from 'classnames';
+// import { useReactToPrint } from 'react-to-print';
+// import { Document, Page, pdfjs } from 'react-pdf';
+// import 'react-pdf/dist/umd/Page/AnnotationLayer.css';
+// import PdfjsWorker from './pdf.worker.entry';
+import ViewerPDF from './ViewerPDF';
 
-pdfjs.GlobalWorkerOptions.workerPort = new PdfjsWorker();
+// pdfjs.GlobalWorkerOptions.workerPort = new PdfjsWorker();
 
 export interface ViewerCanvasProps {
   prefixCls: string;
@@ -33,7 +35,8 @@ export interface ViewerCanvasState {
   mouseY?: number;
 }
 
-const ViewerCanvas = (props: ViewerCanvasProps, printRef: React.MutableRefObject<HTMLImageElement>) => {
+const ViewerCanvas = (props: ViewerCanvasProps, printRef) => {
+
   const isMouseDown = React.useRef(false);
   const prePosition = React.useRef({
     x: 0,
@@ -137,18 +140,18 @@ const ViewerCanvas = (props: ViewerCanvasProps, printRef: React.MutableRefObject
     document[funcName]('mousemove', handleMouseMove, false);
   }
 
-  let imgStyle: React.CSSProperties = {
-    width: `${props.width}px`,
-    height: `${props.height}px`,
-    transform: `
-translateX(${props.left !== null ? props.left + 'px' : 'aoto'}) translateY(${props.top}px)
-    rotate(${props.rotate}deg) scaleX(${props.scaleX}) scaleY(${props.scaleY})`,
-  };
+//   let imgStyle: React.CSSProperties = {
+//     width: `${props.width}px`,
+//     height: `${props.height}px`,
+//     transform: `
+// translateX(${props.left !== null ? props.left + 'px' : 'aoto'}) translateY(${props.top}px)
+//     rotate(${props.rotate}deg) scaleX(${props.scaleX}) scaleY(${props.scaleY})`,
+//   };
 
-  const imgClass = classnames(`${props.prefixCls}-image`, {
-    drag: props.drag,
-    [`${props.prefixCls}-image-transition`]: !isMouseDown.current,
-  });
+//   const imgClass = classnames(`${props.prefixCls}-image`, {
+//     drag: props.drag,
+//     [`${props.prefixCls}-image-transition`]: !isMouseDown.current,
+//   });
 
   let style = {
     zIndex: props.zIndex,
@@ -156,39 +159,93 @@ translateX(${props.left !== null ? props.left + 'px' : 'aoto'}) translateY(${pro
 
   let imgNode = null;
 
-  const [totalPages, settotalPages] = React.useState(1);
+  // const [totalPages, settotalPages] = React.useState(1);
 
-  const onDocumentLoadSuccess = ({ numPages }) => {
-    settotalPages(numPages);
-  };
+  // const [pageNo, setPageNo] = React.useState(1);
 
-  const options = {
-    cMapUrl: 'cmaps/',
-    cMapPacked: true,
-  };
+  // const [content, setContent] = React.useState([]);
+
+  // const loadSizeRef = React.useRef(0);
+  // const containerRef = React.useRef(null);
+
+  // const pageSize = 5;
+
+  // const toPrint = useReactToPrint({
+  //   content: () => containerRef.current,
+  // });
+
+  // const print = () => {
+  //   console.log(containerRef.current);
+  //   toPrint();
+  // };
+
+  // React.useImperativeHandle(printRef, () => ({
+  //   ...containerRef.current,
+  //   print,
+  // }), []);
+
+  // const onRenderSuccess = ({ pageNumber }) => {
+  //   loadSizeRef.current = loadSizeRef.current + 1;
+  //   console.log(loadSizeRef.current);
+  //   console.log(`第${pageNumber}页已经加载完成`);
+  //   if (loadSizeRef.current === pageNo * pageSize || loadSizeRef.current === totalPages) {
+  //     console.log(`${loadSizeRef.current}全部加载完成`);
+  //   }
+  //   if (loadSizeRef.current === totalPages) {
+  //     toPrint();
+  //   }
+  // };
+
+  // const onDocumentLoadSuccess = ({ numPages }) => {
+  //   setPageNo(1);
+  //   settotalPages(numPages);
+  //   loadSizeRef.current = 0;
+  //   let currentSize = numPages;
+  //   if (numPages > pageSize) {
+  //     currentSize = pageSize;
+  //   }
+  //   setContent(new Array(currentSize).fill('').map((_, index) => {
+  //       return <Page onRenderSuccess={onRenderSuccess} renderTextLayer={false} key={index} pageNumber={index + 1} style={{display: 'none'}} />;
+  //   }));
+  // };
+
+  // const onScrollHandler = (e) => {
+  //   const { clientHeight, scrollTop, scrollHeight } = e.target;
+  //   // console.log(scrollTop);
+  //   // console.log(clientHeight);
+  //   // console.log(scrollHeight);
+  //   // 3 屏加载下一页
+  //   if (clientHeight * 3 + scrollTop >= scrollHeight) {
+  //     console.log('触发');
+  //     const size = pageNo * pageSize;
+  //     if (totalPages > size) {
+  //       let currentSize = pageSize;
+  //       const oldContent = content.slice();
+  //       if (totalPages <= size + pageSize) {
+  //         currentSize = totalPages - size;
+  //       }
+  //       setContent(oldContent.concat(new Array(currentSize).fill('').map((_, index) => {
+  //         return <Page onRenderSuccess={onRenderSuccess} renderTextLayer={false} key={(size) + index} pageNumber={(size) + index + 1} style={{ display: 'none' }} />;
+  //       })));
+  //       setPageNo(no => no + 1);
+  //     }
+  //   }
+  // };
+
+  // const options = {
+  //   cMapUrl: 'cmaps/',
+  //   cMapPacked: true,
+  // };
 
   if (props.imgSrc !== '') {
-    props.imgSrc.endsWith('.pdf') ? imgNode = <Document
-      className={imgClass}
-      file={props.imgSrc}
-      options={options}
-      style={imgStyle}
-      onLoadSuccess={onDocumentLoadSuccess}
-    >
-      <div ref={printRef}>
-        {
-          new Array(totalPages).fill('').map((_, index) => {
-            return <Page renderTextLayer={false} key={index} pageNumber={index + 1} style={{display: 'none'}} />;
-          })
-        }
-      </div>
-    </Document> : imgNode = <img
-      ref={printRef}
-      className={imgClass}
-      src={props.imgSrc}
-      style={imgStyle}
-      onMouseDown={handleMouseDown}
-    />;
+    // props.imgSrc.endsWith('.pdf') ? imgNode = <ViewerPDF ref={containerRef} {...props} /> : imgNode = <img
+    //   ref={containerRef}
+    //   className={imgClass}
+    //   src={props.imgSrc}
+    //   style={imgStyle}
+    //   onMouseDown={handleMouseDown}
+    // />;
+    imgNode = <ViewerPDF ref={printRef} handleMouseDown={handleMouseDown} {...props} />;
   }
   if (props.loading) {
     imgNode = (
