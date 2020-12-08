@@ -2,7 +2,7 @@ node_modules/
 dist/
 lib/
 .DS_STORE
-.history
+.history/
 coverage
 pages-build
 client-dist

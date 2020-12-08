@@ -245,7 +245,7 @@ const ViewerCanvas = (props: ViewerCanvasProps, printRef) => {
     //   style={imgStyle}
     //   onMouseDown={handleMouseDown}
     // />;
-    imgNode = <ViewerPDF ref={printRef} handleMouseDown={handleMouseDown} {...props} />;
+    imgNode = <ViewerPDF ref={printRef} handleMouseDown={handleMouseDown} isMouseDown={isMouseDown} {...props} />;
   }
   if (props.loading) {
     imgNode = (
