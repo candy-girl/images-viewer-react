@@ -5,8 +5,9 @@ const Failed  = require('./images/failed.png');
 const PDF = require('./images/pdf.png');
 const img = require('./images/image.pdf');
 const img1 = require('./images/100.pdf');
+const imgpdf = require('./images/image.pdf');
 // const img1 = require('./images/image1.jpg');
-const img2 = require('./images/image2.jpg');
+// const img2 = require('./images/image2.jpg');
 const img3 = require('./images/image3.jpg');
 const img4 = require('./images/image4.jpg');
 const img5 = require('./images/image5.jpg');
@@ -118,17 +119,11 @@ class App extends React.Component<any, Partial<State>> {
       prePageNo: 1,
       nextPageNo: 5,
       images: [{
-          navSrc: Failed,
-          src: '',
-          fileType: 'jpg',
+          navSrc: imgpdf,
+          src: imgpdf,
+          fileType: 'pdf',
           alt: 'lake',
           downloadUrl: 'https://infeng.github.io/react-viewer/59111ff2c38954887bc313887fe76e27.jpg'
-        }, {
-          navSrc: img2,
-          src: img2,
-          fileType: 'jpg',
-          alt: 'mountain',
-          downloadUrl: '',
         }, {
           navSrc: img,
           src: img,

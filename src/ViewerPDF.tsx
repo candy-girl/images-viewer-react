@@ -91,10 +91,10 @@ const ViewerPDF = (props: ViewerPDFProps, printRef: React.MutableRefObject<Print
 
   const onRenderSuccess = ({ pageNumber }) => {
     loadSuccessSize.current = loadSuccessSize.current + 1;
-    console.log(loadSuccessSize.current);
-    console.log(`第${pageNumber}页已经加载完成`);
+    // console.log(loadSuccessSize.current);
+    // console.log(`第${pageNumber}页已经加载完成`);
     if (loadSuccessSize.current === (pageNo + 1) * pageSize || loadSuccessSize.current === totalPages) {
-      console.log(`${loadSuccessSize.current}页全部加载完成`);
+      // console.log(`${loadSuccessSize.current}页全部加载完成`);
     }
     if (loadSuccessSize.current === totalPages && printing) {
       reactToPrint();
@@ -138,14 +138,14 @@ const ViewerPDF = (props: ViewerPDFProps, printRef: React.MutableRefObject<Print
   };
 
   React.useEffect(() => {
-    console.log(pageNo);
+    // console.log(pageNo);
     if (totalPages > 0) {
       loadNextPage();
     }
     if (printing) {
       if (totalPages > pageNo * pageSize) {
         setPageNo(pageNo + 1);
-        console.log('pageNo: ', pageNo);
+        // console.log('pageNo: ', pageNo);
       }
     }
   }, [pageNo, totalPages]);
@@ -154,7 +154,7 @@ const ViewerPDF = (props: ViewerPDFProps, printRef: React.MutableRefObject<Print
     const { clientHeight, scrollTop, scrollHeight } = e.target;
     // 3 屏加载下一页
     if (clientHeight * 3 + scrollTop >= scrollHeight) {
-      console.log('加载下一页');
+      // console.log('加载下一页');
       const hasMore = totalPages > loadSuccessSize.current;
       if (hasMore && !loading) {
         setPageNo(pageNo + 1);
@@ -200,6 +200,7 @@ const ViewerPDF = (props: ViewerPDFProps, printRef: React.MutableRefObject<Print
       </>
     );
   } else {
+    // console.log(7888, props.left)
     let imgStyle: React.CSSProperties = {
       width: `${props.width}px`,
       height: `${props.height}px`,
