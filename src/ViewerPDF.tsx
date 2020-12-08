@@ -26,13 +26,15 @@ export interface ViewerPDFProps {
   drag: boolean;
   container: HTMLElement;
   handleMouseDown: (e) => void;
+  isMouseDown: React.MutableRefObject<boolean>;
 }
 
 export interface PrintRef {
   toPrint: () => void;
 }
 
-const pageSize = 5;
+const pageSize = 2;
+const printSize = 5;
 
 const options = {
   cMapUrl: 'cmaps/',
@@ -51,6 +53,8 @@ const ViewerPDF = (props: ViewerPDFProps, printRef: React.MutableRefObject<Print
   const [content, setContent] = React.useState([]);
 
   const loadSuccessSize = React.useRef(0);
+
+  const nextLoadSuccessSize = React.useRef(0);
 
   const containerRef = React.useRef(null);
 
@@ -93,37 +97,58 @@ const ViewerPDF = (props: ViewerPDFProps, printRef: React.MutableRefObject<Print
     loadSuccessSize.current = loadSuccessSize.current + 1;
     // console.log(loadSuccessSize.current);
     // console.log(`第${pageNumber}页已经加载完成`);
-    if (loadSuccessSize.current === (pageNo + 1) * pageSize || loadSuccessSize.current === totalPages) {
-      // console.log(`${loadSuccessSize.current}页全部加载完成`);
-    }
-    if (loadSuccessSize.current === totalPages && printing) {
-      reactToPrint();
-      setPrinting(false);
+    const nextSize = nextLoadSuccessSize.current;
+    if (pageNo === 0) {
+      if (loadSuccessSize.current === nextSize) {
+        // console.log(`${loadSuccessSize.current}页全部加载完成`);
+        setLoading(false);
+      }
+    } else {
+      if (printing) {
+        if (loadSuccessSize.current === nextSize) {
+          // console.log(`${loadSuccessSize.current}页全部加载完成`);
+          setLoading(false);
+        } else if (loadSuccessSize.current === totalPages) {
+          reactToPrint();
+          setPrinting(false);
+          setLoading(false);
+        }
+      } else {
+        if (loadSuccessSize.current === nextSize || loadSuccessSize.current === totalPages) {
+          // console.log(`${loadSuccessSize.current}页全部加载完成`);
+          setLoading(false);
+        }
+      }
     }
   };
 
   const onDocumentLoadSuccess = ({ numPages }) => {
-    // setPageNo(1);
     setTotalPages(numPages);
     loadSuccessSize.current = 0;
-    // let currentSize = numPages;
-    // if (numPages > pageSize) {
-    //   currentSize = pageSize;
-    // }
-    // setContent(new Array(currentSize).fill('').map((_, index) => {
-    //   return <Page onRenderSuccess={onRenderSuccess} renderTextLayer={false} key={index} pageNumber={index + 1} style={{ display: 'none' }} />;
-    // }));
   };
 
   const loadNextPage = () => {
-    const currentSize = pageNo * pageSize;
-    const nextSize = (pageNo + 1) * pageSize;
+    let size;
+    let nextSize;
+    const currentSize = loadSuccessSize.current;
+    if (pageNo === 0) {
+      size = 1;
+      nextSize = nextLoadSuccessSize.current = 1;
+    } else {
+      if (printing) {
+        size = printSize;
+      } else {
+        size = pageSize;
+      }
+      nextSize = nextLoadSuccessSize.current = currentSize + size;
+    }
+    // console.log('loadSuccessSize:', loadSuccessSize.current);
     if (totalPages > currentSize) {
-      let size = pageSize;
       const oldContent = content.slice();
       if (totalPages <= nextSize) {
         size = totalPages - currentSize;
       }
+      setLoading(true);
       setContent(oldContent.concat(new Array(size).fill('').map((_, index) => {
         return <Page
           onRenderSuccess={onRenderSuccess}
@@ -133,27 +158,27 @@ const ViewerPDF = (props: ViewerPDFProps, printRef: React.MutableRefObject<Print
           style={{ display: 'none' }}
         />;
       })));
-      setLoading(false);
     }
   };
 
   React.useEffect(() => {
-    // console.log(pageNo);
+    if (!loading && printing) {
+      if (totalPages > (pageNo + 1) * pageSize) {
+        setPageNo(pageNo + 1);
+      }
+    }
+  }, [loading]);
+
+  React.useEffect(() => {
     if (totalPages > 0) {
       loadNextPage();
-    }
-    if (printing) {
-      if (totalPages > pageNo * pageSize) {
-        setPageNo(pageNo + 1);
-        // console.log('pageNo: ', pageNo);
-      }
     }
   }, [pageNo, totalPages]);
 
   const onScrollHandler = (e) => {
     const { clientHeight, scrollTop, scrollHeight } = e.target;
     // 3 屏加载下一页
-    if (clientHeight * 3 + scrollTop >= scrollHeight) {
+    if (clientHeight + scrollTop >= scrollHeight) {
       // console.log('加载下一页');
       const hasMore = totalPages > loadSuccessSize.current;
       if (hasMore && !loading) {
@@ -165,16 +190,25 @@ const ViewerPDF = (props: ViewerPDFProps, printRef: React.MutableRefObject<Print
 
   const imgClass = classnames(`${props.prefixCls}-image`, {
     drag: props.drag,
+    [`${props.prefixCls}-image-transition`]: !props.isMouseDown.current,
   });
 
   if (isPDF()) {
+    const pdfStyle: React.CSSProperties = {
+      width: '100%',
+      height: '100%',
+      overflow: (loading || printing) ? 'hidden' : 'auto',
+    };
     return (
       <>
         {
           (printing || loading) && <div
             style={{
               display: 'flex',
+              width: '100%',
               height: '100%',
+              background: '#ccc',
+              position: 'absolute',
               justifyContent: 'center',
               alignItems: 'center',
               zIndex: props.zIndex,
@@ -189,7 +223,7 @@ const ViewerPDF = (props: ViewerPDFProps, printRef: React.MutableRefObject<Print
           options={options}
           onLoadSuccess={onDocumentLoadSuccess}
         >
-          <div style={{ width: '100%', height: '100%', overflowY: 'scroll' }} onScroll={onScrollHandler}>
+          <div style={pdfStyle} onScroll={onScrollHandler}>
             <div ref={containerRef}>
               {
                 content
@@ -200,8 +234,7 @@ const ViewerPDF = (props: ViewerPDFProps, printRef: React.MutableRefObject<Print
       </>
     );
   } else {
-    // console.log(7888, props.left)
-    let imgStyle: React.CSSProperties = {
+    const imgStyle: React.CSSProperties = {
       width: `${props.width}px`,
       height: `${props.height}px`,
       transform: `
@@ -210,13 +243,14 @@ const ViewerPDF = (props: ViewerPDFProps, printRef: React.MutableRefObject<Print
     };
 
     return (
-      <img
-        ref={containerRef}
-        className={imgClass}
-        src={props.imgSrc}
-        style={imgStyle}
-        onMouseDown={props.handleMouseDown}
-      />
+      <div className="print-container" ref={containerRef}>
+        <img
+          className={imgClass}
+          src={props.imgSrc}
+          style={imgStyle}
+          onMouseDown={props.handleMouseDown}
+        />
+      </div>
     );
   }
 
