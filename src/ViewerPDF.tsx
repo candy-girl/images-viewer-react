@@ -37,7 +37,8 @@ const pageSize = 2;
 const printSize = 5;
 
 const options = {
-  cMapUrl: 'cmaps/',
+  // cMapUrl: 'cmaps/',
+  cMapUrl: `//cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjs.version}/cmaps/`,
   cMapPacked: true,
 };
 
