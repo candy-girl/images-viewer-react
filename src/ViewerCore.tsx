@@ -18,6 +18,7 @@ const ACTION_TYPES = {
   setActiveIndex: 'setActiveIndex',
   update: 'update',
   clear: 'clear',
+  setPDFLoading: 'setPDFLoading',
 };
 
 function createAction(type, payload) {
@@ -44,6 +45,7 @@ export interface ViewerCoreState {
   loading?: boolean;
   loadFailed?: boolean;
   startLoading: boolean;
+  loadingPDF: boolean;
 }
 
 export default React.forwardRef((props: ViewerProps, viewerRef: React.MutableRefObject<ViewerRef>) => {
@@ -94,6 +96,7 @@ export default React.forwardRef((props: ViewerProps, viewerRef: React.MutableRef
     loading: false,
     loadFailed: false,
     startLoading: false,
+    loadingPDF: false,
   };
   function setContainerWidthHeight() {
     let width = window.innerWidth;
@@ -142,6 +145,11 @@ export default React.forwardRef((props: ViewerProps, viewerRef: React.MutableRef
           left: 0,
           loading: false,
         };
+      case ACTION_TYPES.setPDFLoading:
+        return {
+          ...s,
+          loadingPDF: action.payload,
+        };
       default:
         break;
     }
@@ -154,6 +162,13 @@ export default React.forwardRef((props: ViewerProps, viewerRef: React.MutableRef
   const [ state, dispatch ] = React.useReducer<(s: any, a: any) => ViewerCoreState>(reducer, initialState);
 
   const printRef = viewerRef ? viewerRef : React.useRef(null);
+
+  const setPDFLoading = (loading: boolean) => {
+    dispatch({
+      type: ACTION_TYPES.setPDFLoading,
+      payload: loading,
+    });
+  };
 
   React.useEffect(() => {
     init.current = true;
@@ -331,7 +346,7 @@ export default React.forwardRef((props: ViewerProps, viewerRef: React.MutableRef
     if (newIndex < 0) {
       newIndex = images.length - 1;
     }
-    if (newIndex === state.activeIndex) {
+    if (newIndex === state.activeIndex || state.loadingPDF) {
       return;
     }
     if (props.onChange) {
@@ -341,6 +356,10 @@ export default React.forwardRef((props: ViewerProps, viewerRef: React.MutableRef
     dispatch(createAction(ACTION_TYPES.setActiveIndex, {
       index: newIndex,
     }));
+    // setPDFLoading(true);
+    // setTimeout(() => {
+    //   setPDFLoading(false);
+    // }, 1000);
   }
 
   function getActiveImage(activeIndex2 = undefined) {
@@ -702,6 +721,7 @@ export default React.forwardRef((props: ViewerProps, viewerRef: React.MutableRef
         loading={state.loading}
         drag={drag}
         container={props.container}
+        setPDFLoading={setPDFLoading}
         onCanvasMouseDown={handleCanvasMouseDown}
       />
       {props.noFooter || (
@@ -725,6 +745,7 @@ export default React.forwardRef((props: ViewerProps, viewerRef: React.MutableRef
               activeIndex={state.activeIndex}
               count={images.length}
               showTotal={showTotal}
+              loadingPDF={state.loadingPDF}
             />
           )}
           {props.noNavbar || (
@@ -736,6 +757,7 @@ export default React.forwardRef((props: ViewerProps, viewerRef: React.MutableRef
               onPreButton={props.onPreButton}
               onNextButton={props.onNextButton}
               navImgWidth={navImgWidth}
+              loadingPDF={state.loadingPDF}
             />
           )}
         </div>

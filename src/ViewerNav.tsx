@@ -1,5 +1,6 @@
 // import { SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS } from 'constants';
 import * as React from 'react';
+import classnames from 'classnames';
 import { ImageDecorator } from './ViewerProps';
 const PDF = require('./images/pdf@2x.png');
 const FAILED = require('./images/failed.png');
@@ -16,6 +17,7 @@ export interface ViewerNavProps {
   onPreButton: (activeIndex: number) => Promise<number>;
   onNextButton: (activeIndex: number) => Promise<number>;
   onChangeImg: (index: number) => void;
+  loadingPDF?: boolean;
 }
 
 export default function ViewerNav(props: ViewerNavProps) {
@@ -105,19 +107,25 @@ export default function ViewerNav(props: ViewerNavProps) {
   }
 
   function handleChangeImg(newIndex) {
-    if (activeIndex === newIndex) {
+    if (activeIndex === newIndex || props.loadingPDF) {
       return;
     }
     props.onChangeImg(newIndex);
   }
 
   function goNext() {
+    if (props.loadingPDF) {
+      return;
+    }
     if (activeIndex + 1 <= props.images.length) {
       fetchData(activeIndex + 1);
     }
   }
 
   function goPre() {
+    if (props.loadingPDF) {
+      return;
+    }
     if (activeIndex >= 1) {
       fetchData(activeIndex - 1);
     }
@@ -131,19 +139,22 @@ export default function ViewerNav(props: ViewerNavProps) {
     width: navImgWidth,
   };
 
+  const title = props.loadingPDF ? '数据加载中，请稍后...' : '';
+
   return (
     <div className={`${props.prefixCls}-navbar divContainer`}>
       {
-        marginValue ? <img src={ArrowLeft} alt="" className="preButton" onClick={() => goPre()}/> : <span className="preSpan"></span>
+        marginValue ? <img src={ArrowLeft} alt="" title={title} className={classnames('preButton', { disable: props.loadingPDF })} onClick={() => goPre()}/> : <span className="preSpan"></span>
       }
       <div className="ulContainer" ref={ulRef} style={{margin: 'auto', width: (navImgWidth + 10) * props.images.length}}>
       <ul className={`${props.prefixCls}-list ${props.prefixCls}-list-transition`} style={listStyle}>
         {props.images.map((item, index) =>
           <li
-          key={index}
-          className={index === activeIndex ? 'active' : ''}
-          style={liStyle}
-          onClick={() => { handleChangeImg(index); }}
+            key={index}
+            title={title}
+            className={classnames({active: index === activeIndex, disable: props.loadingPDF})}
+            style={liStyle}
+            onClick={() => { handleChangeImg(index); }}
           >
             <img src={
                 item.fileType === 'pdf'
@@ -157,7 +168,7 @@ export default function ViewerNav(props: ViewerNavProps) {
         </ul>
       </div>
       {
-        showNext ? <img src={ArrowRight} alt="" className="nextButton" onClick={() => goNext()}/> : <span className="nextSpan"></span>
+        showNext ? <img src={ArrowRight} alt="" title={title} className={classnames('nextButton', { disable: props.loadingPDF })} onClick={() => goNext()}/> : <span className="nextSpan"></span>
       }
     </div>
   );

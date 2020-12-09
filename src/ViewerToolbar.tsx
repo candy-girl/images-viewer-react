@@ -1,4 +1,5 @@
 import * as React from 'react';
+import classnames from 'classnames';
 import Icon, { ActionType } from './Icon';
 import { ToolbarConfig } from './ViewerProps';
 
@@ -20,6 +21,7 @@ export interface ViewerToolbarProps {
   activeIndex: number;
   count: number;
   showTotal: boolean;
+  loadingPDF?: boolean;
 }
 
 export const defaultToolbars: ToolbarConfig[] = [
@@ -91,10 +93,14 @@ export default function ViewerToolbar(props: ViewerToolbarProps) {
     if (config.render) {
       content = config.render;
     }
+    const loading = (config.actionType === ActionType.prev || config.actionType === ActionType.next || config.actionType === ActionType.print) && props.loadingPDF;
+    const title = props.loadingPDF ? '数据加载中，请稍后...' : '';
+
     return (
       <li
         key={config.key}
-        className={`${props.prefixCls}-btn`}
+        title={title}
+        className={classnames(`${props.prefixCls}-btn`, { disable: loading })}
         onClick={() => {handleAction(config); }}
         data-key={config.key}
       >
