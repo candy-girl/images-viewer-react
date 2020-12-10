@@ -44,7 +44,7 @@ const options = {
 };
 
 const ViewerPDF = (props: ViewerPDFProps, printRef: React.MutableRefObject<PrintRef>) => {
-  const [totalPages, setTotalPages] = React.useState(1);
+  const [totalPages, setTotalPages] = React.useState(0);
 
   const [pageNo, setPageNo] = React.useState(0);
 
