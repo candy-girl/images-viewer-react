@@ -234,6 +234,16 @@ export default React.forwardRef((props: ViewerProps, viewerRef: React.MutableRef
     let activeImage: ImageDecorator = null;
     if (images.length > 0) {
       activeImage = images[currentActiveIndex];
+      if (activeImage.src.endsWith('.pdf')) {
+        dispatch(
+          createAction(ACTION_TYPES.update, {
+            loading: false,
+            loadFailed: false,
+            startLoading: false,
+          }),
+        )
+        return
+      }
     }
     let loadComplete = false;
     let img = new Image();
