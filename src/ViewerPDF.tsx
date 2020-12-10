@@ -25,6 +25,7 @@ export interface ViewerPDFProps {
   loading: boolean;
   drag: boolean;
   container: HTMLElement;
+  setPDFLoading: (loading: boolean) => void;
   handleMouseDown: (e) => void;
   isMouseDown: React.MutableRefObject<boolean>;
 }
@@ -33,7 +34,7 @@ export interface PrintRef {
   toPrint: () => void;
 }
 
-const pageSize = 2;
+const pageSize = 5;
 const printSize = 5;
 
 const options = {
@@ -72,7 +73,7 @@ const ViewerPDF = (props: ViewerPDFProps, printRef: React.MutableRefObject<Print
   };
 
   React.useEffect(() => {
-    if (printing) {
+    if (printing && loadSuccessSize.current > 0) {
       if (totalPages > loadSuccessSize.current) {
         setPageNo(pageNo + 1);
       } else {
@@ -94,6 +95,18 @@ const ViewerPDF = (props: ViewerPDFProps, printRef: React.MutableRefObject<Print
     }
   };
 
+  const startLoading = () => {
+    props.setPDFLoading(true);
+    setLoading(true);
+  };
+
+  const endLoading = () => {
+    setLoading(false);
+    if (!printing) {
+      props.setPDFLoading(false);
+    }
+  };
+
   const onRenderSuccess = ({ pageNumber }) => {
     loadSuccessSize.current = loadSuccessSize.current + 1;
     // console.log(loadSuccessSize.current);
@@ -102,22 +115,25 @@ const ViewerPDF = (props: ViewerPDFProps, printRef: React.MutableRefObject<Print
     if (pageNo === 0) {
       if (loadSuccessSize.current === nextSize) {
         // console.log(`${loadSuccessSize.current}页全部加载完成`);
-        setLoading(false);
+        endLoading();
       }
     } else {
       if (printing) {
         if (loadSuccessSize.current === nextSize) {
           // console.log(`${loadSuccessSize.current}页全部加载完成`);
-          setLoading(false);
-        } else if (loadSuccessSize.current === totalPages) {
+          endLoading();
+        }
+        if (loadSuccessSize.current === totalPages) {
+          // console.log('开始打印');
           reactToPrint();
           setPrinting(false);
           setLoading(false);
+          props.setPDFLoading(false);
         }
       } else {
         if (loadSuccessSize.current === nextSize || loadSuccessSize.current === totalPages) {
           // console.log(`${loadSuccessSize.current}页全部加载完成`);
-          setLoading(false);
+          endLoading();
         }
       }
     }
@@ -149,7 +165,7 @@ const ViewerPDF = (props: ViewerPDFProps, printRef: React.MutableRefObject<Print
       if (totalPages <= nextSize) {
         size = totalPages - currentSize;
       }
-      setLoading(true);
+      startLoading();
       setContent(oldContent.concat(new Array(size).fill('').map((_, index) => {
         return <Page
           onRenderSuccess={onRenderSuccess}
@@ -164,15 +180,18 @@ const ViewerPDF = (props: ViewerPDFProps, printRef: React.MutableRefObject<Print
 
   React.useEffect(() => {
     if (!loading && printing) {
-      if (totalPages > (pageNo + 1) * pageSize) {
+      if (totalPages > loadSuccessSize.current) {
         setPageNo(pageNo + 1);
       }
     }
   }, [loading]);
 
   React.useEffect(() => {
-    if (totalPages > 0) {
-      loadNextPage();
+    if (isPDF()) {
+      // props.setPDFLoading(true);
+      if (totalPages > 0) {
+        loadNextPage();
+      }
     }
   }, [pageNo, totalPages]);
 
@@ -184,7 +203,7 @@ const ViewerPDF = (props: ViewerPDFProps, printRef: React.MutableRefObject<Print
       const hasMore = totalPages > loadSuccessSize.current;
       if (hasMore && !loading) {
         setPageNo(pageNo + 1);
-        setLoading(true);
+        startLoading();
       }
     }
   };

@@ -26,6 +26,7 @@ export interface ViewerCanvasProps {
   loading: boolean;
   drag: boolean;
   container: HTMLElement;
+  setPDFLoading: (loading: boolean) => void;
   onCanvasMouseDown: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
