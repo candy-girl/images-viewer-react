@@ -88,7 +88,7 @@ const ViewerPDF = (props: ViewerPDFProps, printRef: React.MutableRefObject<Print
   }), [containerRef.current]);
 
   const isPDF = () => {
-    if (props.imgSrc.endsWith('.pdf')) {
+    if (props.imgSrc && props.imgSrc.endsWith('.pdf')) {
       return true;
     } else {
       return false;
