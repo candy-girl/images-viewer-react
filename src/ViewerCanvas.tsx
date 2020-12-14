@@ -240,7 +240,7 @@ translateX(${props.left !== null ? props.left + 'px' : 'aoto'}) translateY(${pro
   // };
 
   if (props.imgSrc !== '') {
-    console.log(7777, props.imgSrc)
+    console.log(7777, props.imgSrc);
     // props.imgSrc.endsWith('.pdf') ? imgNode = <ViewerPDF ref={containerRef} {...props} /> : imgNode = <img
     //   ref={containerRef}
     //   className={imgClass}
@@ -248,14 +248,14 @@ translateX(${props.left !== null ? props.left + 'px' : 'aoto'}) translateY(${pro
     //   style={imgStyle}
     //   onMouseDown={handleMouseDown}
     // />;
-    if(props.imgSrc === 'changePdfFail') {
-      console.log(88888, props.imgSrc)
+    if (props.imgSrc === 'changePdfFail') {
+      console.log(88888, props.imgSrc);
       imgNode = <img
       className={imgClass}
       src={FAILED}
       style={imgStyle}
       // onMouseDown={props.handleMouseDown}
-    />
+    />;
     } else {
       imgNode = <ViewerPDF ref={printRef} handleMouseDown={handleMouseDown} isMouseDown={isMouseDown} {...props} />;
     }
