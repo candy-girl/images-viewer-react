@@ -1,11 +1,11 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import Viewer from '../src/Viewer';
-const Failed  = require('./images/failed.png');
+const Loading = require('./images/loading.png');
 const PDF = require('./images/pdf.png');
 const img = require('./images/image.pdf');
-const img1 = require('./images/100.pdf');
-const imgpdf = require('./images/image.pdf');
+// const img1 = require('./images/100.pdf');
+// const imgpdf = require('./images/image.pdf');
 // const img1 = require('./images/image1.jpg');
 // const img2 = require('./images/image2.jpg');
 const img3 = require('./images/image3.jpg');
@@ -119,11 +119,11 @@ class App extends React.Component<any, Partial<State>> {
       prePageNo: 1,
       nextPageNo: 5,
       images: [{
-          navSrc: imgpdf,
-          src: imgpdf,
+          navSrc: '',
+          src: 'changePdfFail',
           fileType: 'pdf',
           alt: 'lake',
-          downloadUrl: 'https://infeng.github.io/react-viewer/59111ff2c38954887bc313887fe76e27.jpg'
+          downloadUrl: ''
         }, {
           navSrc: img,
           src: img,
@@ -131,8 +131,8 @@ class App extends React.Component<any, Partial<State>> {
           alt: '',
           downloadUrl: '',
         }, {
-          navSrc: img1,
-          src: img1,
+          navSrc: '',
+          src: '',
           fileType: 'pdf',
           alt: '',
           downloadUrl: '',
@@ -198,8 +198,8 @@ class App extends React.Component<any, Partial<State>> {
 
   render() {
     let defaultImg = {
-      src: Failed,
-      navSrc: Failed,
+      src: Loading,
+      navSrc: Loading,
     }
 
     let inline = this.state.mode === 'inline';
@@ -349,7 +349,7 @@ class App extends React.Component<any, Partial<State>> {
                 {this.state.images.map((item, index) => {
                   return (
                     <div key={index.toString()} className="img-item">
-                      <img src={item.src?.endsWith('.pdf') ? PDF : item.src||Failed} onClick={() => {
+                      <img src={item.src?.endsWith('.pdf') ? PDF : item.src||Loading} onClick={() => {
                         this.setState({
                           visible: true,
                           activeIndex: index,

@@ -8,6 +8,7 @@ import Icon, { ActionType } from './Icon';
 import * as constants from './constants';
 import classnames from 'classnames';
 import { ViewerRef } from './Viewer';
+const FAILED = require('./images/failed.png')
 
 function noop() { }
 
@@ -234,16 +235,16 @@ export default React.forwardRef((props: ViewerProps, viewerRef: React.MutableRef
     let activeImage: ImageDecorator = null;
     if (images.length > 0) {
       activeImage = images[currentActiveIndex];
-      if (activeImage.src.endsWith('.pdf')) {
-        dispatch(
-          createAction(ACTION_TYPES.update, {
-            loading: false,
-            loadFailed: false,
-            startLoading: false,
-          }),
-        )
-        return
-      }
+      // if (activeImage.src.endsWith('.pdf')) {
+      //   dispatch(
+      //     createAction(ACTION_TYPES.update, {
+      //       loading: false,
+      //       loadFailed: false,
+      //       startLoading: false,
+      //     }),
+      //   )
+      //   return
+      // }
     }
     let loadComplete = false;
     let img = new Image();
@@ -686,6 +687,7 @@ export default React.forwardRef((props: ViewerProps, viewerRef: React.MutableRef
 
   if (visible && state.visible && !state.loading && state.activeIndex !== null && !state.startLoading) {
     activeImg = getActiveImage();
+    console.log(555, activeImg)
   }
 
   return (
@@ -716,7 +718,8 @@ export default React.forwardRef((props: ViewerProps, viewerRef: React.MutableRef
       <ViewerCanvas
         ref={printRef}
         prefixCls={prefixCls}
-        imgSrc={state.loadFailed && !activeImg.src.endsWith('.pdf') ? (props.defaultImg.src || activeImg.src) : activeImg.src}
+        // imgSrc={state.loadFailed && !activeImg.src.endsWith('.pdf') ? (props.defaultImg.src || activeImg.src) : activeImg.src}
+        imgSrc={activeImg.src==='changePdfFail' ? FAILED : state.loadFailed && !activeImg.src.endsWith('.pdf') ? (props.defaultImg.src || activeImg.src) : activeImg.src}
         visible={visible}
         width={state.width}
         height={state.height}

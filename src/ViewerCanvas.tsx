@@ -1,11 +1,12 @@
 import * as React from 'react';
 import Loading from './Loading';
-// import classnames from 'classnames';
+import classnames from 'classnames';
 // import { useReactToPrint } from 'react-to-print';
 // import { Document, Page, pdfjs } from 'react-pdf';
 // import 'react-pdf/dist/umd/Page/AnnotationLayer.css';
 // import PdfjsWorker from './pdf.worker.entry';
 import ViewerPDF from './ViewerPDF';
+const FAILED = require('./images/failed.png');
 
 // pdfjs.GlobalWorkerOptions.workerPort = new PdfjsWorker();
 
@@ -141,18 +142,18 @@ const ViewerCanvas = (props: ViewerCanvasProps, printRef) => {
     document[funcName]('mousemove', handleMouseMove, false);
   }
 
-//   let imgStyle: React.CSSProperties = {
-//     width: `${props.width}px`,
-//     height: `${props.height}px`,
-//     transform: `
-// translateX(${props.left !== null ? props.left + 'px' : 'aoto'}) translateY(${props.top}px)
-//     rotate(${props.rotate}deg) scaleX(${props.scaleX}) scaleY(${props.scaleY})`,
-//   };
+  let imgStyle: React.CSSProperties = {
+    width: `${props.width}px`,
+    height: `${props.height}px`,
+    transform: `
+translateX(${props.left !== null ? props.left + 'px' : 'aoto'}) translateY(${props.top}px)
+    rotate(${props.rotate}deg) scaleX(${props.scaleX}) scaleY(${props.scaleY})`,
+  };
 
-//   const imgClass = classnames(`${props.prefixCls}-image`, {
-//     drag: props.drag,
-//     [`${props.prefixCls}-image-transition`]: !isMouseDown.current,
-//   });
+  const imgClass = classnames(`${props.prefixCls}-image`, {
+    drag: props.drag,
+    [`${props.prefixCls}-image-transition`]: !isMouseDown.current,
+  });
 
   let style = {
     zIndex: props.zIndex,
@@ -239,6 +240,7 @@ const ViewerCanvas = (props: ViewerCanvasProps, printRef) => {
   // };
 
   if (props.imgSrc !== '') {
+    console.log(7777, props.imgSrc)
     // props.imgSrc.endsWith('.pdf') ? imgNode = <ViewerPDF ref={containerRef} {...props} /> : imgNode = <img
     //   ref={containerRef}
     //   className={imgClass}
@@ -246,7 +248,17 @@ const ViewerCanvas = (props: ViewerCanvasProps, printRef) => {
     //   style={imgStyle}
     //   onMouseDown={handleMouseDown}
     // />;
-    imgNode = <ViewerPDF ref={printRef} handleMouseDown={handleMouseDown} isMouseDown={isMouseDown} {...props} />;
+    if(props.imgSrc === 'changePdfFail') {
+      console.log(88888, props.imgSrc)
+      imgNode = <img
+      className={imgClass}
+      src={FAILED}
+      style={imgStyle}
+      // onMouseDown={props.handleMouseDown}
+    />
+    } else {
+      imgNode = <ViewerPDF ref={printRef} handleMouseDown={handleMouseDown} isMouseDown={isMouseDown} {...props} />;
+    }
   }
   if (props.loading) {
     imgNode = (
