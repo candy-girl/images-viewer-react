@@ -253,7 +253,11 @@ export default React.forwardRef((props: ViewerProps, viewerRef: React.MutableRef
         return;
       }
       if (!loadComplete) {
-        loadImgSuccess(img.width, img.height, true);
+        if (img.src.includes(props.defaultImg.src)) {
+          loadImgSuccess(img.width, img.height, false);
+        } else {
+          loadImgSuccess(img.width, img.height, true);
+        }
       }
     };
     img.onerror = () => {
@@ -266,9 +270,10 @@ export default React.forwardRef((props: ViewerProps, viewerRef: React.MutableRef
           loadFailed: true,
           startLoading: false,
         }));
-        const deafultImgWidth = props.defaultImg.width || containerSize.current.width * .5;
-        const defaultImgHeight = props.defaultImg.height || containerSize.current.height * .5;
-        loadImgSuccess(deafultImgWidth, defaultImgHeight, false);
+        // const deafultImgWidth = props.defaultImg.width || containerSize.current.width * .5;
+        // const defaultImgHeight = props.defaultImg.height || containerSize.current.height * .5;
+        // loadImgSuccess(deafultImgWidth, defaultImgHeight, false);
+        img.src = props.defaultImg.src;
       } else {
         dispatch(createAction(ACTION_TYPES.update, {
           loading: false,
