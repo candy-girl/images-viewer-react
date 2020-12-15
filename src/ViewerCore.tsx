@@ -691,7 +691,6 @@ export default React.forwardRef((props: ViewerProps, viewerRef: React.MutableRef
 
   if (visible && state.visible && !state.loading && state.activeIndex !== null && !state.startLoading) {
     activeImg = getActiveImage();
-    console.log(555, activeImg);
   }
 
   return (

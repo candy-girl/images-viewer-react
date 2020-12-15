@@ -254,7 +254,7 @@ translateX(${props.left !== null ? props.left + 'px' : 'aoto'}) translateY(${pro
       className={imgClass}
       src={FAILED}
       style={imgStyle}
-      // onMouseDown={props.handleMouseDown}
+      onMouseDown={handleMouseDown}
     />;
     } else {
       imgNode = <ViewerPDF ref={printRef} handleMouseDown={handleMouseDown} isMouseDown={isMouseDown} {...props} />;
