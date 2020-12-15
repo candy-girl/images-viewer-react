@@ -32,17 +32,16 @@ export default function ViewerNav(props: ViewerNavProps) {
     // 删除图片后的位移
     const initMarginValue = activeIndex > 5 ? - ( activeIndex - 5 ) * ( navImgWidth + 10 ) : 0;
     setMarginValue(initMarginValue)
-  });
-
-  React.useEffect(() => {
-    let ulContainer = ulRef.current || undefined;
-    let ulWidth = ulContainer.clientWidth;
-    const showNextButton = (navImgWidth + 10) * images.length + marginValue - 5 > ulWidth;
-    if (showNextButton) {
-      setShowNext(true);
-    } else {
-      setShowNext(false);
-    }
+    setTimeout(() => {
+      let ulContainer = ulRef.current || undefined;
+      let ulWidth = ulContainer.clientWidth;
+      const showNextButton = (navImgWidth + 10) * images.length + marginValue - 5 > ulWidth;
+      if (showNextButton) {
+        setShowNext(true);
+      } else {
+        setShowNext(false);
+      }
+    }, 0);
   });
 
   React.useEffect(() => {
