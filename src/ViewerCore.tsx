@@ -8,7 +8,7 @@ import Icon, { ActionType } from './Icon';
 import * as constants from './constants';
 import classnames from 'classnames';
 import { ViewerRef } from './Viewer';
-const FAILED = require('./images/failed.png')
+const FAILED = require('./images/failed.png');
 
 function noop() { }
 
@@ -277,7 +277,11 @@ export default React.forwardRef((props: ViewerProps, viewerRef: React.MutableRef
         }));
       }
     };
-    img.src = activeImage.src;
+    if (activeImage.src === 'changePdfFail') {
+      img.src = FAILED;
+    } else {
+      img.src = activeImage.src;
+    }
     if (img.complete) {
       loadComplete = true;
       loadImgSuccess(img.width, img.height, true);
@@ -687,7 +691,7 @@ export default React.forwardRef((props: ViewerProps, viewerRef: React.MutableRef
 
   if (visible && state.visible && !state.loading && state.activeIndex !== null && !state.startLoading) {
     activeImg = getActiveImage();
-    console.log(555, activeImg)
+    console.log(555, activeImg);
   }
 
   return (
@@ -719,7 +723,7 @@ export default React.forwardRef((props: ViewerProps, viewerRef: React.MutableRef
         ref={printRef}
         prefixCls={prefixCls}
         // imgSrc={state.loadFailed && !activeImg.src.endsWith('.pdf') ? (props.defaultImg.src || activeImg.src) : activeImg.src}
-        imgSrc={activeImg.src==='changePdfFail' ? FAILED : state.loadFailed && !activeImg.src.endsWith('.pdf') ? (props.defaultImg.src || activeImg.src) : activeImg.src}
+        imgSrc={state.loadFailed && !activeImg.src.endsWith('.pdf') ? (props.defaultImg.src || activeImg.src) : activeImg.src}
         visible={visible}
         width={state.width}
         height={state.height}
