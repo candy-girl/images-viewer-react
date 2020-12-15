@@ -114,16 +114,16 @@ class App extends React.Component<any, Partial<State>> {
 
     this.state = {
       visible: false,
-      activeIndex: 6,
+      activeIndex: 0,
       mode: 'modal',
       prePageNo: 1,
       nextPageNo: 5,
       images: [{
-          navSrc: '',
-          src: 'changePdfFail',
-          fileType: 'pdf',
-          alt: 'lake',
-          downloadUrl: ''
+        alt: "",
+        downloadUrl: "",
+        fileType: "xlsx",
+        navSrc: "",
+        src: "changePdfFail",
         }, {
           navSrc: img,
           src: img,
