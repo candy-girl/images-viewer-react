@@ -1,6 +1,6 @@
 {
   "name": "images-viewer-react",
-  "version": "1.3.3",
+  "version": "1.3.7",
   "description": "react image viewers",
   "main": "dist/index",
   "scripts": {

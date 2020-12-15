@@ -119,52 +119,52 @@ class App extends React.Component<any, Partial<State>> {
       prePageNo: 1,
       nextPageNo: 5,
       images: [{
-        alt: "",
-        downloadUrl: "",
-        fileType: "xlsx",
-        navSrc: "",
-        src: "changePdfFail",
-        }, {
           navSrc: img,
           src: img,
           fileType: 'pdf',
-          alt: '',
+          alt: '0',
           downloadUrl: '',
         }, {
+          alt: "1",
+          downloadUrl: "",
+          fileType: "xlsx",
+          navSrc: "",
+          src: "changePdfFail",
+          }, {
           navSrc: '',
           src: '',
           fileType: 'pdf',
-          alt: '',
+          alt: '2',
           downloadUrl: '',
         }, {
           navSrc: img3,
           src: img3,
           fileType: 'xls',
-          alt: '',
+          alt: '3',
           downloadUrl: '',
         }, {
           navSrc: img4,
           src: img4,
           fileType: 'xlsx',
-          alt: '',
+          alt: '4',
           downloadUrl: '',
         }, {
           navSrc: img5,
           src: img5,
           fileType: 'doc',
-          alt: '',
+          alt: '5',
           downloadUrl: '',
         }, {
           navSrc: img6,
           src: img6,
           fileType: 'docx',
-          alt: '',
+          alt: '6',
           downloadUrl: '',
       }, {
         navSrc: img7,
         src: img7,
         fileType: 'jpg',
-        alt: '',
+        alt: '7',
         downloadUrl: '',
     }]
     };
@@ -374,16 +374,25 @@ class App extends React.Component<any, Partial<State>> {
             container={inline ? this.container : null}
             downloadable={true}
             printable={true}
-            onChange={(activeImage, index) => console.log(111,activeImage, index)}
+            onChange={(activeImage, index) => this.setState({activeIndex: index})}
             defaultImg={defaultImg}
             // onPreButton={getPreData}
             // onNextButton={getNextData}
             customToolbar={(toolbars) => {
               return toolbars.concat([{
                 key: 'test',
-                render: <div>C</div>,
+                render: <div>D</div>,
                 onClick: (activeImage) => {
-                  console.log(activeImage);
+                  const {activeIndex} = this.state
+                  this.setState({
+                    activeIndex: activeIndex>0 ? activeIndex-1 : 0
+                  },() => {
+                    const currentImages = this.state.images
+                    currentImages.splice(activeIndex,1)
+                    this.setState({
+                      images: currentImages
+                    })
+                  })
                 },
               }]);
             }}

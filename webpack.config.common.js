@@ -161,7 +161,7 @@ config.module
     .use('url-loader')
       .loader('url-loader')
       .options({
-        limit: 10000,
+        limit: 20000,
       });
 
 config.resolve

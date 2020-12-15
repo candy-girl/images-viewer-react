@@ -21,7 +21,7 @@ export interface ViewerNavProps {
 }
 
 export default function ViewerNav(props: ViewerNavProps) {
-  const { navImgWidth = 100, activeIndex = 0 } = props;
+  const { navImgWidth = 100, activeIndex = 0, images } = props;
   const initMarginValue = activeIndex > 5 ? - ( activeIndex - 5 ) * ( navImgWidth + 10 ) : 0;
   const [marginValue, setMarginValue] = React.useState(initMarginValue);
   const ulRef = React.useRef();
@@ -29,9 +29,15 @@ export default function ViewerNav(props: ViewerNavProps) {
   const preActiveIndex = React.useRef(activeIndex);
 
   React.useEffect(() => {
+    // 删除图片后的位移
+    const initMarginValue = activeIndex > 5 ? - ( activeIndex - 5 ) * ( navImgWidth + 10 ) : 0;
+    setMarginValue(initMarginValue)
+  });
+
+  React.useEffect(() => {
     let ulContainer = ulRef.current || undefined;
     let ulWidth = ulContainer.clientWidth;
-    const showNextButton = (navImgWidth + 10) * props.images.length + marginValue - 5 > ulWidth;
+    const showNextButton = (navImgWidth + 10) * images.length + marginValue - 5 > ulWidth;
     if (showNextButton) {
       setShowNext(true);
     } else {
@@ -46,7 +52,7 @@ export default function ViewerNav(props: ViewerNavProps) {
   }, [activeIndex]);
 
   function move() {
-    if (props.images.length <= 6) {
+    if (images.length <= 6) {
       return;
     }
     // 移动缩略图
@@ -56,7 +62,7 @@ export default function ViewerNav(props: ViewerNavProps) {
     let currentValue = marginValue;
     if (activeIndex < preActiveIndex.current) {
       // 左移
-      if (activeIndex === 0 && preActiveIndex.current === props.images.length - 1) {
+      if (activeIndex === 0 && preActiveIndex.current === images.length - 1) {
         // 从最后一张跳到第一张
         currentValue = 0;
       } else if (activeIndex === leftIndex - 1) {
@@ -67,9 +73,9 @@ export default function ViewerNav(props: ViewerNavProps) {
       }
     } else if (activeIndex > preActiveIndex.current) {
       // 右移
-      if (activeIndex === props.images.length - 1 && preActiveIndex.current === 0) {
+      if (activeIndex === images.length - 1 && preActiveIndex.current === 0) {
         // 从第一张跳到最后一张
-        currentValue = - (props.images.length - 5) * itemOffset;
+        currentValue = - (images.length - 5) * itemOffset;
       } else if (activeIndex === rightIndex + 1) {
         // 边界右移1
         currentValue -= itemOffset;
@@ -86,13 +92,13 @@ export default function ViewerNav(props: ViewerNavProps) {
     // 当前选中第6张，加载前20张
     if (targetIndex <= 5 && props.onPreButton) {
       props.onPreButton(targetIndex).then(length => {
-        targetIndex = length - props.images.length + targetIndex;
+        targetIndex = length - images.length + targetIndex;
       }).catch(() => {
         console.log('没有更多了');
       }).finally(() => {
         props.onChangeImg(targetIndex);
       });
-    } else if (targetIndex >= props.images.length - 6 && props.onNextButton) {
+    } else if (targetIndex >= images.length - 6 && props.onNextButton) {
       // 当前显示第15张,加载下一页20张
       props.onNextButton(targetIndex).then(length => {
       }).catch(() => {
@@ -117,7 +123,7 @@ export default function ViewerNav(props: ViewerNavProps) {
     if (props.loadingPDF) {
       return;
     }
-    if (activeIndex + 1 <= props.images.length) {
+    if (activeIndex + 1 <= images.length) {
       fetchData(activeIndex + 1);
     }
   }
@@ -146,9 +152,9 @@ export default function ViewerNav(props: ViewerNavProps) {
       {
         marginValue ? <img src={ArrowLeft} alt="" title={title} className={classnames('preButton', { disable: props.loadingPDF })} onClick={() => goPre()}/> : <span className="preSpan"></span>
       }
-      <div className="ulContainer" ref={ulRef} style={{margin: 'auto', width: (navImgWidth + 10) * props.images.length}}>
+      <div className="ulContainer" ref={ulRef} style={{margin: 'auto', width: (navImgWidth + 10) * images.length}}>
       <ul className={`${props.prefixCls}-list ${props.prefixCls}-list-transition`} style={listStyle}>
-        {props.images.map((item, index) =>
+        {images.map((item, index) =>
           <li
             key={index}
             title={title}
