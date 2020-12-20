@@ -34,7 +34,10 @@ export default function ViewerNav(props: ViewerNavProps) {
     setMarginValue(deleteMarginValue);
     setTimeout(() => {
       let ulContainer = ulRef.current || undefined;
-      let ulWidth = ulContainer.clientWidth;
+      let ulWidth = 0;
+      if(ulContainer){
+        ulWidth = ulContainer.clientWidth
+      }
       const showNextButton = (navImgWidth + 10) * images.length + marginValue - 5 > ulWidth;
       if (showNextButton) {
         setShowNext(true);
