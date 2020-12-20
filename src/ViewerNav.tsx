@@ -30,8 +30,8 @@ export default function ViewerNav(props: ViewerNavProps) {
 
   React.useEffect(() => {
     // 删除图片后的位移
-    const initMarginValue = activeIndex > 5 ? - ( activeIndex - 5 ) * ( navImgWidth + 10 ) : 0;
-    setMarginValue(initMarginValue)
+    const deleteMarginValue = activeIndex > 5 ? - ( activeIndex - 5 ) * ( navImgWidth + 10 ) : 0;
+    setMarginValue(deleteMarginValue);
     setTimeout(() => {
       let ulContainer = ulRef.current || undefined;
       let ulWidth = ulContainer.clientWidth;
