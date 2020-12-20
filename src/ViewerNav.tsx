@@ -35,8 +35,8 @@ export default function ViewerNav(props: ViewerNavProps) {
     setTimeout(() => {
       let ulContainer = ulRef.current || undefined;
       let ulWidth = 0;
-      if(ulContainer){
-        ulWidth = ulContainer.clientWidth
+      if (ulContainer) {
+        ulWidth = ulContainer.clientWidth;
       }
       const showNextButton = (navImgWidth + 10) * images.length + marginValue - 5 > ulWidth;
       if (showNextButton) {
