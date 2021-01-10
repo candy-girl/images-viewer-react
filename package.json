@@ -1,7 +1,7 @@
 {
   "name": "images-viewer-react",
-  "version": "1.4.1",
-  "description": "react image viewers",
+  "version": "1.4.6",
+  "description": "images viewer react",
   "main": "dist/index",
   "scripts": {
     "test": "jest",
@@ -20,9 +20,9 @@
     "url": "git+https://github.com/candy-girl/images-viewer-react.git"
   },
   "keywords": [
-    "react",
-    "image",
-    "viewer"
+    "images",
+    "viewer",
+    "react"
   ],
   "author": "candy-girl",
   "license": "MIT",

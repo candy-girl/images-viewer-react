@@ -4,7 +4,7 @@ import Viewer from '../src/Viewer';
 const Loading = require('./images/loading.png');
 const PDF = require('./images/pdf.png');
 const img = require('./images/image.pdf');
-// const img1 = require('./images/100.pdf');
+const img1 = require('./images/100.pdf');
 // const imgpdf = require('./images/image.pdf');
 // const img1 = require('./images/image1.jpg');
 // const img2 = require('./images/image2.jpg');
@@ -275,7 +275,7 @@ class App extends React.Component<any, Partial<State>> {
     //     return images.length;
     //   });
     // }
-
+    console.log(66666)
     return (
       <div>
         <nav className="navbar">
@@ -380,7 +380,7 @@ class App extends React.Component<any, Partial<State>> {
             // onNextButton={getNextData}
             customToolbar={(toolbars) => {
               return toolbars.concat([{
-                key: 'test',
+                key: 'delete',
                 render: <div>D</div>,
                 onClick: (activeImage) => {
                   const {activeIndex} = this.state
@@ -393,6 +393,16 @@ class App extends React.Component<any, Partial<State>> {
                       images: currentImages
                     })
                   })
+                },
+              },{
+                key: 'replace',
+                render: <div>R</div>,
+                onClick: () => {
+                  const {activeIndex, images} = this.state
+                  images[activeIndex].src = img1;
+                  this.setState({
+                    images: images
+                  },()=>console.log(888, this.state.images))
                 },
               }]);
             }}

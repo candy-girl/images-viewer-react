@@ -248,7 +248,7 @@ export default React.forwardRef((props: ViewerProps, viewerRef: React.MutableRef
         return;
       }
       if (!loadComplete) {
-        if (img.src.includes(props.defaultImg.src)) {
+        if (img.src.includes(props.defaultImg?.src)) {
           loadImgSuccess(img.width, img.height, false);
         } else {
           loadImgSuccess(img.width, img.height, true);
