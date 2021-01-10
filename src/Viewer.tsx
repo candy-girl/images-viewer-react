@@ -1,42 +1,38 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import ViewerCore from './ViewerCore';
-import ViewerProps from './ViewerProps';
+import React, { forwardRef, memo } from 'react'
+import ReactDOM from 'react-dom'
+import ViewerCore from './ViewerCore'
+import ViewerProps from './ViewerProps'
 
 export interface ViewerRef {
-  toPrint: () => void;
+  toPrint: () => void
 }
 
-export default React.forwardRef((props: ViewerProps, viewerRef: React.MutableRefObject<ViewerRef>) => {
-  const defaultContainer = React.useRef(typeof document !== 'undefined' ? document.createElement('div') : null);
-  const [ container, setContainer ] = React.useState(props.container);
-  const [ init, setInit ] = React.useState(false);
+const Viewer = (props: ViewerProps, viewerRef: React.MutableRefObject<ViewerRef>): React.ReactElement => {
+  const defaultContainer = React.useRef(typeof document !== 'undefined' ? document.createElement('div') : null)
+  const [container, setContainer] = React.useState(props.container)
+  const [init, setInit] = React.useState(false)
 
   React.useEffect(() => {
-    document.body.appendChild(defaultContainer.current);
-  }, []);
+    document.body.appendChild(defaultContainer.current)
+  }, [])
 
   React.useEffect(() => {
     if (props.visible && !init) {
-      setInit(true);
+      setInit(true)
     }
-  }, [props.visible, init]);
+  }, [props.visible, init])
 
   React.useEffect(() => {
     if (props.container) {
-      setContainer(props.container);
+      setContainer(props.container)
     } else {
-      setContainer(defaultContainer.current);
+      setContainer(defaultContainer.current)
     }
-  }, [props.container]);
+  }, [props.container])
 
   if (!init) {
-    return null;
+    return null
   }
-  return ReactDOM.createPortal((
-    <ViewerCore
-      ref={viewerRef}
-      {...props}
-    />
-  ), container);
-});
+  return ReactDOM.createPortal(<ViewerCore ref={viewerRef} {...props} />, container)
+}
+export default memo(forwardRef<ViewerRef, ViewerProps>(Viewer))

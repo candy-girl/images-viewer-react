@@ -1,5 +1,3 @@
-const FOOTER_HEIGHT = 84;
+const FOOTER_HEIGHT = 84
 
-export {
-  FOOTER_HEIGHT,
- };
+export { FOOTER_HEIGHT }
