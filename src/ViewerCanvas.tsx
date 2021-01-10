@@ -326,61 +326,6 @@ const ViewerCanvas = (props: ViewerCanvasProps, printRef) => {
     }
   }
 
-  if (props.imgSrc !== '') {
-    if (isPDF()) {
-      const pdfStyle: React.CSSProperties = {
-        width: '100%',
-        height: '100%',
-        overflow: loading || printing ? 'hidden' : 'auto',
-      }
-      imgNode = (
-        <>
-          {(printing || loading) && (
-            <div
-              style={{
-                display: 'flex',
-                width: '100%',
-                height: '100%',
-                background: '#ccc',
-                position: 'absolute',
-                justifyContent: 'center',
-                alignItems: 'center',
-                zIndex: props.zIndex,
-              }}
-            >
-              <Loading />
-            </div>
-          )}
-          <Document className={imgClass} file={props.imgSrc} options={options} onLoadSuccess={onDocumentLoadSuccess}>
-            <div style={pdfStyle} onScroll={onScrollHandler}>
-              <div ref={containerRef}>{content}</div>
-            </div>
-          </Document>
-        </>
-      )
-    } else {
-      const imgStyle: React.CSSProperties = {
-        width: `${props.width}px`,
-        height: `${props.height}px`,
-        transform: `
-    translateX(${props.left !== null ? props.left + 'px' : 'aoto'}) translateY(${props.top}px)
-        rotate(${props.rotate}deg) scaleX(${props.scaleX}) scaleY(${props.scaleY})`,
-      }
-
-      let imgSrc = props.imgSrc
-
-      if (props.imgSrc === 'changePdfFail') {
-        imgSrc = FAILED
-      }
-
-      imgNode = (
-        <div className='print-container' ref={containerRef}>
-          <img className={imgClass} src={imgSrc} style={imgStyle} onMouseDown={handleMouseDown} />
-        </div>
-      )
-    }
-  }
-
   if (props.loading) {
     imgNode = (
       <div
@@ -394,6 +339,61 @@ const ViewerCanvas = (props: ViewerCanvasProps, printRef) => {
         <Loading />
       </div>
     )
+  } else {
+    if (props.imgSrc !== '') {
+      if (isPDF()) {
+        const pdfStyle: React.CSSProperties = {
+          width: '100%',
+          height: '100%',
+          overflow: loading || printing ? 'hidden' : 'auto',
+        }
+        imgNode = (
+          <>
+            {(printing || loading) && (
+              <div
+                style={{
+                  display: 'flex',
+                  width: '100%',
+                  height: '100%',
+                  background: '#ccc',
+                  position: 'absolute',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  zIndex: props.zIndex,
+                }}
+              >
+                <Loading />
+              </div>
+            )}
+            <Document className={imgClass} file={props.imgSrc} options={options} onLoadSuccess={onDocumentLoadSuccess}>
+              <div style={pdfStyle} onScroll={onScrollHandler}>
+                <div ref={containerRef}>{content}</div>
+              </div>
+            </Document>
+          </>
+        )
+      } else {
+        const imgStyle: React.CSSProperties = {
+          width: `${props.width}px`,
+          height: `${props.height}px`,
+          transform: `
+    translateX(${props.left !== null ? props.left + 'px' : 'aoto'}) translateY(${props.top}px)
+        rotate(${props.rotate}deg) scaleX(${props.scaleX}) scaleY(${props.scaleY})`,
+        }
+
+        let imgSrc = props.imgSrc
+
+        if (props.imgSrc === 'changePdfFail') {
+          imgSrc = FAILED
+        }
+
+        imgNode = (
+          <div className='print-container' ref={containerRef}>
+            <img className={imgClass} src={imgSrc} style={imgStyle} onMouseDown={handleMouseDown} />
+          </div>
+        )
+      }
+    }
   }
 
   return (
