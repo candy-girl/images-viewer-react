@@ -1,15 +1,28 @@
 import React, { forwardRef, memo } from 'react'
-import Loading from './Loading'
 import classnames from 'classnames'
-// import { useReactToPrint } from 'react-to-print';
-// import { Document, Page, pdfjs } from 'react-pdf';
-// import 'react-pdf/dist/umd/Page/AnnotationLayer.css';
-// import PdfjsWorker from './pdf.worker.entry';
-import ViewerPDF from './ViewerPDF'
-import { ViewerRef } from './Viewer'
-import FAILED from './images/failed.png'
+import { useReactToPrint } from 'react-to-print'
+import { Document, Page, pdfjs } from 'react-pdf'
+import Loading from './Loading'
 
-// pdfjs.GlobalWorkerOptions.workerPort = new PdfjsWorker();
+import FAILED from './images/failed.png'
+import { ViewerRef } from './Viewer'
+import PdfjsWorker from './pdf.worker.entry'
+import 'react-pdf/dist/umd/Page/AnnotationLayer.css'
+
+pdfjs.GlobalWorkerOptions.workerPort = new PdfjsWorker()
+
+export interface PrintRef {
+  toPrint: () => void
+}
+
+const pageSize = 5
+const printSize = 5
+
+const options = {
+  // cMapUrl: 'cmaps/',
+  cMapUrl: `//cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjs.version}/cmaps/`,
+  cMapPacked: true,
+}
 
 export interface ViewerCanvasProps {
   prefixCls: string
@@ -142,14 +155,6 @@ const ViewerCanvas = (props: ViewerCanvasProps, printRef) => {
     document[funcName]('mousemove', handleMouseMove, false)
   }
 
-  const imgStyle: React.CSSProperties = {
-    width: `${props.width}px`,
-    height: `${props.height}px`,
-    transform: `
-translateX(${props.left !== null ? props.left + 'px' : 'aoto'}) translateY(${props.top}px)
-    rotate(${props.rotate}deg) scaleX(${props.scaleX}) scaleY(${props.scaleY})`,
-  }
-
   const imgClass = classnames(`${props.prefixCls}-image`, {
     drag: props.drag,
     [`${props.prefixCls}-image-transition`]: !isMouseDown.current,
@@ -161,98 +166,221 @@ translateX(${props.left !== null ? props.left + 'px' : 'aoto'}) translateY(${pro
 
   let imgNode = null
 
-  // const [totalPages, settotalPages] = React.useState(1);
+  // render
+  const [totalPages, setTotalPages] = React.useState(0)
+  const [pageNo, setPageNo] = React.useState(0)
+  const [loading, setLoading] = React.useState(true)
+  const [printing, setPrinting] = React.useState(false)
+  const [content, setContent] = React.useState([])
+  const loadSuccessSize = React.useRef(0)
+  const nextLoadSuccessSize = React.useRef(0)
+  const containerRef = React.useRef(null)
 
-  // const [pageNo, setPageNo] = React.useState(1);
+  React.useEffect(() => {
+    if (!loading && printing) {
+      if (totalPages > loadSuccessSize.current) {
+        setPageNo(pageNo + 1)
+      }
+    }
+  }, [loading])
 
-  // const [content, setContent] = React.useState([]);
+  React.useEffect(() => {
+    if (isPDF()) {
+      // props.setPDFLoading(true);
+      if (totalPages > 0) {
+        loadNextPage()
+      }
+    }
+  }, [pageNo, totalPages])
 
-  // const loadSizeRef = React.useRef(0);
-  // const containerRef = React.useRef(null);
+  React.useEffect(() => {
+    if (printing && loadSuccessSize.current > 0) {
+      if (totalPages > loadSuccessSize.current) {
+        setPageNo(pageNo + 1)
+      } else {
+        reactToPrint()
+        setPrinting(false)
+      }
+    }
+  }, [printing])
 
-  // const pageSize = 5;
+  React.useImperativeHandle(
+    printRef,
+    () => ({
+      toPrint,
+    }),
+    [containerRef.current],
+  )
 
-  // const toPrint = useReactToPrint({
-  //   content: () => containerRef.current,
-  // });
+  const reactToPrint = useReactToPrint({
+    content: () => containerRef.current,
+  })
 
-  // const print = () => {
-  //   console.log(containerRef.current);
-  //   toPrint();
-  // };
-
-  // React.useImperativeHandle(printRef, () => ({
-  //   ...containerRef.current,
-  //   print,
-  // }), []);
-
-  // const onRenderSuccess = ({ pageNumber }) => {
-  //   loadSizeRef.current = loadSizeRef.current + 1;
-  //   console.log(loadSizeRef.current);
-  //   console.log(`第${pageNumber}页已经加载完成`);
-  //   if (loadSizeRef.current === pageNo * pageSize || loadSizeRef.current === totalPages) {
-  //     console.log(`${loadSizeRef.current}全部加载完成`);
-  //   }
-  //   if (loadSizeRef.current === totalPages) {
-  //     toPrint();
-  //   }
-  // };
-
-  // const onDocumentLoadSuccess = ({ numPages }) => {
-  //   setPageNo(1);
-  //   settotalPages(numPages);
-  //   loadSizeRef.current = 0;
-  //   let currentSize = numPages;
-  //   if (numPages > pageSize) {
-  //     currentSize = pageSize;
-  //   }
-  //   setContent(new Array(currentSize).fill('').map((_, index) => {
-  //       return <Page onRenderSuccess={onRenderSuccess} renderTextLayer={false} key={index} pageNumber={index + 1} style={{display: 'none'}} />;
-  //   }));
-  // };
-
-  // const onScrollHandler = (e) => {
-  //   const { clientHeight, scrollTop, scrollHeight } = e.target;
-  //   // console.log(scrollTop);
-  //   // console.log(clientHeight);
-  //   // console.log(scrollHeight);
-  //   // 3 屏加载下一页
-  //   if (clientHeight * 3 + scrollTop >= scrollHeight) {
-  //     console.log('触发');
-  //     const size = pageNo * pageSize;
-  //     if (totalPages > size) {
-  //       let currentSize = pageSize;
-  //       const oldContent = content.slice();
-  //       if (totalPages <= size + pageSize) {
-  //         currentSize = totalPages - size;
-  //       }
-  //       setContent(oldContent.concat(new Array(currentSize).fill('').map((_, index) => {
-  //         return <Page onRenderSuccess={onRenderSuccess} renderTextLayer={false} key={(size) + index} pageNumber={(size) + index + 1} style={{ display: 'none' }} />;
-  //       })));
-  //       setPageNo(no => no + 1);
-  //     }
-  //   }
-  // };
-
-  // const options = {
-  //   cMapUrl: 'cmaps/',
-  //   cMapPacked: true,
-  // };
-
-  if (props.imgSrc !== '') {
-    // props.imgSrc.endsWith('.pdf') ? imgNode = <ViewerPDF ref={containerRef} {...props} /> : imgNode = <img
-    //   ref={containerRef}
-    //   className={imgClass}
-    //   src={props.imgSrc}
-    //   style={imgStyle}
-    //   onMouseDown={handleMouseDown}
-    // />;
-    if (props.imgSrc === 'changePdfFail') {
-      imgNode = <img className={imgClass} src={FAILED} style={imgStyle} onMouseDown={handleMouseDown} />
+  function isPDF() {
+    if (props.imgSrc && props.imgSrc.endsWith('.pdf')) {
+      return true
     } else {
-      imgNode = <ViewerPDF ref={printRef} handleMouseDown={handleMouseDown} isMouseDown={isMouseDown} {...props} />
+      return false
     }
   }
+
+  function toPrint() {
+    if (isPDF()) {
+      setPrinting(true)
+    } else {
+      reactToPrint()
+    }
+  }
+
+  function startLoading() {
+    props.setPDFLoading(true)
+    setLoading(true)
+  }
+
+  function endLoading() {
+    setLoading(false)
+    if (!printing) {
+      props.setPDFLoading(false)
+    }
+  }
+
+  function onRenderSuccess() {
+    loadSuccessSize.current = loadSuccessSize.current + 1
+    const nextSize = nextLoadSuccessSize.current
+    if (pageNo === 0) {
+      if (loadSuccessSize.current === nextSize) {
+        endLoading()
+      }
+    } else {
+      if (printing) {
+        if (loadSuccessSize.current === nextSize) {
+          endLoading()
+        }
+        if (loadSuccessSize.current === totalPages) {
+          reactToPrint()
+          setPrinting(false)
+          setLoading(false)
+          props.setPDFLoading(false)
+        }
+      } else {
+        if (loadSuccessSize.current === nextSize || loadSuccessSize.current === totalPages) {
+          endLoading()
+        }
+      }
+    }
+  }
+
+  function onDocumentLoadSuccess({ numPages }) {
+    setTotalPages(numPages)
+    loadSuccessSize.current = 0
+  }
+
+  function loadNextPage() {
+    let size: number
+    let nextSize: number
+    const currentSize = loadSuccessSize.current
+    if (pageNo === 0) {
+      size = 1
+      nextSize = nextLoadSuccessSize.current = 1
+    } else {
+      if (printing) {
+        size = printSize
+      } else {
+        size = pageSize
+      }
+      nextSize = nextLoadSuccessSize.current = currentSize + size
+    }
+    if (totalPages > currentSize) {
+      const oldContent = content.slice()
+      if (totalPages <= nextSize) {
+        size = totalPages - currentSize
+      }
+      startLoading()
+      setContent(
+        oldContent.concat(
+          new Array(size).fill('').map((_, index) => {
+            return (
+              <Page
+                onRenderSuccess={onRenderSuccess}
+                renderTextLayer={false}
+                key={currentSize + index}
+                pageNumber={currentSize + index + 1}
+                style={{ display: 'none' }}
+              />
+            )
+          }),
+        ),
+      )
+    }
+  }
+
+  function onScrollHandler(e) {
+    const { clientHeight, scrollTop, scrollHeight } = e.target
+    // 3 屏加载下一页
+    if (clientHeight + scrollTop >= scrollHeight) {
+      const hasMore = totalPages > loadSuccessSize.current
+      if (hasMore && !loading) {
+        setPageNo(pageNo + 1)
+        startLoading()
+      }
+    }
+  }
+
+  if (props.imgSrc !== '') {
+    if (isPDF()) {
+      const pdfStyle: React.CSSProperties = {
+        width: '100%',
+        height: '100%',
+        overflow: loading || printing ? 'hidden' : 'auto',
+      }
+      imgNode = (
+        <>
+          {(printing || loading) && (
+            <div
+              style={{
+                display: 'flex',
+                width: '100%',
+                height: '100%',
+                background: '#ccc',
+                position: 'absolute',
+                justifyContent: 'center',
+                alignItems: 'center',
+                zIndex: props.zIndex,
+              }}
+            >
+              <Loading />
+            </div>
+          )}
+          <Document className={imgClass} file={props.imgSrc} options={options} onLoadSuccess={onDocumentLoadSuccess}>
+            <div style={pdfStyle} onScroll={onScrollHandler}>
+              <div ref={containerRef}>{content}</div>
+            </div>
+          </Document>
+        </>
+      )
+    } else {
+      const imgStyle: React.CSSProperties = {
+        width: `${props.width}px`,
+        height: `${props.height}px`,
+        transform: `
+    translateX(${props.left !== null ? props.left + 'px' : 'aoto'}) translateY(${props.top}px)
+        rotate(${props.rotate}deg) scaleX(${props.scaleX}) scaleY(${props.scaleY})`,
+      }
+
+      let imgSrc = props.imgSrc
+
+      if (props.imgSrc === 'changePdfFail') {
+        imgSrc = FAILED
+      }
+
+      imgNode = (
+        <div className='print-container' ref={containerRef}>
+          <img className={imgClass} src={imgSrc} style={imgStyle} onMouseDown={handleMouseDown} />
+        </div>
+      )
+    }
+  }
+
   if (props.loading) {
     imgNode = (
       <div

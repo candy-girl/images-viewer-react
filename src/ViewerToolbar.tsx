@@ -1,5 +1,6 @@
 import React, { memo } from 'react'
 import classnames from 'classnames'
+
 import Icon, { ActionType } from './Icon'
 import { ToolbarConfig } from './ViewerProps'
 

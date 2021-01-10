@@ -1,18 +1,19 @@
 import React, { forwardRef, memo } from 'react'
-import './style/index.less'
+import classnames from 'classnames'
 import ViewerCanvas from './ViewerCanvas'
 import ViewerNav from './ViewerNav'
 import ViewerToolbar, { defaultToolbars } from './ViewerToolbar'
-import ViewerProps, { ImageDecorator, ToolbarConfig } from './ViewerProps'
 import Icon, { ActionType } from './Icon'
-import * as constants from './constants'
-import classnames from 'classnames'
-import { ViewerRef } from './Viewer'
+
 import FAILED from './images/failed.png'
 
-const noop = () => ({})
+import * as constants from './constants'
+import ViewerProps, { ImageDecorator, ToolbarConfig } from './ViewerProps'
+import { ViewerRef } from './Viewer'
 
-// const transitionDuration = 300;
+import './style/index.less'
+
+const noop = () => ({})
 
 const ACTION_TYPES = {
   setVisible: 'setVisible',
@@ -280,9 +281,6 @@ const ViewerCore = (props: ViewerProps, viewerRef: React.MutableRefObject<Viewer
             startLoading: false,
           }),
         )
-        // const deafultImgWidth = props.defaultImg.width || containerSize.current.width * .5;
-        // const defaultImgHeight = props.defaultImg.height || containerSize.current.height * .5;
-        // loadImgSuccess(deafultImgWidth, defaultImgHeight, false);
         img.src = props.defaultImg.src
       } else {
         dispatch(
@@ -531,7 +529,7 @@ const ViewerCore = (props: ViewerProps, viewerRef: React.MutableRefObject<Viewer
     }
   }
 
-  function handleCanvasMouseDown(e) {
+  function handleCanvasMouseDown(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     onMaskClick(e)
   }
 
@@ -554,86 +552,6 @@ const ViewerCore = (props: ViewerProps, viewerRef: React.MutableRefObject<Viewer
       // );
     }
   }
-
-  // function handleKeydown(e) {
-  //   let keyCode = e.keyCode || e.which || e.charCode;
-  //   let isFeatrue = false;
-  //   switch (keyCode) {
-  //     // key: esc
-  //     case 27:
-  //       onClose();
-  //       isFeatrue = true;
-  //       break;
-  //     // key: ←
-  //     case 37:
-  //       if (e.ctrlKey) {
-  //         handleDefaultAction(ActionType.rotateLeft);
-  //       } else {
-  //         handleDefaultAction(ActionType.prev);
-  //       }
-  //       isFeatrue = true;
-  //       break;
-  //     // key: →
-  //     case 39:
-  //       if (e.ctrlKey) {
-  //         handleDefaultAction(ActionType.rotateRight);
-  //       } else {
-  //         handleDefaultAction(ActionType.next);
-  //       }
-  //       isFeatrue = true;
-  //       break;
-  //     // key: ↑
-  //     case 38:
-  //       handleDefaultAction(ActionType.zoomIn);
-  //       isFeatrue = true;
-  //       break;
-  //     // key: ↓
-  //     case 40:
-  //       handleDefaultAction(ActionType.zoomOut);
-  //       isFeatrue = true;
-  //       break;
-  //     // key: Ctrl + 1
-  //     case 49:
-  //       if (e.ctrlKey) {
-  //         loadImg(state.activeIndex);
-  //         isFeatrue = true;
-  //       }
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  //   if (isFeatrue) {
-  //     e.preventDefault();
-  //     e.stopPropagation();
-  //   }
-  // }
-
-  // function handleMouseScroll(e) {
-  //   if (disableMouseZoom) {
-  //     return;
-  //   }
-  //   if (state.loading) {
-  //     return;
-  //   }
-  //   e.preventDefault();
-  //   let direct: 0 | 1 | -1 = 0;
-  //   const value = e.deltaY;
-  //   if (value === 0) {
-  //     direct = 0;
-  //   } else {
-  //     direct = value > 0 ? -1 : 1;
-  //   }
-  //   if (direct !== 0) {
-  //     let x = e.clientX;
-  //     let y = e.clientY;
-  //     if (props.container) {
-  //       const containerRect = props.container.getBoundingClientRect();
-  //       x -= containerRect.left;
-  //       y -= containerRect.top;
-  //     }
-  //     handleZoom(x, y, direct, zoomSpeed);
-  //   }
-  // }
 
   function getImageCenterXY() {
     return {
@@ -749,7 +667,6 @@ const ViewerCore = (props: ViewerProps, viewerRef: React.MutableRefObject<Viewer
       <ViewerCanvas
         ref={printRef}
         prefixCls={prefixCls}
-        // imgSrc={state.loadFailed && !activeImg.src.endsWith('.pdf') ? (props.defaultImg.src || activeImg.src) : activeImg.src}
         imgSrc={
           state.loadFailed && !activeImg.src.endsWith('.pdf') ? props.defaultImg.src || activeImg.src : activeImg.src
         }

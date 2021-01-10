@@ -1,13 +1,14 @@
-// import { SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS } from 'constants';
 import React, { memo } from 'react'
 import classnames from 'classnames'
-import { ImageDecorator } from './ViewerProps'
+
 import PDF from './images/pdf@2x.png'
+import WORD from './images/word@2x.png'
+import EXCEL from './images/excel@2x.png'
 import LOADING from './images/loading.png'
 import ArrowLeft from './images/arrow-left.png'
 import ArrowRight from './images/arrow-right.png'
-import EXCEL from './images/excel@2x.png'
-import WORD from './images/word@2x.png'
+
+import { ImageDecorator } from './ViewerProps'
 
 export interface ViewerNavProps {
   prefixCls: string

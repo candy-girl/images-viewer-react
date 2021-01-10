@@ -1,6 +1,7 @@
 import React, { forwardRef, memo } from 'react'
 import ReactDOM from 'react-dom'
 import ViewerCore from './ViewerCore'
+
 import ViewerProps from './ViewerProps'
 
 export interface ViewerRef {
@@ -33,6 +34,7 @@ const Viewer = (props: ViewerProps, viewerRef: React.MutableRefObject<ViewerRef>
   if (!init) {
     return null
   }
+
   return ReactDOM.createPortal(<ViewerCore ref={viewerRef} {...props} />, container)
 }
 export default memo(forwardRef<ViewerRef, ViewerProps>(Viewer))

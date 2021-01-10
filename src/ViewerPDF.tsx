@@ -1,11 +1,12 @@
 import React, { forwardRef, memo } from 'react'
-import Loading from './Loading'
 import classnames from 'classnames'
 import { useReactToPrint } from 'react-to-print'
 import { Document, Page, pdfjs } from 'react-pdf'
-import 'react-pdf/dist/umd/Page/AnnotationLayer.css'
-import PdfjsWorker from './pdf.worker.entry'
+import Loading from './Loading'
+
 import { ViewerRef } from './Viewer'
+import PdfjsWorker from './pdf.worker.entry'
+import 'react-pdf/dist/umd/Page/AnnotationLayer.css'
 
 pdfjs.GlobalWorkerOptions.workerPort = new PdfjsWorker()
 
