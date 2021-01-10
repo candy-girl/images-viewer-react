@@ -1,148 +1,148 @@
 export interface ViewerImageSize {
-  width: number;
-  height: number;
+  width: number
+  height: number
 }
 
 export interface ImageDecorator {
-  navSrc: string;
-  src: string;
-  fileType: string;
-  alt?: string;
-  downloadUrl?: string;
-  defaultSize?: ViewerImageSize;
+  navSrc: string
+  src: string
+  fileType: string
+  alt?: string
+  downloadUrl?: string
+  defaultSize?: ViewerImageSize
 }
 
 export interface ToolbarConfig {
-  key: string;
-  actionType?: number;
-  render?: React.ReactNode;
-  onClick?: (activeImage: ImageDecorator) => void;
+  key: string
+  actionType?: number
+  render?: React.ReactNode
+  onClick?: (activeImage: ImageDecorator) => void
 }
 
 export interface ViewerDefaultImg {
-  navSrc: string;
-  src: string;
-  width?: number;
-  height?: number;
+  navSrc: string
+  src: string
+  width?: number
+  height?: number
 }
 
 interface ViewerProps {
   /** viewer是否可见 */
-  visible?: boolean;
+  visible?: boolean
 
   /** 点击关闭按钮的回调 */
-  onClose?: () => void;
+  onClose?: () => void
 
   /** 需要进行浏览的图片地址集合 */
-  images?: ImageDecorator[];
+  images?: ImageDecorator[]
 
   /** 缩略图的宽度 */
-  navImgWidth?: number;
+  navImgWidth?: number
 
   /** 当前图像index */
-  activeIndex?: number;
+  activeIndex?: number
 
   /** 自定义viewer组件的z-index */
-  zIndex?: number;
+  zIndex?: number
 
   /** viewer渲染的父节点，设置后开启inline mode */
-  container?: HTMLElement;
+  container?: HTMLElement
 
   /** 图片是否可拖动 */
-  drag?: boolean;
+  drag?: boolean
 
   /** 是否显示图片属性 */
-  attribute?: boolean;
+  attribute?: boolean
 
   /** 是否显示缩放按钮 */
-  zoomable?: boolean;
+  zoomable?: boolean
 
   /** 是否显示旋转按钮 */
-  rotatable?: boolean;
+  rotatable?: boolean
 
   /** 是否显示变换按钮 */
-  scalable?: boolean;
+  scalable?: boolean
 
   /** 当蒙版被点击时的回调函数 */
-  onMaskClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
+  onMaskClick?: (e: React.MouseEvent<HTMLDivElement>) => void
 
   /** 是否显示下载按钮 */
-  downloadable?: boolean;
+  downloadable?: boolean
 
   /** 是否显示打印按钮 */
-  printable?: boolean;
+  printable?: boolean
 
   /** 图片是否可循环 */
-  loop?: boolean;
+  loop?: boolean
 
   // 不显示管理按钮
-  noClose?: boolean;
+  noClose?: boolean
 
   // 不显示图片详情
-  noImgDetails?: boolean;
+  noImgDetails?: boolean
 
   // 不显示导航条
-  noNavbar?: boolean;
+  noNavbar?: boolean
 
   // 不显示工具栏
-  noToolbar?: boolean;
+  noToolbar?: boolean
 
   // 不呈现页脚
-  noFooter?: boolean;
+  noFooter?: boolean
 
   // 是否显示更改按钮
-  changeable?: boolean;
+  changeable?: boolean
 
   // 自定义工具栏
-  customToolbar?: (toolbars: ToolbarConfig[]) => ToolbarConfig[];
+  customToolbar?: (toolbars: ToolbarConfig[]) => ToolbarConfig[]
 
   // 变焦速度
-  zoomSpeed?: number;
+  zoomSpeed?: number
 
   // 默认图片大小
-  defaultSize?: ViewerImageSize;
+  defaultSize?: ViewerImageSize
 
   // 图片加载失败显示默认图片
-  defaultImg?: ViewerDefaultImg;
+  defaultImg?: ViewerDefaultImg
 
   // 禁用键盘支持
-  disableKeyboardSupport?: boolean;
+  disableKeyboardSupport?: boolean
 
   // 没有复位变焦后的图像变化
-  noResetZoomAfterChange?: boolean;
+  noResetZoomAfterChange?: boolean
 
   // 没有限制图像初始化大小
-  noLimitInitializationSize?: boolean;
+  noLimitInitializationSize?: boolean
 
   // 默认的放大缩小倍数
-  defaultScale?: number;
+  defaultScale?: number
 
   // 当图片改变时回调
-  onChange?: (activeImage: ImageDecorator, index: number) => void;
+  onChange?: (activeImage: ImageDecorator, index: number) => void
 
   // 点击上一张
-  onPreButton?: (activeIndex: number) =>  Promise<number>;
+  onPreButton?: (activeIndex: number) => Promise<number>
 
   // 点击下一张
-  onNextButton?: (activeIndex: number) =>  Promise<number>;
+  onNextButton?: (activeIndex: number) => Promise<number>
 
   // 禁用鼠标缩放
-  disableMouseZoom?: boolean;
+  disableMouseZoom?: boolean
 
   // 是否在新窗口中下载
-  downloadInNewWindow?: boolean;
+  downloadInNewWindow?: boolean
 
   // 自定义样式名
-  className?: string;
+  className?: string
 
   // 是否显示总数和范围
-  showTotal?: boolean;
+  showTotal?: boolean
 
   // 最大缩放
-  maxScale?: number;
+  maxScale?: number
 
   // 最小缩放
-  minScale?: number;
+  minScale?: number
 }
 
-export default ViewerProps;
+export default ViewerProps

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { memo } from 'react'
 
 export enum ActionType {
   zoomIn = 1,
@@ -16,13 +16,13 @@ export enum ActionType {
 }
 
 export interface IconProps {
-  type: ActionType;
+  type: ActionType
 }
 
-export default function Icon(props: IconProps) {
-  let prefixCls = 'images-viewer-react-icon';
+const Icon = (props: IconProps) => {
+  const prefixCls = 'images-viewer-react-icon'
 
-  return (
-    <i className={`${prefixCls} ${prefixCls}-${ActionType[props.type]}`}></i>
-  );
+  return <i className={`${prefixCls} ${prefixCls}-${ActionType[props.type]}`}></i>
 }
+
+export default memo(Icon)

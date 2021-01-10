@@ -1,15 +1,16 @@
-import * as React from 'react';
+import React, { memo } from 'react'
 
 export interface LoadingProps {
-  style?: React.CSSProperties;
+  style?: React.CSSProperties
 }
 
-export default function Loading(props: LoadingProps) {
-  let cls = 'circle-loading';
+const Loading = (props: LoadingProps) => {
+  const cls = 'circle-loading'
   return (
-    <div className="loading-wrap" style={props.style}>
-      <div className={cls}>
-      </div>
+    <div className='loading-wrap' style={props.style}>
+      <div className={cls}></div>
     </div>
-  );
+  )
 }
+
+export default memo(Loading)

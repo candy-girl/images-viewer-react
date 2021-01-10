@@ -1,20 +1,21 @@
-const config = require('./webpack.config.common');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const fs = require('fs-extra');
-const path = require('path');
+/* eslint-disable @typescript-eslint/no-var-requires */
+const config = require('./webpack.config.common')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const fs = require('fs-extra')
+const path = require('path')
 
-const distPath = path.join(__dirname, 'dist');
+const distPath = path.join(__dirname, 'dist')
 if (fs.existsSync(distPath)) {
-  fs.removeSync(distPath);
+  fs.removeSync(distPath)
 }
 
 config.output.merge({
   library: 'images-viewer-react',
   libraryTarget: 'umd',
-  globalObject: 'this'
-});
+  globalObject: 'this',
+})
 
-config.mode('production');
+config.mode('development')
 
 config.externals({
   react: {
@@ -29,11 +30,10 @@ config.externals({
     commonjs: 'react-dom',
     amd: 'react-dom',
   },
-});
+})
 
 if (process.env.ANALYZE) {
-  config.plugin('BundleAnalyzerPlugin')
-    .use(BundleAnalyzerPlugin);
+  config.plugin('BundleAnalyzerPlugin').use(BundleAnalyzerPlugin)
 }
 
-module.exports = config.toConfig();
+module.exports = config.toConfig()
