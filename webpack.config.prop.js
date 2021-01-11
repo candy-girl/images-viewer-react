@@ -15,7 +15,7 @@ config.output.merge({
   globalObject: 'this',
 })
 
-config.mode('development')
+config.mode('production')
 
 config.externals({
   react: {

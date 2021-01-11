@@ -668,7 +668,7 @@ const ViewerCore = (props: ViewerProps, viewerRef: React.MutableRefObject<Viewer
         ref={printRef}
         prefixCls={prefixCls}
         imgSrc={
-          state.loadFailed && !activeImg.src.endsWith('.pdf') ? props.defaultImg.src || activeImg.src : activeImg.src
+          state.loadFailed && !activeImg.src.endsWith('.pdf') ? props.defaultImg?.src || activeImg.src : activeImg.src
         }
         visible={visible}
         width={state.width}
