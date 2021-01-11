@@ -85,7 +85,7 @@ const ViewerCore = (props: ViewerProps, viewerRef: React.MutableRefObject<Viewer
     visible: false,
     visibleStart: false,
     transitionEnd: false,
-    activeIndex: props.activeIndex,
+    activeIndex: activeIndex,
     width: 0,
     height: 0,
     top: 10,
