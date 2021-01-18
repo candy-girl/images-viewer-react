@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import * as React from 'react'
 
 export interface LoadingProps {
   style?: React.CSSProperties
@@ -13,4 +13,4 @@ const Loading = (props: LoadingProps) => {
   )
 }
 
-export default memo(Loading)
+export default React.memo(Loading)

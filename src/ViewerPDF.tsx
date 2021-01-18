@@ -1,4 +1,4 @@
-import React, { forwardRef, memo } from 'react'
+import * as React from 'react'
 import classnames from 'classnames'
 import { useReactToPrint } from 'react-to-print'
 import { Document, Page, pdfjs } from 'react-pdf'
@@ -273,4 +273,4 @@ const ViewerPDF = (props: ViewerPDFProps, printRef: React.MutableRefObject<Print
   }
 }
 
-export default memo(forwardRef<ViewerRef, ViewerPDFProps>(ViewerPDF))
+export default React.memo(React.forwardRef<ViewerRef, ViewerPDFProps>(ViewerPDF))

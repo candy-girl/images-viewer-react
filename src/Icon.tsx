@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import * as React from 'react'
 
 export enum ActionType {
   zoomIn = 1,
@@ -25,4 +25,4 @@ const Icon = (props: IconProps) => {
   return <i className={`${prefixCls} ${prefixCls}-${ActionType[props.type]}`}></i>
 }
 
-export default memo(Icon)
+export default React.memo(Icon)

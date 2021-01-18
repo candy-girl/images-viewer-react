@@ -1,4 +1,4 @@
-import React, { forwardRef, memo } from 'react'
+import * as React from 'react'
 import classnames from 'classnames'
 import ViewerCanvas from './ViewerCanvas'
 import ViewerNav from './ViewerNav'
@@ -249,6 +249,7 @@ const ViewerCore = (props: ViewerProps, viewerRef: React.MutableRefObject<Viewer
     let activeImage: ImageDecorator = null
     if (images.length > 0) {
       activeImage = images[currentActiveIndex]
+      console.log(activeImage)
       if (activeImage.src.endsWith('.pdf')) {
         return setTimeout(() => {
           loadImgSuccess(containerSize.current.width, containerSize.current.height, true)
@@ -729,4 +730,4 @@ const ViewerCore = (props: ViewerProps, viewerRef: React.MutableRefObject<Viewer
   )
 }
 
-export default memo(forwardRef<ViewerRef, ViewerProps>(ViewerCore))
+export default React.memo(React.forwardRef<ViewerRef, ViewerProps>(ViewerCore))

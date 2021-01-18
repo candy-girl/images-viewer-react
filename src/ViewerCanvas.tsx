@@ -1,4 +1,4 @@
-import React, { forwardRef, memo } from 'react'
+import * as React from 'react'
 import classnames from 'classnames'
 import { useReactToPrint } from 'react-to-print'
 import { Document, Page, pdfjs } from 'react-pdf'
@@ -7,7 +7,11 @@ import Loading from './Loading'
 import FAILED from './images/failed.png'
 import { ViewerRef } from './Viewer'
 import PdfjsWorker from './pdf.worker.entry'
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+// const PdfjsWorker = require('pdfjs-dist/build/pdf.worker.js')
 import 'react-pdf/dist/umd/Page/AnnotationLayer.css'
+
+console.log(PdfjsWorker)
 
 pdfjs.GlobalWorkerOptions.workerPort = new PdfjsWorker()
 
@@ -403,4 +407,4 @@ const ViewerCanvas = (props: ViewerCanvasProps, printRef) => {
   )
 }
 
-export default memo(forwardRef<ViewerRef, ViewerCanvasProps>(ViewerCanvas))
+export default React.memo(React.forwardRef<ViewerRef, ViewerCanvasProps>(ViewerCanvas))

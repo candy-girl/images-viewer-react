@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import * as React from 'react'
 import classnames from 'classnames'
 
 import Icon, { ActionType } from './Icon'
@@ -157,4 +157,4 @@ const ViewerToolbar = (props: ViewerToolbarProps) => {
   )
 }
 
-export default memo(ViewerToolbar)
+export default React.memo(ViewerToolbar)

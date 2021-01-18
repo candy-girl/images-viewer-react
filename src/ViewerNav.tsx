@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import * as React from 'react'
 import classnames from 'classnames'
 
 import PDF from './images/pdf@2x.png'
@@ -239,4 +239,4 @@ const ViewerNav = (props: ViewerNavProps) => {
   )
 }
 
-export default memo(ViewerNav)
+export default React.memo(ViewerNav)
