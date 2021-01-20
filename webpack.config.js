@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-var config = require('./webpack.config.common')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
+const config = require('./webpack.config.common')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path')
 
 config.entry('index').clear().add('./demo/index.tsx')

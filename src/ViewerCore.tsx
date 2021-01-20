@@ -250,7 +250,7 @@ const ViewerCore = (props: ViewerProps, viewerRef: React.MutableRefObject<Viewer
     if (images.length > 0) {
       activeImage = images[currentActiveIndex]
       console.log(activeImage)
-      if (activeImage.src.endsWith('.pdf')) {
+      if (activeImage.src?.endsWith('.pdf')) {
         return setTimeout(() => {
           loadImgSuccess(containerSize.current.width, containerSize.current.height, true)
         }, 0)
@@ -263,7 +263,7 @@ const ViewerCore = (props: ViewerProps, viewerRef: React.MutableRefObject<Viewer
         return
       }
       if (!loadComplete) {
-        if (img.src.includes(props.defaultImg?.src)) {
+        if (img.src?.includes(props.defaultImg?.src)) {
           loadImgSuccess(img.width, img.height, false)
         } else {
           loadImgSuccess(img.width, img.height, true)

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path')
 const Config = require('webpack-chain')
 const autoprefixer = require('autoprefixer')

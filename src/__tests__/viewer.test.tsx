@@ -3,7 +3,7 @@ import ViewerProps, { ImageDecorator } from '../ViewerProps'
 import { configure, mount } from 'enzyme'
 import * as Adapter from 'enzyme-adapter-react-16'
 import * as React from 'react'
-import EventEmitter from 'wolfy87-eventemitter'
+const EventEmitter = require('wolfy87-eventemitter')
 import img from '../../demo/images/image1.jpg'
 import img2 from '../../demo/images/image2.jpg'
 

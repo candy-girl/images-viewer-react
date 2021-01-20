@@ -36,6 +36,7 @@
   "homepage": "https://github.com/candy-girl/images-viewer-react/#readme",
   "devDependencies": {
     "@babel/core": "^7.6.4",
+    "@babel/plugin-proposal-optional-chaining": "^7.12.7",
     "@babel/plugin-transform-runtime": "^7.12.10",
     "@babel/preset-env": "^7.6.3",
     "@babel/preset-react": "^7.6.3",
@@ -119,7 +120,7 @@
     "moduleNameMapper": {
       "^.+\\.(jpg|png|jpeg)$": "jest-static-stubs/jpg",
       "\\.(css|less)$": "identity-obj-proxy",
-      "\\.worker.entry.js": "identity-obj-proxy"
+      "^.+\\.worker\\.entry": "<rootDir>/__mocks__/wokerMock.js"
     },
     "moduleDirectories": [
       "node_modules"

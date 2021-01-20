@@ -21,3 +21,5 @@ settings:
   react:
     pragma: "React"
     version: "detect"
+rules:
+  '@typescript-eslint/no-var-requires': 'off'
