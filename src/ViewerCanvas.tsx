@@ -11,8 +11,6 @@ import PdfjsWorker from './pdf.worker.entry'
 // const PdfjsWorker = require('pdfjs-dist/build/pdf.worker.js')
 import 'react-pdf/dist/umd/Page/AnnotationLayer.css'
 
-console.log(PdfjsWorker)
-
 pdfjs.GlobalWorkerOptions.workerPort = new PdfjsWorker()
 
 export interface PrintRef {

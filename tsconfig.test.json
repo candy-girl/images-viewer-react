@@ -10,7 +10,8 @@
     "types": [
       "react",
       "react-dom",
-      "node"
+      "node",
+      "jest"
     ]
   },
   "exclude": [

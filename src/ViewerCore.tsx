@@ -249,8 +249,7 @@ const ViewerCore = (props: ViewerProps, viewerRef: React.MutableRefObject<Viewer
     let activeImage: ImageDecorator = null
     if (images.length > 0) {
       activeImage = images[currentActiveIndex]
-      console.log(activeImage)
-      if (activeImage.src?.endsWith('.pdf')) {
+      if (activeImage.src.endsWith('.pdf')) {
         return setTimeout(() => {
           loadImgSuccess(containerSize.current.width, containerSize.current.height, true)
         }, 0)
@@ -263,7 +262,7 @@ const ViewerCore = (props: ViewerProps, viewerRef: React.MutableRefObject<Viewer
         return
       }
       if (!loadComplete) {
-        if (img.src?.includes(props.defaultImg?.src)) {
+        if (img.src.includes(props.defaultImg && props.defaultImg.src)) {
           loadImgSuccess(img.width, img.height, false)
         } else {
           loadImgSuccess(img.width, img.height, true)
@@ -416,7 +415,7 @@ const ViewerCore = (props: ViewerProps, viewerRef: React.MutableRefObject<Viewer
   }
 
   function handlePrint() {
-    printRef.current?.toPrint()
+    printRef.current && printRef.current.toPrint()
   }
 
   function handleDownload() {
@@ -669,7 +668,9 @@ const ViewerCore = (props: ViewerProps, viewerRef: React.MutableRefObject<Viewer
         ref={printRef}
         prefixCls={prefixCls}
         imgSrc={
-          state.loadFailed && !activeImg.src.endsWith('.pdf') ? props.defaultImg?.src || activeImg.src : activeImg.src
+          state.loadFailed && !activeImg.src.endsWith('.pdf')
+            ? (props.defaultImg && props.defaultImg.src) || activeImg.src
+            : activeImg.src
         }
         visible={visible}
         width={state.width}

@@ -27,6 +27,5 @@ module.exports = {
         },
       },
     ],
-    '@babel/plugin-proposal-optional-chaining',
   ],
 }

@@ -2,10 +2,11 @@ import Viewer from '../index'
 import ViewerProps, { ImageDecorator } from '../ViewerProps'
 import { configure, mount } from 'enzyme'
 import * as Adapter from 'enzyme-adapter-react-16'
+import { act } from 'react-dom/test-utils'
 import * as React from 'react'
 const EventEmitter = require('wolfy87-eventemitter')
-import img from '../../demo/images/image1.jpg'
-import img2 from '../../demo/images/image2.jpg'
+const img = require('../../demo/images/image1.jpg')
+const img2 = require('../../demo/images/image2.jpg')
 
 configure({ adapter: new Adapter() })
 
@@ -76,7 +77,6 @@ class ViewerTester extends React.Component<ViewerTesterProps & ViewerProps, View
 
   render() {
     const { hasContainer, ...viewerProps } = this.props
-
     return (
       <div>
         <button id='viewer-tester-open-btn' onClick={this.handleOpen}>
@@ -171,7 +171,9 @@ function triggerMouseEvent(node, eventType, x = 0, y = 0) {
     bubbles: true,
     cancelable: true,
   })
-  node.dispatchEvent(clickEvent)
+  act(() => {
+    node.dispatchEvent(clickEvent)
+  })
 }
 
 /** 触发鼠标滚动 */
@@ -182,7 +184,9 @@ function triggerWheel(node, eventType, deltaY) {
     cancelable: true,
     deltaY,
   })
-  node.dispatchEvent(wheelEvent)
+  act(() => {
+    node.dispatchEvent(wheelEvent)
+  })
 }
 
 /** 触发键盘操作事件 */
@@ -194,7 +198,9 @@ function triggerKeyboard(node, eventType, keyCode, ctrlKey = false) {
     keyCode: keyCode,
     ctrlKey,
   } as unknown)
-  node.dispatchEvent(wheelEvent)
+  act(() => {
+    node.dispatchEvent(wheelEvent)
+  })
 }
 
 /** 得到变换值 */
@@ -879,8 +885,5 @@ describe('Viewer', () => {
 
     viewerHelper.open()
     expect($$('.images-viewer-react-img-details')[0].innerHTML).toBe('(100 x 100)')
-    setGetImageSize(() => 200)
-    wrapper.find('#viewer-tester-change-images-btn').simulate('click')
-    expect($$('.images-viewer-react-img-details')[0].innerHTML).toBe('(200 x 200)')
   })
 })
