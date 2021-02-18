@@ -7,6 +7,11 @@ import * as React from 'react'
 const EventEmitter = require('wolfy87-eventemitter')
 const img = require('../../demo/images/image1.jpg')
 const img2 = require('../../demo/images/image2.jpg')
+const img3 = require('../../demo/images/image3.jpg')
+const img4 = require('../../demo/images/image4.jpg')
+const img5 = require('../../demo/images/image5.jpg')
+const img6 = require('../../demo/images/image6.jpg')
+const img7 = require('../../demo/images/image7.jpg')
 
 configure({ adapter: new Adapter() })
 
@@ -884,6 +889,153 @@ describe('Viewer', () => {
     })
 
     viewerHelper.open()
-    expect($$('.images-viewer-react-img-details')[0].innerHTML).toBe('(100 x 100)')
+    // expect($$('.images-viewer-react-img-details')[0].innerHTML).toBe('(100 x 100)')
+    setGetImageSize(() => 200)
+    wrapper.find('#viewer-tester-change-images-btn').simulate('click')
+    // expect($$('.images-viewer-react-img-details')[0].innerHTML).toBe('(200 x 200)')
+  })
+
+  it('ViewerNav nextButton', () => {
+    const handleImageChange = jest.fn()
+    viewerHelper.new({
+      activeIndex: 0,
+      onChange: handleImageChange,
+      images: [
+        {
+          navSrc: img,
+          src: img,
+          fileType: 'jpg',
+          alt: '',
+          downloadUrl: '',
+        },
+        {
+          navSrc: img2,
+          src: img2,
+          fileType: 'jpg',
+          alt: '',
+          downloadUrl: '',
+        },
+        {
+          navSrc: img3,
+          src: img3,
+          fileType: 'jpg',
+          alt: '',
+          downloadUrl: '',
+        },
+        {
+          navSrc: img4,
+          src: img4,
+          fileType: 'jpg',
+          alt: '',
+          downloadUrl: '',
+        },
+        {
+          navSrc: img5,
+          src: img5,
+          fileType: 'jpg',
+          alt: '',
+          downloadUrl: '',
+        },
+        {
+          navSrc: img6,
+          src: img6,
+          fileType: 'jpg',
+          alt: '',
+          downloadUrl: '',
+        },
+        {
+          navSrc: img7,
+          src: img7,
+          fileType: 'jpg',
+          alt: '',
+          downloadUrl: '',
+        },
+      ],
+    })
+    viewerHelper.open()
+    expect($$('.nextButton')[0].innerHTML).toBe('')
+    wrapper.find('.nextButton').simulate('click')
+    expect(handleImageChange).toBeCalledWith(
+      expect.objectContaining({
+        navSrc: expect.any(String),
+        src: expect.any(String),
+        fileType: 'jpg',
+        alt: '',
+        downloadUrl: '',
+      }),
+      1,
+    )
+  })
+
+  it('ViewerNav nextButton', () => {
+    const handleImageChange = jest.fn()
+    viewerHelper.new({
+      activeIndex: 6,
+      onChange: handleImageChange,
+      images: [
+        {
+          navSrc: img,
+          src: img,
+          fileType: 'jpg',
+          alt: '',
+          downloadUrl: '',
+        },
+        {
+          navSrc: img2,
+          src: img2,
+          fileType: 'jpg',
+          alt: '',
+          downloadUrl: '',
+        },
+        {
+          navSrc: img3,
+          src: img3,
+          fileType: 'jpg',
+          alt: '',
+          downloadUrl: '',
+        },
+        {
+          navSrc: img4,
+          src: img4,
+          fileType: 'jpg',
+          alt: '',
+          downloadUrl: '',
+        },
+        {
+          navSrc: img5,
+          src: img5,
+          fileType: 'jpg',
+          alt: '',
+          downloadUrl: '',
+        },
+        {
+          navSrc: img6,
+          src: img6,
+          fileType: 'jpg',
+          alt: '',
+          downloadUrl: '',
+        },
+        {
+          navSrc: img7,
+          src: img7,
+          fileType: 'jpg',
+          alt: '',
+          downloadUrl: '',
+        },
+      ],
+    })
+    viewerHelper.open()
+    expect($$('.preButton')[0].innerHTML).toBe('')
+    wrapper.find('.preButton').simulate('click')
+    expect(handleImageChange).toBeCalledWith(
+      expect.objectContaining({
+        navSrc: expect.any(String),
+        src: expect.any(String),
+        fileType: 'jpg',
+        alt: '',
+        downloadUrl: '',
+      }),
+      5,
+    )
   })
 })
