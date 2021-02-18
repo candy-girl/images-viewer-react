@@ -1038,4 +1038,67 @@ describe('Viewer', () => {
       5,
     )
   })
+
+  it('ViewerNav nextButton', () => {
+    viewerHelper.new({
+      activeIndex: 0,
+      images: [
+        {
+          navSrc: img,
+          src: img,
+          fileType: 'jpg',
+          alt: '0',
+          downloadUrl: '',
+        },
+        {
+          navSrc: img2,
+          src: img2,
+          fileType: 'jpg',
+          alt: '1',
+          downloadUrl: '',
+        },
+        {
+          navSrc: img3,
+          src: img3,
+          fileType: 'jpg',
+          alt: '2',
+          downloadUrl: '',
+        },
+        {
+          navSrc: img4,
+          src: img4,
+          fileType: 'jpg',
+          alt: '3',
+          downloadUrl: '',
+        },
+        {
+          navSrc: img5,
+          src: img5,
+          fileType: 'jpg',
+          alt: '4',
+          downloadUrl: '',
+        },
+        {
+          navSrc: img6,
+          src: img6,
+          fileType: 'jpg',
+          alt: '5',
+          downloadUrl: '',
+        },
+        {
+          navSrc: img7,
+          src: img7,
+          fileType: 'jpg',
+          alt: '6',
+          downloadUrl: '',
+        },
+      ],
+    })
+    viewerHelper.open()
+    viewerHelper.skipAnimation()
+    expect($$('.nextButton')[0].innerHTML).toBe('')
+    expect($$('.active img')[0].alt).toBe('0')
+    wrapper.find('.nextButton').simulate('click')
+    expect($$('.active img')[0].alt).toBe('1')
+  })
 })
