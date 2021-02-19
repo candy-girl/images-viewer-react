@@ -219,6 +219,7 @@ const ViewerCanvas = (props: ViewerCanvasProps, printRef) => {
   })
 
   function isPDF() {
+    console.log(props)
     if (props.imgSrc && props.imgSrc.endsWith('.pdf')) {
       return true
     } else {

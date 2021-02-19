@@ -4,6 +4,8 @@ import { configure, mount } from 'enzyme'
 import * as Adapter from 'enzyme-adapter-react-16'
 import { act } from 'react-dom/test-utils'
 import * as React from 'react'
+const fs = require('fs')
+const path = require('path')
 const EventEmitter = require('wolfy87-eventemitter')
 const img = require('../../demo/images/image1.jpg')
 const img2 = require('../../demo/images/image2.jpg')
@@ -1040,6 +1042,15 @@ describe('Viewer', () => {
   })
 
   it('ViewerNav nextButton', () => {
+    const mockedRect = {
+      width: 100 * 7,
+      height: 80,
+      top: 0,
+      left: 0,
+      bottom: 0,
+      right: 0,
+    }
+    window.Element.prototype.getBoundingClientRect = jest.fn().mockReturnValueOnce(mockedRect)
     viewerHelper.new({
       activeIndex: 0,
       images: [
@@ -1095,10 +1106,151 @@ describe('Viewer', () => {
       ],
     })
     viewerHelper.open()
-    viewerHelper.skipAnimation()
     expect($$('.nextButton')[0].innerHTML).toBe('')
     expect($$('.active img')[0].alt).toBe('0')
     wrapper.find('.nextButton').simulate('click')
     expect($$('.active img')[0].alt).toBe('1')
+    wrapper.find('.nextButton').simulate('click')
+    expect($$('.active img')[0].alt).toBe('2')
+    wrapper.find('.nextButton').simulate('click')
+    expect($$('.active img')[0].alt).toBe('3')
+    wrapper.find('.nextButton').simulate('click')
+    expect($$('.active img')[0].alt).toBe('4')
+    wrapper.find('.nextButton').simulate('click')
+    expect($$('.active img')[0].alt).toBe('5')
+    wrapper.find('.nextButton').simulate('click')
+    expect($$('.active img')[0].alt).toBe('6')
+    wrapper.find('.nextButton').simulate('click')
+    expect($$('.active img')[0].alt).toBe('0')
+  })
+
+  it('ViewerNav preButton', () => {
+    const mockedRect = {
+      width: 100 * 7,
+      height: 80,
+      top: 0,
+      left: 0,
+      bottom: 0,
+      right: 0,
+    }
+    window.Element.prototype.getBoundingClientRect = jest.fn().mockReturnValueOnce(mockedRect)
+    viewerHelper.new({
+      activeIndex: 6,
+      images: [
+        {
+          navSrc: img,
+          src: img,
+          fileType: 'jpg',
+          alt: '0',
+          downloadUrl: '',
+        },
+        {
+          navSrc: img2,
+          src: img2,
+          fileType: 'jpg',
+          alt: '1',
+          downloadUrl: '',
+        },
+        {
+          navSrc: img3,
+          src: img3,
+          fileType: 'jpg',
+          alt: '2',
+          downloadUrl: '',
+        },
+        {
+          navSrc: img4,
+          src: img4,
+          fileType: 'jpg',
+          alt: '3',
+          downloadUrl: '',
+        },
+        {
+          navSrc: img5,
+          src: img5,
+          fileType: 'jpg',
+          alt: '4',
+          downloadUrl: '',
+        },
+        {
+          navSrc: img6,
+          src: img6,
+          fileType: 'jpg',
+          alt: '5',
+          downloadUrl: '',
+        },
+        {
+          navSrc: img7,
+          src: img7,
+          fileType: 'jpg',
+          alt: '6',
+          downloadUrl: '',
+        },
+      ],
+    })
+    viewerHelper.open()
+    expect($$('.preButton')[0].innerHTML).toBe('')
+    wrapper.find('.preButton').simulate('click')
+    expect($$('.active img')[0].alt).toBe('5')
+    wrapper.find('.preButton').simulate('click')
+    expect($$('.active img')[0].alt).toBe('4')
+    wrapper.find('.preButton').simulate('click')
+    expect($$('.active img')[0].alt).toBe('3')
+    wrapper.find('.preButton').simulate('click')
+    expect($$('.active img')[0].alt).toBe('2')
+    wrapper.find('.preButton').simulate('click')
+    expect($$('.active img')[0].alt).toBe('1')
+    wrapper.find('.preButton').simulate('click')
+    expect($$('.active img')[0].alt).toBe('0')
+  })
+
+  it('ViewerCanvas pdf', () => {
+    const raw = fs.readFileSync(path.join(__dirname, '../../demo/images/image.pdf'))
+    const pdf = `data:application/pdf;base64,${raw.toString('base64')}`
+    viewerHelper.new({
+      activeIndex: 0,
+      images: [
+        {
+          navSrc: pdf,
+          src: pdf,
+          fileType: 'pdf',
+          alt: '0',
+          downloadUrl: '',
+        },
+        {
+          navSrc: img,
+          src: img,
+          fileType: 'jpg',
+          alt: '1',
+          downloadUrl: '',
+        },
+        {
+          navSrc: img2,
+          src: img2,
+          fileType: 'jpg',
+          alt: '2',
+          downloadUrl: '',
+        },
+        {
+          navSrc: img3,
+          src: img3,
+          fileType: 'jpg',
+          alt: '3',
+          downloadUrl: '',
+        },
+      ],
+    })
+    const mockedRect = {
+      width: 100 * 4,
+      height: 80,
+      top: 0,
+      left: 0,
+      bottom: 0,
+      right: 0,
+    }
+    window.Element.prototype.getBoundingClientRect = jest.fn().mockReturnValueOnce(mockedRect)
+    viewerHelper.open()
+    viewerHelper.skipAnimation()
+    console.log(wrapper.find('.images-viewer-react-canvas').debug())
   })
 })
