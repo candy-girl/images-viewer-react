@@ -672,6 +672,7 @@ const ViewerCore = (props: ViewerProps, viewerRef: React.MutableRefObject<Viewer
             ? (props.defaultImg && props.defaultImg.src) || activeImg.src
             : activeImg.src
         }
+        fileType={state.loadFailed ? 'jpg' : activeImg.fileType}
         visible={visible}
         width={state.width}
         height={state.height}

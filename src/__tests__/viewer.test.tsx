@@ -1251,6 +1251,5 @@ describe('Viewer', () => {
     window.Element.prototype.getBoundingClientRect = jest.fn().mockReturnValueOnce(mockedRect)
     viewerHelper.open()
     viewerHelper.skipAnimation()
-    console.log(wrapper.find('.images-viewer-react-canvas').debug())
   })
 })

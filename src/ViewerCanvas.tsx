@@ -29,6 +29,7 @@ const options = {
 export interface ViewerCanvasProps {
   prefixCls: string
   imgSrc: string
+  fileType: string
   visible: boolean
   width: number
   height: number
@@ -219,8 +220,7 @@ const ViewerCanvas = (props: ViewerCanvasProps, printRef) => {
   })
 
   function isPDF() {
-    console.log(props)
-    if (props.imgSrc && props.imgSrc.endsWith('.pdf')) {
+    if (props.fileType === 'pdf') {
       return true
     } else {
       return false
