@@ -75,7 +75,7 @@ interface ViewerProps {
   /** 图片是否可循环 */
   loop?: boolean
 
-  // 不显示管理按钮
+  // 是否隐藏关闭按钮
   noClose?: boolean
 
   // 不显示图片详情

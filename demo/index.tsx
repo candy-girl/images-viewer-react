@@ -6,7 +6,7 @@ import PDF from './images/pdf.png'
 import img from './images/image.pdf'
 // import img1  from'./images/100.pdf'
 // import imgpdf  from'./images/image.pdf'
-// import img1  from'./images/image1.jpg'
+import img1 from './images/image1.jpg'
 // import img2  from'./images/image2.jpg'
 import img3 from './images/image3.jpg'
 import img4 from './images/image4.jpg'
@@ -147,44 +147,44 @@ class App extends React.Component<unknown, Partial<State>> {
           downloadUrl: '',
         },
         {
-          alt: '1',
-          downloadUrl: '',
+          navSrc: img1,
+          src: img1,
           fileType: 'xlsx',
-          navSrc: '',
-          src: 'changePdfFail',
+          alt: '显示xlsx文件',
+          downloadUrl: '',
         },
         {
           navSrc: '',
           src: '',
           fileType: 'pdf',
           alt: '2',
-          downloadUrl: '',
+          downloadUrl: 'changePdfFail',
         },
         {
           navSrc: img3,
           src: img3,
-          fileType: 'xls',
+          fileType: 'jpg',
           alt: '3',
           downloadUrl: '',
         },
         {
           navSrc: img4,
           src: img4,
-          fileType: 'xlsx',
+          fileType: 'jpg',
           alt: '4',
           downloadUrl: '',
         },
         {
           navSrc: img5,
           src: img5,
-          fileType: 'doc',
+          fileType: 'jpg',
           alt: '5',
           downloadUrl: '',
         },
         {
           navSrc: img6,
           src: img6,
-          fileType: 'docx',
+          fileType: 'jpg',
           alt: '6',
           downloadUrl: '',
         },

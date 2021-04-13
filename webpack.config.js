@@ -20,7 +20,7 @@ config.plugin('html-webpack-plugin').use(HtmlWebpackPlugin, [
 config.devServer.merge({
   contentBase: path.join(__dirname, 'dist'),
   compress: false,
-  port: 8001,
+  port: 8100,
   host: '0.0.0.0',
   disableHostCheck: true,
 })
