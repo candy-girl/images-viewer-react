@@ -1,7 +1,5 @@
 import * as React from 'react'
 import classnames from 'classnames'
-
-import PDF from './images/pdf@2x.png'
 import WORD from './images/word@2x.png'
 import EXCEL from './images/excel@2x.png'
 import LOADING from './images/loading.png'
@@ -209,10 +207,11 @@ const ViewerNav = (props: ViewerNavProps) => {
               }}
             >
               <img
-                src={
-                  item.fileType === 'pdf'
-                    ? PDF
-                    : item.fileType === 'xls' || item.fileType === 'xlsx'
+                // src={
+                //   item.fileType === 'pdf'
+                //     ? PDF
+                //     : item.fileType === 'xls' || item.fileType === 'xlsx'
+                src={item.fileType === 'xls' || item.fileType === 'xlsx'
                     ? EXCEL
                     : item.fileType === 'doc' || item.fileType === 'docx'
                     ? WORD
