@@ -211,7 +211,8 @@ const ViewerNav = (props: ViewerNavProps) => {
                 //   item.fileType === 'pdf'
                 //     ? PDF
                 //     : item.fileType === 'xls' || item.fileType === 'xlsx'
-                src={item.fileType === 'xls' || item.fileType === 'xlsx'
+                src={
+                  item.fileType === 'xls' || item.fileType === 'xlsx'
                     ? EXCEL
                     : item.fileType === 'doc' || item.fileType === 'docx'
                     ? WORD
